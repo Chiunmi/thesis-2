@@ -1,0 +1,331 @@
+.adminProfile {
+  position: fixed;
+  margin: 2vh 2vw 2vw 26vh;
+  /* background-color: pink; */
+  width: 86vw;
+  height: 90vh;
+  overflow-y: auto;
+  max-height: fit-content;
+  color: black;
+}
+
+.adminProfile::-webkit-scrollbar {
+  display: none;
+}
+.buttons {
+  /* background-color: aquamarine; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.dept,
+.admin-button {
+  display: flex;
+  justify-content: space-between;
+  margin: 1vh 1vw;
+  /* background-color: aqua; */
+  width: 28vw;
+}
+
+.dept {
+  margin-top: 6vh;
+}
+
+.admin-button {
+  margin: 2vh 2vw 4vh 2vw;
+}
+
+.admin-search {
+  /* background-color: azure; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5vw;
+  margin-top: 4vh;
+}
+
+.search-input {
+  width: 320px;
+  padding: 2px;
+  margin-right: 0.5vw;
+  border: 2px solid #8a8a8a;
+  border-radius: 6px;
+  outline: none;
+}
+
+.button-jhs,
+.button-shs,
+.button-college {
+  background-color: #fafafa;
+  border: 1px solid #8a8a8a;
+  color: #8a8a8a;
+  padding: 0px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0px 40px 4px 0px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.button-jhs:hover,
+.button-shs:hover,
+.button-college:hover,
+.create-account-btn .save-btn:hover,
+.create-account-btn .close-btn:hover {
+  background-color: #c0c2c2;
+  border: 1px solid #003163;
+  color: #003163;
+}
+
+.active-button,
+.active-button:hover {
+  background-color: #003163;
+  border: 1px white solid;
+  color: white;
+}
+
+.button-create,
+.button-manage,
+.button-bmi {
+  background-color: #003163;
+  border: 1px white solid;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 0px 0px 20px 55px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.button-create {
+  margin-left: 8vw;
+}
+.button-create:hover,
+.button-manage:hover,
+.button-bmi:hover {
+  background-color: #c0c2c2;
+  border: 1px solid #003163;
+  color: #003163;
+}
+
+/* .container {
+  background-color: bisque;
+} */
+
+.name-list {
+  margin: 1vw 2vh;
+  /* background-color: pink; */
+  list-style-type: decimal;
+}
+
+.name-list ul {
+  cursor: pointer;
+  list-style-type: decimal;
+  margin-left: 1.5vw;
+}
+
+.student-name:hover {
+  color: #8a8a8a;
+}
+
+.section {
+  display: flex;
+}
+.student-data {
+  /* background-color: beige; */
+  margin-top: 2vh;
+}
+
+.student-data-i h3 {
+  text-align: center;
+  color: #003163;
+}
+
+.student-info h3 {
+  text-align: center;
+  margin-top: 1vh;
+}
+
+.selected-section-header:hover {
+  cursor: pointer;
+  color: #8a8a8a;
+}
+
+.student-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-bmi {
+  margin: 1vh 34vh;
+}
+
+.bmi-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content h3 {
+  text-align: center;
+}
+.bmi-form label {
+  margin: 0;
+}
+
+.bmi-form input {
+  width: calc(100% - 20px);
+}
+.scan-bmi-btn {
+  display: flex;
+  justify-content: space-around;
+  margin: 2vh 0vw 1vh 0vw;
+}
+.scan-bmi-btn .save-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #00ab66;
+  border: 1px white solid;
+  color: white;
+}
+
+.scan-bmi-btn .close-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #808080;
+  color: white;
+  border: 1px solid #ddd; /* Border for close button */
+}
+.archive-student-pic .jen {
+  position: relative;
+  top: 0;
+  right: 0;
+  height: 150px;
+  width: 150px;
+}
+
+.archive-student-pic {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+.student-info {
+  display: flex;
+  flex-direction: column;
+  /* background-color: pink; */
+  margin: 1vw 2vh;
+  column-gap: 20px;
+}
+.column-one,
+.column-two,
+.column-three {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+}
+
+.student-data-i,
+.student-data-ii,
+.student-data-iii,
+.student-data-iv,
+.student-data-v {
+  background-color: rgba(138, 138, 138, 0.2);
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: 100%;
+  min-width: 480px;
+}
+
+/* Styling for all dropdown select elements */
+select {
+  color: black;
+  background-color: #c0c2c2;
+  border: 2px solid #8a8a8a;
+  padding: 2px;
+  border-radius: 8px;
+  margin: 1vh 1vw;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #003163; /* Change border color when focused */
+  box-shadow: 0 0 5px rgba(0, 49, 99, 0.5); /* Add shadow on focus */
+}
+
+select option {
+  color: black; /* Text color of options */
+  background-color: white; /* Background color of options */
+}
+
+.modal-content {
+  background-color: #003163;
+  color: white;
+  padding: 20px;
+  border-radius: 24px;
+  height: fit-content;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: relative; /* For proper alignment */
+  margin: auto;
+  top: 50%; /* Center the modal vertically */
+  transform: translateY(-50%); /* Adjust vertical alignment */
+}
+
+.form input[type="text"] {
+  width: calc(100% - 20px); /* Full width minus padding */
+  padding: 7px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form label {
+  margin-right: 10px;
+}
+.create-account-btn {
+  display: flex; /* Align buttons horizontally */
+  justify-content: flex-end;
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px; /* Margin above the buttons */
+}
+
+.create-account-btn .save-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #00ab66;
+  border: 1px white solid;
+  color: white;
+}
+
+.create-account-btn .close-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #808080;
+  color: white;
+  border: 1px solid #ddd; /* Border for close button */
+}
+
+/* Modal overlay styles */
+.modal-overlay {
+  position: fixed; /* Overlay covers the whole screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(138, 138, 138, 0.2);
+  display: flex; /* Flex to center the modal */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Ensure overlay is above other content */
+}

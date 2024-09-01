@@ -1,0 +1,124 @@
+.schedule-page {
+  position: fixed;
+  margin: 2vh 2vw 2vw 26vh;
+  width: 86vw;
+  height: 90vh;
+}
+
+.schedule-page h1,
+.schedule-page h4 {
+  text-align: center;
+}
+
+.add-event,
+.save-edit,
+.delete-event,
+.cancel-edit {
+  color: white;
+  border: none;
+  background-color: #003163;
+  padding: 7px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.save-edit {
+  background-color: green;
+}
+.delete-event {
+  background-color: red;
+}
+.button-event {
+  margin-left: 20px;
+}
+.button-edit {
+  display: flex;
+  column-gap: 20px;
+}
+.calendar-title {
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+
+.react-datepicker-popper {
+  z-index: 3 !important; /* Set z-index higher than the calendar */
+}
+
+.rbc-calendar {
+  position: relative;
+  z-index: 1; /* Ensures calendar is below date picker popups */
+}
+.button-edit {
+  display: flex;
+  column-gap: 20px;
+  justify-content: center;
+}
+
+.edit-event-modal {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-60%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 104;
+}
+
+.custom-input {
+  width: 60%;
+  margin-right: 10px;
+}
+
+@media (max-width: 1600px) {
+  .schedule-page {
+    width: calc(100% - 270px);
+    margin-left: 250px;
+    margin-top: 10%;
+  }
+  .edit-event-modal {
+    width: calc(100% - 40%);
+    left: 70%;
+    transform: translateX(-60%);
+  }
+
+  .custom-input {
+    width: 35%;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .schedule-page {
+    width: calc(100% - 80px);
+    margin-left: 17%;
+    margin-top: 15%;
+  }
+
+  .calendar-title {
+    margin-left: 20%;
+  }
+
+  .schedule-page h1 {
+    margin-left: 30%;
+  }
+  .edit-event-modal {
+    width: calc(100% - 40%);
+    left: 65%;
+    transform: translateX(-60%);
+  }
+
+  .button-event {
+    margin-left: 20px;
+  }
+  .calendar-title {
+    display: grid;
+    justify-content: center;
+  }
+
+  .custom-input {
+    width: 100%;
+    margin-right: 10px;
+  }
+}

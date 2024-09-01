@@ -1,0 +1,154 @@
+.admin-inventory {
+  position: fixed;
+  margin: 2vh 2vw 2vw 26vh;
+  /* background-color: pink; */
+  width: 86vw;
+  height: 90vh;
+  overflow-y: auto;
+  max-height: fit-content;
+}
+
+.inventory-status {
+  width: 100%;
+  height: fit-content;
+  background-color: #c0c2c2;
+  border-radius: 20px;
+  padding: 10px;
+  text-align: center;
+}
+
+.inventory-management {
+  margin: 5% 0%;
+  background-color: #c0c2c2;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.back {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.back-button {
+  background-color: #003163;
+  width: fit-content;
+  padding: 4px 20px 0px 20px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.back-button::hover {
+  background-color: #c0c2c2;
+  border: none;
+  color: #003163;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2vh;
+}
+.status-label {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.stock-search {
+  /* background-color: azure; */
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 2vh 0vw;
+}
+
+.stock-search-input {
+  width: 600px;
+  padding: 2px;
+  margin-right: 0.5vw;
+  border: 2px solid #8a8a8a;
+  border-radius: 6px;
+  outline: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* Combine border into a single line */
+}
+
+/* Style table header */
+th {
+  border-bottom: 1px solid #ddd; /* Add border bottom for each header cell */
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style table rows */
+td {
+  border-bottom: 1px solid #ddd; /* Add border bottom for each data cell */
+  padding: 8px;
+}
+
+/* Style the last row of the table without bottom border */
+tr:last-child td {
+  border-bottom: none; /* Remove bottom border for the last row */
+}
+
+.modal-content {
+  background-color: #f8f8ff;
+  color: black;
+  padding: 20px;
+  border: none;
+  border-radius: 24px;
+  height: fit-content;
+  width: 500px;
+  position: relative;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: none;
+}
+
+.stock-btn {
+  display: flex; /* Align buttons horizontally */
+  justify-content: flex-end;
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px; /* Margin above the buttons */
+}
+
+.stock-modal input {
+  margin-left: 10px;
+}
+.stock-btn .add-stock-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #00ab66;
+  border: 1px white solid;
+  color: white;
+}
+
+.stock-btn .remove-stock-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #d22b2b;
+  border: 1px white solid;
+  color: white;
+}
+
+.stock-btn .close-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #808080;
+  color: white;
+  border: 1px solid #ddd; /* Border for close button */
+}
+
+.stock-modal h3,
+.stock-modal p {
+  text-align: center;
+  margin: 4px;
+}

@@ -1,0 +1,99 @@
+.nav {
+  z-index: 10;
+}
+
+.navbar-right {
+  z-index: 11;
+}
+.nav {
+  position: fixed;
+  display: flex;
+  top: 0;
+  /* left: 10%; */
+  width: 100%;
+  background: linear-gradient(to right, #003163, #13072e);
+  color: white;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+.nav ul {
+  display: flex;
+  list-style: none;
+  margin-left: 17%;
+  padding: 0;
+  width: 800px;
+  /* background-color: pink; */
+}
+
+.nav li {
+  position: relative; /* Position relative to enable absolute positioning of ::before */
+  white-space: nowrap; /* Prevents line break within the text */
+  margin-right: 20%;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.nav li::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px; /* Adjust this value to position the underline */
+  transform: translateX(-50%);
+  height: 4px;
+  width: 80px;
+  border-radius: 24px;
+  background-color: aliceblue;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.nav li.active::before {
+  opacity: 1;
+}
+
+.nav a,
+.navbar-right a {
+  text-decoration: none; /* Remove default underline */
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  margin-right: 20%;
+  display: inline-block; /* Ensures the hover area includes the text */
+}
+
+.navbar-right a {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.nav a:hover,
+.navbar-right a:hover {
+  color: gray;
+}
+
+/* Adjust navbar-right styles if necessary */
+.navbar-right {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 77%;
+  /* background-color: pink; */
+}
+
+.navbar-right ul {
+  display: flex;
+  list-style: none;
+  margin-left: 10%;
+  padding: 0;
+  width: 500px;
+}
+
+.navbar-right li {
+  position: relative;
+  white-space: nowrap;
+}
+
+.user-icon {
+  margin: 12px;
+  color: white;
+}

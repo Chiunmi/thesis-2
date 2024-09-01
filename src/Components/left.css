@@ -1,0 +1,83 @@
+.left {
+  display: flex;
+  z-index: 10;
+  background-color: #f8f8ff;
+  height: calc(100vh);
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 220px;
+  z-index: 12;
+}
+
+.sidebar-list {
+  margin: 140px 0px 0px 16px;
+  display: flex;
+  flex: 1;
+  flex-flow: column nowrap;
+  row-gap: 24px;
+}
+
+.logo {
+  position: fixed;
+  top: 20px;
+  left: 28px;
+  width: 150px;
+  height: 85px;
+  vertical-align: middle;
+  z-index: 15;
+}
+
+.sidebar-list li {
+  list-style-type: none;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sidebar-list li a {
+  padding: 16px;
+  color: black;
+  text-align: left;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  /* margin-top: -10px; */
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.sidebar-list li:hover,
+.sidebar-list li.active {
+  background-color: #003163;
+  border-radius: 26px;
+  /* margin-right: 20px;  */
+  width: 180px;
+  height: 50px;
+}
+
+.sidebar-list li:hover {
+  background-color: #003163;
+}
+
+.sidebar-list li:hover a,
+.sidebar-list li.active a {
+  color: white; /* Text color on hover and active */
+}
+
+.left-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none; /* Removes underline from link text */
+  color: white; /* Ensures link text color is white */
+  padding: 5px;
+}
+.left-icon {
+  margin-right: 10px;
+  margin-top: -6px;
+  vertical-align: middle;
+}
+
+.left-link:hover .left-icon {
+  color: white; /* Changes icon color on hover */
+}
