@@ -87,7 +87,8 @@
 
 .button-create,
 .button-manage,
-.button-bmi {
+.button-bmi,
+.edit-profile {
   background-color: #003163;
   border: 1px white solid;
   color: white;
@@ -104,15 +105,26 @@
 }
 .button-create:hover,
 .button-manage:hover,
-.button-bmi:hover {
-  background-color: #c0c2c2;
+.button-bmi:hover,
+.edit-profile:hover {
+  background-color: white;
   border: 1px solid #003163;
   color: #003163;
 }
 
-/* .container {
-  background-color: bisque;
-} */
+.edit-profile {
+  background-color: #00ab66;
+  margin-left: 2.5vw;
+}
+
+.button-bmi {
+  margin-right: 2.5vw;
+}
+.profile-btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 2vh 9vw;
+}
 
 .name-list {
   margin: 1vw 2vh;
@@ -158,10 +170,6 @@
   justify-content: space-between;
 }
 
-.button-bmi {
-  margin: 1vh 34vh;
-}
-
 .bmi-form {
   display: flex;
   flex-direction: column;
@@ -177,6 +185,7 @@
 .bmi-form input {
   width: calc(100% - 20px);
 }
+
 .scan-bmi-btn {
   display: flex;
   justify-content: space-around;
@@ -221,7 +230,8 @@
 }
 .column-one,
 .column-two,
-.column-three {
+.column-three,
+.column-four {
   display: flex;
   justify-content: space-between;
   column-gap: 20px;
@@ -231,7 +241,9 @@
 .student-data-ii,
 .student-data-iii,
 .student-data-iv,
-.student-data-v {
+.student-data-v,
+.student-data-vii,
+.student-data-viii {
   background-color: rgba(138, 138, 138, 0.2);
   padding: 20px;
   margin-top: 10px;
@@ -239,7 +251,29 @@
   width: 100%;
   min-width: 480px;
 }
+.student-data-vii,
+.student-data-viii {
+  background-color: #c0c2c2;
+}
 
+.add-assessment,
+.add-follow-up {
+  background-color: #003163;
+  width: 70px;
+  padding: 2px 20px;
+  border-radius: 10px;
+  border: 2px solid #003163;
+  color: white;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.add-assessment:hover,
+.add-follow-up:hover {
+  background-color: white;
+  border: 2px solid #003163;
+  color: #003163;
+}
 /* Styling for all dropdown select elements */
 select {
   color: black;
@@ -316,6 +350,27 @@ select option {
   border: 1px solid #ddd; /* Border for close button */
 }
 
+.x-ray {
+  display: flex;
+}
+.xray-upload-btn {
+  background-color: #003163;
+  border: 1px white solid;
+  color: white;
+  padding: 3px 15px;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.xray-upload-btn:hover {
+  background-color: white;
+  border: 1px solid #003163;
+  color: #003163;
+}
+
 /* Modal overlay styles */
 .modal-overlay {
   position: fixed; /* Overlay covers the whole screen */
@@ -328,4 +383,45 @@ select option {
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   z-index: 1000; /* Ensure overlay is above other content */
+}
+
+.table-style {
+  width: 100%;
+  border-collapse: collapse; /* Combine border into a single line */
+}
+
+/* Style table header */
+.table-style th {
+  border-bottom: 1px solid #ddd; /* Add border bottom for each header cell */
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style table rows */
+.table-style td {
+  border-bottom: 1px solid #ddd; /* Add border bottom for each data cell */
+  padding: 8px;
+}
+
+/* Style the last row of the table without bottom border */
+.table-style tr:last-child td {
+  border-bottom: none; /* Remove bottom border for the last row */
+}
+
+.edit-assessment-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #00ab66;
+  border: 1px white solid;
+  color: white;
+}
+
+.assessment-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.assessment-modal h3 {
+  text-align: center;
 }

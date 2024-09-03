@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
+import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
 import Chart from "./chart";
 
 import Modal from "react-modal";
@@ -237,6 +239,119 @@ function AdminProfile() {
 
   const [isCreateAccountModalOpen, setCreateAccountModalOpen] = useState(false);
   const [isScanBMIModalOpen, setScanBMIModalOpen] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(""); // 'add' or 'edit'
+  const [formData, setFormData] = useState({
+    date: "",
+    symptoms: "",
+    action: "",
+  });
+
+  const openAddModal = () => {
+    setModalType("add");
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (data) => {
+    setFormData(data);
+    setModalType("edit");
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setFormData({
+      date: "",
+      symptoms: "",
+      action: "",
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSave = () => {
+    if (modalType === "add") {
+      // Handle add logic
+    } else if (modalType === "edit") {
+      // Update the selected student's data or handle update logic
+    }
+    closeModal();
+  };
+
+  const isDetailsBlank = (item) => {
+    return !item.date && !item.symptoms && !item.action;
+  };
+
+  const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false);
+
+  const openEditProfileModal = () => {
+    setEditProfileModalOpen(true);
+  };
+
+  const closeEditProfileModal = () => {
+    setEditProfileModalOpen(false);
+  };
+
+  const assessmentData = [
+    {
+      id: 1,
+      date: "09/01/24",
+      symptoms: "Masakit ulo",
+      action: "Gave gatorade and itlog ",
+    },
+    {
+      id: 2,
+      date: "09/02/24",
+      symptoms: "Sore throat",
+      action: "Administered cough syrup",
+    },
+    {
+      id: 3,
+      date: "09/03/24",
+      symptoms: "Fever",
+      action: "Provided antipyretics",
+    },
+    {
+      id: 4,
+      date: "09/04/24",
+      symptoms: "Headache",
+      action: "Recommended rest and hydration",
+    },
+  ];
+
+  const followUpData = [
+    {
+      id: 1,
+      date: "09/01/24",
+      symptoms: "Masakit ulo",
+      action: "Followed up on treatment efficacy",
+    },
+    {
+      id: 2,
+      date: "09/02/24",
+      symptoms: "Sore throat",
+      action: "Checked for improvement",
+    },
+    {
+      id: 3,
+      date: "09/03/24",
+      symptoms: "Fever",
+      action: "Scheduled follow-up visit",
+    },
+    {
+      id: 4,
+      date: null,
+      symptoms: null,
+      action: null,
+    },
+  ];
 
   return (
     <div className="adminProfile">
@@ -483,12 +598,554 @@ function AdminProfile() {
                   <img src={jen} alt="" className="jen" />
                 </div>
 
-                <button
-                  onClick={() => setScanBMIModalOpen(true)}
-                  className="button-bmi"
-                >
-                  Scan BMI
-                </button>
+                <div className="profile-btn">
+                  <button
+                    className="edit-profile"
+                    onClick={openEditProfileModal}
+                  >
+                    Edit Profile
+                  </button>
+                  <Modal
+                    isOpen={isEditProfileModalOpen}
+                    onRequestClose={closeEditProfileModal}
+                    style={{
+                      overlay: {
+                        backgroundColor: "rgba(0, 0, 0, 0.6)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 1,
+                        boxShadow: "none",
+                      },
+                      content: {
+                        width: "700px",
+                        height: "auto",
+                        margin: "auto",
+                        marginTop: "5vh ",
+                        marginBottomBottom: "50vh",
+                        backgroundColor: "white",
+                        border: "none",
+                        paddingTop: "94vh",
+                      },
+                    }}
+                  >
+                    <div className="modal-content">
+                      <h3>Edit Profile</h3>
+                      <form>
+                        <h4>I. Personal Information</h4>
+                        <label>Full Name: </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={selectedStudent.name}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Gr./Section: </label>
+                        <input
+                          type="text"
+                          name="section"
+                          value={selectedStudent.section}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Age: </label>
+                        <input
+                          type="number"
+                          name="age"
+                          value={selectedStudent.age}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Civil Status: </label>
+                        <input
+                          type="text"
+                          name="civilstatus"
+                          value={selectedStudent.civilstatus}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Birthdate: </label>
+                        <input
+                          type="date"
+                          name="birthdate"
+                          value={selectedStudent.birthdate}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Address: </label>
+                        <input
+                          type="text"
+                          name="address"
+                          value={selectedStudent.address}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Tel. No.: </label>
+                        <input
+                          type="tel"
+                          name="telNum"
+                          value={selectedStudent.telNum}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Religion: </label>
+                        <input
+                          type="text"
+                          name="religion"
+                          value={selectedStudent.religion}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Guardian: </label>
+                        <input
+                          type="text"
+                          name="guardian"
+                          value={selectedStudent.guardian}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Guardian's Address: </label>
+                        <input
+                          type="text"
+                          name="guardianAddress"
+                          value={selectedStudent.guardianAddress}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Guardian's Number: </label>
+                        <input
+                          type="tel"
+                          name="guardianNum"
+                          value={selectedStudent.guardianNum}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Department: </label>
+                        <input
+                          type="text"
+                          name="department"
+                          value={selectedStudent.department}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <h4>II. Illnesses Involving Systems</h4>
+                        <label>Respiratory: </label>
+                        <input
+                          type="text"
+                          name="respiratory"
+                          value={selectedStudent.respiratory}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Digestive: </label>
+                        <input
+                          type="text"
+                          name="digestive"
+                          value={selectedStudent.digestive}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Nervous: </label>
+                        <input
+                          type="text"
+                          name="nervous"
+                          value={selectedStudent.nervous}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Excretory: </label>
+                        <input
+                          type="text"
+                          name="excretory"
+                          value={selectedStudent.excretory}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Endocrine: </label>
+                        <input
+                          type="text"
+                          name="endocrine"
+                          value={selectedStudent.endocrine}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Circulatory: </label>
+                        <input
+                          type="text"
+                          name="circulatory"
+                          value={selectedStudent.circulatory}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Skeletal: </label>
+                        <input
+                          type="text"
+                          name="skeletal"
+                          value={selectedStudent.skeletal}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Muscular: </label>
+                        <input
+                          type="text"
+                          name="muscular"
+                          value={selectedStudent.muscular}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Reproductive: </label>
+                        <input
+                          type="text"
+                          name="reproductive"
+                          value={selectedStudent.reproductive}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Lymphatic: </label>
+                        <input
+                          type="text"
+                          name="lymphatic"
+                          value={selectedStudent.lymphatic}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <h4>III. Habits and Allergies</h4>
+                        <label>Do you smoke?: </label>
+                        <input
+                          type="text"
+                          name="smoke"
+                          value={selectedStudent.smoke}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Do you drink?: </label>
+                        <input
+                          type="text"
+                          name="drink"
+                          value={selectedStudent.drink}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Allergy?: </label>
+                        <input
+                          type="text"
+                          name="allergy"
+                          value={selectedStudent.allergy}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>If so, specify: </label>
+                        <input
+                          type="text"
+                          name="specifyAllergy"
+                          value={selectedStudent.specifyAllergy}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <h4>IV. Physical Examinations</h4>
+                        <label>Eyes: </label>
+                        <input
+                          type="text"
+                          name="eyes"
+                          value={selectedStudent.eyes}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Ear: </label>
+                        <input
+                          type="text"
+                          name="ear"
+                          value={selectedStudent.ear}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Nose: </label>
+                        <input
+                          type="text"
+                          name="nose"
+                          value={selectedStudent.nose}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Throat: </label>
+                        <input
+                          type="text"
+                          name="throat"
+                          value={selectedStudent.throat}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Tonsils: </label>
+                        <input
+                          type="text"
+                          name="tonsils"
+                          value={selectedStudent.tonsils}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Teeth: </label>
+                        <input
+                          type="text"
+                          name="teeth"
+                          value={selectedStudent.teeth}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Tongue: </label>
+                        <input
+                          type="text"
+                          name="tongue"
+                          value={selectedStudent.tongue}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Neck: </label>
+                        <input
+                          type="text"
+                          name="neck"
+                          value={selectedStudent.neck}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Thyroids: </label>
+                        <input
+                          type="text"
+                          name="thyroids"
+                          value={selectedStudent.thyroids}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Cervical Glands: </label>
+                        <input
+                          type="text"
+                          name="cervicalGlands"
+                          value={selectedStudent.cervicalGlands}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <h4>V. Chest and Cardiovascular System</h4>
+                        <label>Chest: </label>
+                        <input
+                          type="text"
+                          name="chest"
+                          value={selectedStudent.chest}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Contour: </label>
+                        <input
+                          type="text"
+                          name="contour"
+                          value={selectedStudent.contour}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Heart: </label>
+                        <input
+                          type="text"
+                          name="heart"
+                          value={selectedStudent.heart}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Rate: </label>
+                        <input
+                          type="text"
+                          name="rate"
+                          value={selectedStudent.rate}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Rhythm: </label>
+                        <input
+                          type="text"
+                          name="rhythm"
+                          value={selectedStudent.rhythm}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>BP: </label>
+                        <input
+                          type="text"
+                          name="bp"
+                          value={selectedStudent.bp}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Height: </label>
+                        <input
+                          type="text"
+                          name="height"
+                          value={selectedStudent.height}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Weight: </label>
+                        <input
+                          type="text"
+                          name="weight"
+                          value={selectedStudent.weight}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>BMI: </label>
+                        <input
+                          type="text"
+                          name="bmi"
+                          value={selectedStudent.bmi}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Lungs: </label>
+                        <input
+                          type="text"
+                          name="lungs"
+                          value={selectedStudent.lungs}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <h4>VI. Abdomen</h4>
+                        <label>Abdomen: </label>
+                        <input
+                          type="text"
+                          name="abdomen"
+                          value={selectedStudent.abdomen}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Contour: </label>
+                        <input
+                          type="text"
+                          name="contour"
+                          value={selectedStudent.contour}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Liver: </label>
+                        <input
+                          type="text"
+                          name="liver"
+                          value={selectedStudent.liver}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Spleen: </label>
+                        <input
+                          type="text"
+                          name="spleen"
+                          value={selectedStudent.spleen}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Kidneys: </label>
+                        <input
+                          type="text"
+                          name="kidneys"
+                          value={selectedStudent.kidneys}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <h4>VII. Extremities</h4>
+                        <label>Extremities: </label>
+                        <input
+                          type="text"
+                          name="extremities"
+                          value={selectedStudent.extremities}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Upper Extremities: </label>
+                        <input
+                          type="text"
+                          name="upperExtremities"
+                          value={selectedStudent.upperExtremities}
+                          onChange={handleChange}
+                        />
+                        <br />
+
+                        <label>Lower Extremities: </label>
+                        <input
+                          type="text"
+                          name="lowerExtremities"
+                          value={selectedStudent.lowerExtremities}
+                          onChange={handleChange}
+                        />
+                        <br />
+                      </form>
+                      <div className="modal-buttons">
+                        <button
+                          className="close-btn"
+                          onClick={closeEditProfileModal}
+                        >
+                          Close
+                        </button>
+                        <button className="save-btn" onClick={handleSave}>
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </Modal>
+
+                  <button
+                    onClick={() => setScanBMIModalOpen(true)}
+                    className="button-bmi"
+                  >
+                    Scan BMI
+                  </button>
+                </div>
                 <Modal
                   isOpen={isScanBMIModalOpen}
                   onRequestClose={() => setScanBMIModalOpen(false)}
@@ -600,11 +1257,11 @@ function AdminProfile() {
                 <p>Heart : {selectedStudent.drink}</p>
                 <p>Rate : {selectedStudent.drink}</p>
                 <p>Rhythm : {selectedStudent.drink}</p>
-                <p>BP : {selectedStudent.specifyAllergy}</p>
-                <p>Height : {selectedStudent.allergy}</p>
-                <p>Weight : {selectedStudent.specifyAllergy}</p>
-                <p>BMI : {selectedStudent.specifyAllergy}</p>
-                <p>Lungs : {selectedStudent.specifyAllergy}</p>
+                <p>BP : {selectedStudent.bp}</p>
+                <p>Height : {selectedStudent.height}</p>
+                <p>Weight : {selectedStudent.weight}</p>
+                <p>BMI : {selectedStudent.bmi}</p>
+                <p>Lungs : {selectedStudent.lungs}</p>
               </div>
 
               <div className="student-data-iv">
@@ -617,16 +1274,22 @@ function AdminProfile() {
                 <p>Kidneys : {selectedStudent.drink}</p>
                 <br />
                 <h4> VII. </h4>
-                <p>Extremities : {selectedStudent.specifyAllergy}</p>
-                <p>Upper : {selectedStudent.allergy}</p>
-                <p>Lower : {selectedStudent.specifyAllergy}</p>
+                <p>Extremities : {selectedStudent.extremities}</p>
+                <p>Upper : {selectedStudent.upperExtremities}</p>
+                <p>Lower : {selectedStudent.lowerExtremities}</p>
               </div>
             </div>
             <h3>Laboratory Examination</h3>
             <div className="column-three">
               <div className="student-data-v">
                 <h4> VI. </h4>
-                <h4> CHEST X-RAY </h4>
+                <div className="x-ray">
+                  <h4> CHEST X-RAY </h4>
+                  <button className="xray-upload-btn">
+                    {" "}
+                    Upload Chest X-RAY
+                  </button>
+                </div>
                 <br />
                 <br />
                 <br />
@@ -639,6 +1302,154 @@ function AdminProfile() {
                 <br />
                 <p> Others: (If indicated)</p>
               </div>
+            </div>
+
+            <div className="column-four">
+              <div className="student-data-vii">
+                <button onClick={openAddModal} className="add-assessment">
+                  Add
+                </button>
+
+                <h3>Assessment</h3>
+                <table className="table-style">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Symptoms/Complaints</th>
+                      <th>Action</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {assessmentData.map((item) => (
+                      <tr key={item.id}>
+                        <td>{item.date}</td>
+                        <td>{item.symptoms}</td>
+                        <td>{item.action}</td>
+                        <td>
+                          {isDetailsBlank(item) ? (
+                            <PostAddRoundedIcon
+                              style={{ color: "blue", cursor: "pointer" }}
+                              onClick={() => openEditModal(item)}
+                            />
+                          ) : (
+                            <DriveFileRenameOutlineRoundedIcon
+                              style={{ color: "green", cursor: "pointer" }}
+                              onClick={() => openEditModal(item)}
+                            />
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="student-data-viii">
+                <br /> <h3>Follow Up</h3>
+                <table className="table-style">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Symptoms/Complaints</th>
+                      <th>Action</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {followUpData.map((item) => (
+                      <tr key={item.id}>
+                        <td>{item.date}</td>
+                        <td>{item.symptoms}</td>
+                        <td>{item.action}</td>
+                        <td>
+                          {isDetailsBlank(item) ? (
+                            <PostAddRoundedIcon
+                              style={{ color: "blue", cursor: "pointer" }}
+                              onClick={() => openEditModal(item)}
+                            />
+                          ) : (
+                            <DriveFileRenameOutlineRoundedIcon
+                              style={{ color: "green", cursor: "pointer" }}
+                              onClick={() => openEditModal(item)}
+                            />
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                style={{
+                  overlay: {
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 1,
+                    boxShadow: "none",
+                  },
+                  content: {
+                    width: "700px",
+                    height: "300px",
+                    margin: "auto",
+                    borderRadius: "24px",
+                    border: "none",
+                    backgroundColor: "#f8f8ff",
+                    color: "black",
+                  },
+                }}
+              >
+                <div className="assessment-content">
+                  <div className="assessment-modal">
+                    <h3>
+                      {modalType === "add"
+                        ? "New Assessment"
+                        : "Edit Assessment"}
+                    </h3>
+                    <label>Date:</label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                    />
+                    <label>Symptoms/Complaints:</label>
+                    <input
+                      type="text"
+                      name="symptoms"
+                      value={formData.symptoms}
+                      onChange={handleChange}
+                    />
+                    <label>Actions:</label>
+                    <input
+                      type="text"
+                      name="action"
+                      value={formData.action}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="stock-btn">
+                    <button className="close-btn" onClick={closeModal}>
+                      Close
+                    </button>
+                    <button
+                      className={
+                        modalType === "add"
+                          ? "add-stock-btn"
+                          : "edit-assessment-btn"
+                      }
+                      onClick={handleSave}
+                    >
+                      {modalType === "add" ? "Add" : "Save"}
+                    </button>
+                  </div>
+                </div>
+              </Modal>
             </div>
             <div className="archive-staff">
               Last edited by: (staff name) <br />
