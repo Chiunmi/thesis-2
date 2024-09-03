@@ -150,55 +150,87 @@ const studentData = {
   },
   College: {
     "1st Year": {
-      "Computer Science": {
-        "CS-101": [
-          {
-            name: "Ahehi, Lobarn A.",
-            section: "CS-101",
-            age: 18,
-            birthdate: "2005-05-12",
-          },
-          {
-            name: "Bdjgd Loejd C.",
-            section: "CS-101",
-            age: 18,
-            birthdate: "2005-07-21",
-          },
-        ],
-        "CS-102": [
-          {
-            name: "Csjfjds Opsdfkdf S.",
-            section: "CS-102",
-            age: 18,
-            birthdate: "2005-09-14",
-          },
-        ],
+      "College of Informatics": {
+        "Computer Science": {
+          "CS-101": [
+            {
+              name: "Ahehi, Lobarn A.",
+              section: "CS-101",
+              age: 18,
+              birthdate: "2005-05-12",
+            },
+            {
+              name: "Bdjgd Loejd C.",
+              section: "CS-101",
+              age: 18,
+              birthdate: "2005-07-21",
+            },
+          ],
+          "CS-102": [
+            {
+              name: "Csjfjds Opsdfkdf S.",
+              section: "CS-102",
+              age: 18,
+              birthdate: "2005-09-14",
+            },
+          ],
+        },
+        "Information Technology": {
+          "IT-101": [
+            {
+              name: "Doe, John",
+              section: "IT-101",
+              age: 18,
+              birthdate: "2005-11-30",
+            },
+          ],
+        },
+      },
+      "College of Education": {
+        "Education Program": {
+          "ED-101": [
+            {
+              name: "Alex, Jane D.",
+              section: "ED-101",
+              age: 18,
+              birthdate: "2005-02-14",
+            },
+          ],
+        },
       },
     },
     "2nd Year": {
-      "Computer Science": {
-        "CS-101": [
-          {
-            name: "Ahehi, Lobarn A.",
-            section: "CS-101",
-            age: 18,
-            birthdate: "2005-05-12",
-          },
-          {
-            name: "Bdjgd Loejd C.",
-            section: "CS-101",
-            age: 18,
-            birthdate: "2005-07-21",
-          },
-        ],
-        "CS-102": [
-          {
-            name: "Csjfjds Opsdfkdf S.",
-            section: "CS-102",
-            age: 18,
-            birthdate: "2005-09-14",
-          },
-        ],
+      "College of Informatics": {
+        "Computer Science": {
+          "CS-201": [
+            {
+              name: "Emily Watson",
+              section: "CS-201",
+              age: 19,
+              birthdate: "2004-04-13",
+            },
+          ],
+          "CS-202": [
+            {
+              name: "William Harris",
+              section: "CS-202",
+              age: 19,
+              birthdate: "2004-08-24",
+            },
+          ],
+        },
+      },
+      "College of Business": {
+        "Business Administration": {
+          "BA-201": [
+            {
+              name: "George Lucas",
+              section: "BA-201",
+              age: 19,
+              birthdate: "2004-05-09",
+            },
+          ],
+        },
       },
     },
   },
@@ -207,13 +239,19 @@ const studentData = {
 function AdminProfile() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedProgram, setSelectedProgram] = useState("");
   const [selectedStrandOrProgram, setSelectedStrandOrProgram] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
   const [selectedStudent, setSelectedStudent] = useState(null);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    setSelectedYear("");
     setSelectedGrade("");
+    setSelectedDepartment("");
+    setSelectedProgram("");
     setSelectedStrandOrProgram("");
     setSelectedSection("");
     setSelectedStudent(null);
@@ -222,6 +260,27 @@ function AdminProfile() {
   const handleGradeChange = (grade) => {
     setSelectedGrade(grade);
     setSelectedStrandOrProgram("");
+    setSelectedSection("");
+    setSelectedStudent(null);
+  };
+
+  const handleYearChange = (year) => {
+    setSelectedYear(year);
+    setSelectedDepartment("");
+    setSelectedProgram("");
+    setSelectedSection("");
+    setSelectedStudent(null);
+  };
+
+  const handleDepartmentChange = (department) => {
+    setSelectedDepartment(department);
+    setSelectedProgram("");
+    setSelectedSection("");
+    setSelectedStudent(null);
+  };
+
+  const handleProgramChange = (program) => {
+    setSelectedProgram(program);
     setSelectedSection("");
     setSelectedStudent(null);
   };
@@ -353,6 +412,73 @@ function AdminProfile() {
     },
   ];
 
+  const [vaccineData, setVaccineData] = useState([
+    {
+      id: 1,
+      date: "06/02/24",
+      vaccine: "Anti-rabies",
+      remarks: "Sheeshhhh",
+    },
+    {
+      id: 2,
+      date: "07/15/24",
+      vaccine: "COVID-19",
+      remarks: "Booster dose",
+    },
+  ]);
+
+  const [isVaccineModalOpen, setIsVaccineModalOpen] = useState(false);
+  const [vaccineFormData, setVaccineFormData] = useState({
+    id: null,
+    date: "",
+    vaccine: "",
+    remarks: "",
+  });
+  const [vaccineModalType, setVaccineModalType] = useState("add");
+
+  // Modal state functions
+  const openVaccineModal = (type, vaccine) => {
+    setVaccineModalType(type);
+    setVaccineFormData(
+      vaccine
+        ? { ...vaccine }
+        : { id: null, date: "", vaccine: "", remarks: "" }
+    );
+    setIsVaccineModalOpen(true);
+  };
+
+  const closeVaccineModal = () => {
+    setIsVaccineModalOpen(false);
+  };
+
+  // Handle form data change
+  const handleVaccineChange = (e) => {
+    const { name, value } = e.target;
+    setVaccineFormData({
+      ...vaccineFormData,
+      [name]: value,
+    });
+  };
+
+  // Save function for adding or editing a vaccine
+  const handleVaccineSave = () => {
+    if (vaccineModalType === "add") {
+      // Add new vaccine
+      setVaccineData([
+        ...vaccineData,
+        { ...vaccineFormData, id: vaccineData.length + 1 },
+      ]);
+    } else {
+      // Edit existing vaccine
+      setVaccineData(
+        vaccineData.map((vaccine) =>
+          vaccine.id === vaccineFormData.id ? vaccineFormData : vaccine
+        )
+      );
+    }
+    closeVaccineModal();
+  };
+
   return (
     <div className="adminProfile">
       <span className="healthRecord"> Health Record </span>
@@ -400,6 +526,7 @@ function AdminProfile() {
           <Modal
             isOpen={isCreateAccountModalOpen}
             onRequestClose={() => setCreateAccountModalOpen(false)}
+            className="pisting-yawa"
             style={{
               overlay: {
                 backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -410,21 +537,25 @@ function AdminProfile() {
                 boxShadow: "none",
               },
               content: {
-                width: "600px",
-                height: "900px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "fit-content",
+                height: "90vh",
                 margin: "auto",
-                marginTop: "0.3vh",
+                marginTop: "3vh",
                 backgroundColor: "rgba(0, 0, 0, 0)",
                 border: "none",
               },
             }}
           >
-            <div className="modal-content">
+            <div className="create-account-modal">
               <h3>Create Account</h3>
               <div className="form">
                 <input type="text" placeholder="Last Name" />
                 <input type="text" placeholder="First Name" />
-                <input type="number" placeholder="Age" />
+                <label> Age: </label>
+                <input type="number" />
                 <select>
                   <option value="" disabled selected>
                     Sex
@@ -480,13 +611,15 @@ function AdminProfile() {
           <option value="College">College</option>
         </select>
 
-        {/* Grade Dropdown */}
-        {selectedCategory && (
+        {/* Grade/Year Dropdown (Only for JHS and SHS) */}
+        {selectedCategory && selectedCategory !== "College" && (
           <select
             onChange={(e) => handleGradeChange(e.target.value)}
             value={selectedGrade}
           >
-            <option value="">Select Grade</option>
+            <option value="">
+              Select {selectedCategory === "College" ? "Year" : "Grade"}
+            </option>
             {Object.keys(studentData[selectedCategory] || {}).map((grade) => (
               <option key={grade} value={grade}>
                 {grade}
@@ -495,15 +628,67 @@ function AdminProfile() {
           </select>
         )}
 
-        {/* Section Dropdown for JHS */}
-        {selectedGrade && selectedCategory === "JHS" && (
+        {/* Year Level Dropdown (Only for College) */}
+        {selectedCategory === "College" && (
+          <select
+            onChange={(e) => handleYearChange(e.target.value)}
+            value={selectedYear}
+          >
+            <option value="">Select Year Level</option>
+            {Object.keys(studentData[selectedCategory] || {}).map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        )}
+
+        {/* Department Dropdown */}
+        {selectedYear && (
+          <select
+            onChange={(e) => handleDepartmentChange(e.target.value)}
+            value={selectedDepartment}
+          >
+            <option value="">Select Department</option>
+            {Object.keys(studentData[selectedCategory][selectedYear] || {}).map(
+              (department) => (
+                <option key={department} value={department}>
+                  {department}
+                </option>
+              )
+            )}
+          </select>
+        )}
+
+        {/* Program Dropdown */}
+        {selectedDepartment && (
+          <select
+            onChange={(e) => handleProgramChange(e.target.value)}
+            value={selectedProgram}
+          >
+            <option value="">Select Program</option>
+            {Object.keys(
+              studentData[selectedCategory][selectedYear][selectedDepartment] ||
+                {}
+            ).map((program) => (
+              <option key={program} value={program}>
+                {program}
+              </option>
+            ))}
+          </select>
+        )}
+
+        {/* Section Dropdown */}
+        {selectedProgram && (
           <select
             onChange={(e) => handleSectionChange(e.target.value)}
             value={selectedSection}
           >
             <option value="">Select Section</option>
             {Object.keys(
-              studentData[selectedCategory][selectedGrade] || {}
+              studentData[selectedCategory][selectedYear][selectedDepartment][
+                selectedProgram
+              ] || {}
             ).map((section) => (
               <option key={section} value={section}>
                 {section}
@@ -512,57 +697,75 @@ function AdminProfile() {
           </select>
         )}
 
-        {/* Strand/Program Dropdown for SHS and College */}
-        {selectedGrade &&
-          (selectedCategory === "SHS" || selectedCategory === "College") && (
-            <select
-              onChange={(e) => handleStrandOrProgramChange(e.target.value)}
-              value={selectedStrandOrProgram}
-            >
-              <option value="">Select Strand/Program</option>
-              {Object.keys(
-                studentData[selectedCategory][selectedGrade] || {}
-              ).map((strandOrProgram) => (
-                <option key={strandOrProgram} value={strandOrProgram}>
-                  {strandOrProgram}
-                </option>
-              ))}
-            </select>
-          )}
+        {/* JHS Sections Dropdown */}
+        {selectedGrade && selectedCategory === "JHS" && (
+          <select
+            onChange={(e) => handleSectionChange(e.target.value)}
+            value={selectedSection}
+          >
+            <option value="">Select Section</option>
+            {Object.keys(
+              studentData[selectedCategory]?.[selectedGrade] || {}
+            ).map((section) => (
+              <option key={section} value={section}>
+                {section}
+              </option>
+            ))}
+          </select>
+        )}
 
-        {/* Section Dropdown for SHS and College */}
-        {selectedStrandOrProgram &&
-          (selectedCategory === "SHS" || selectedCategory === "College") && (
-            <select
-              onChange={(e) => handleSectionChange(e.target.value)}
-              value={selectedSection}
-            >
-              <option value="">Select Section</option>
-              {Object.keys(
-                studentData[selectedCategory][selectedGrade][
-                  selectedStrandOrProgram
-                ] || {}
-              ).map((section) => (
-                <option key={section} value={section}>
-                  {section}
-                </option>
-              ))}
-            </select>
-          )}
+        {/* SHS Strand/Program Dropdown */}
+        {selectedGrade && selectedCategory === "SHS" && (
+          <select
+            onChange={(e) => handleStrandOrProgramChange(e.target.value)}
+            value={selectedStrandOrProgram}
+          >
+            <option value="">Select Strand</option>
+            {Object.keys(
+              studentData[selectedCategory]?.[selectedGrade] || {}
+            ).map((strand) => (
+              <option key={strand} value={strand}>
+                {strand}
+              </option>
+            ))}
+          </select>
+        )}
+
+        {/* SHS Sections Dropdown */}
+        {selectedStrandOrProgram && selectedCategory === "SHS" && (
+          <select
+            onChange={(e) => handleSectionChange(e.target.value)}
+            value={selectedSection}
+          >
+            <option value="">Select Section</option>
+            {Object.keys(
+              studentData[selectedCategory]?.[selectedGrade]?.[
+                selectedStrandOrProgram
+              ] || {}
+            ).map((section) => (
+              <option key={section} value={section}>
+                {section}
+              </option>
+            ))}
+          </select>
+        )}
 
         {/* List of Students */}
         {selectedSection && !selectedStudent && (
           <div className="name-list">
             <h3>{selectedSection}</h3>
             <ul>
-              {(
-                studentData[selectedCategory]?.[selectedGrade]?.[
-                  selectedStrandOrProgram
-                ]?.[selectedSection] ||
-                studentData[selectedCategory]?.[selectedGrade]?.[
-                  selectedSection
-                ] ||
-                []
+              {(selectedCategory === "JHS"
+                ? studentData[selectedCategory]?.[selectedGrade]?.[
+                    selectedSection
+                  ]
+                : selectedCategory === "SHS"
+                ? studentData[selectedCategory]?.[selectedGrade]?.[
+                    selectedStrandOrProgram
+                  ]?.[selectedSection]
+                : studentData[selectedCategory]?.[selectedYear]?.[
+                    selectedDepartment
+                  ]?.[selectedProgram]?.[selectedSection]
               ).map((student) => (
                 <li
                   className="student-name"
@@ -618,18 +821,22 @@ function AdminProfile() {
                         boxShadow: "none",
                       },
                       content: {
-                        width: "700px",
-                        height: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "50vw",
+                        height: "10vh",
+                        maxHeight: "fit-content",
                         margin: "auto",
-                        marginTop: "5vh ",
-                        marginBottomBottom: "50vh",
-                        backgroundColor: "white",
+                        marginTop: "5vh",
+                        paddingTop: "265vh",
+                        backgroundColor: "rgba(0, 0, 0, 0)",
                         border: "none",
-                        paddingTop: "94vh",
+                        overflowY: "auto",
                       },
                     }}
                   >
-                    <div className="modal-content">
+                    <div className="edit-profile-modal">
                       <h3>Edit Profile</h3>
                       <form>
                         <h4>I. Personal Information</h4>
@@ -641,7 +848,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Gr./Section: </label>
                         <input
                           type="text"
@@ -650,7 +856,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Age: </label>
                         <input
                           type="number"
@@ -659,7 +864,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Civil Status: </label>
                         <input
                           type="text"
@@ -668,7 +872,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Birthdate: </label>
                         <input
                           type="date"
@@ -677,7 +880,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Address: </label>
                         <input
                           type="text"
@@ -686,7 +888,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Tel. No.: </label>
                         <input
                           type="tel"
@@ -695,7 +896,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Religion: </label>
                         <input
                           type="text"
@@ -704,7 +904,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Guardian: </label>
                         <input
                           type="text"
@@ -713,7 +912,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Guardian's Address: </label>
                         <input
                           type="text"
@@ -722,7 +920,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Guardian's Number: </label>
                         <input
                           type="tel"
@@ -731,7 +928,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Department: </label>
                         <input
                           type="text"
@@ -740,7 +936,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <h4>II. Illnesses Involving Systems</h4>
                         <label>Respiratory: </label>
                         <input
@@ -750,7 +945,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Digestive: </label>
                         <input
                           type="text"
@@ -759,7 +953,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Nervous: </label>
                         <input
                           type="text"
@@ -768,7 +961,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Excretory: </label>
                         <input
                           type="text"
@@ -777,7 +969,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Endocrine: </label>
                         <input
                           type="text"
@@ -786,7 +977,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Circulatory: </label>
                         <input
                           type="text"
@@ -795,7 +985,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Skeletal: </label>
                         <input
                           type="text"
@@ -804,7 +993,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Muscular: </label>
                         <input
                           type="text"
@@ -813,7 +1001,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Reproductive: </label>
                         <input
                           type="text"
@@ -822,7 +1009,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Lymphatic: </label>
                         <input
                           type="text"
@@ -831,26 +1017,43 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <h4>III. Habits and Allergies</h4>
                         <label>Do you smoke?: </label>
                         <input
-                          type="text"
+                          type="radio"
                           name="smoke"
-                          value={selectedStudent.smoke}
+                          value="Yes"
+                          checked={selectedStudent.smoke === "Yes"}
                           onChange={handleChange}
-                        />
+                        />{" "}
+                        Yes
+                        <input
+                          type="radio"
+                          name="smoke"
+                          value="No"
+                          checked={selectedStudent.smoke === "No"}
+                          onChange={handleChange}
+                        />{" "}
+                        No
                         <br />
-
                         <label>Do you drink?: </label>
                         <input
-                          type="text"
+                          type="radio"
                           name="drink"
-                          value={selectedStudent.drink}
+                          value="Yes"
+                          checked={selectedStudent.drink === "Yes"}
                           onChange={handleChange}
-                        />
+                        />{" "}
+                        Yes
+                        <input
+                          type="radio"
+                          name="drink"
+                          value="No"
+                          checked={selectedStudent.drink === "No"}
+                          onChange={handleChange}
+                        />{" "}
+                        No
                         <br />
-
                         <label>Allergy?: </label>
                         <input
                           type="text"
@@ -859,7 +1062,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>If so, specify: </label>
                         <input
                           type="text"
@@ -868,7 +1070,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <h4>IV. Physical Examinations</h4>
                         <label>Eyes: </label>
                         <input
@@ -878,7 +1079,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Ear: </label>
                         <input
                           type="text"
@@ -887,7 +1087,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Nose: </label>
                         <input
                           type="text"
@@ -896,7 +1095,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Throat: </label>
                         <input
                           type="text"
@@ -905,7 +1103,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Tonsils: </label>
                         <input
                           type="text"
@@ -914,7 +1111,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Teeth: </label>
                         <input
                           type="text"
@@ -923,7 +1119,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Tongue: </label>
                         <input
                           type="text"
@@ -932,7 +1127,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Neck: </label>
                         <input
                           type="text"
@@ -941,7 +1135,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Thyroids: </label>
                         <input
                           type="text"
@@ -950,7 +1143,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Cervical Glands: </label>
                         <input
                           type="text"
@@ -959,7 +1151,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <h4>V. Chest and Cardiovascular System</h4>
                         <label>Chest: </label>
                         <input
@@ -969,7 +1160,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Contour: </label>
                         <input
                           type="text"
@@ -978,7 +1168,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Heart: </label>
                         <input
                           type="text"
@@ -987,7 +1176,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Rate: </label>
                         <input
                           type="text"
@@ -996,7 +1184,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Rhythm: </label>
                         <input
                           type="text"
@@ -1005,7 +1192,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>BP: </label>
                         <input
                           type="text"
@@ -1014,7 +1200,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Height: </label>
                         <input
                           type="text"
@@ -1023,7 +1208,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Weight: </label>
                         <input
                           type="text"
@@ -1032,7 +1216,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>BMI: </label>
                         <input
                           type="text"
@@ -1041,7 +1224,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Lungs: </label>
                         <input
                           type="text"
@@ -1050,7 +1232,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <h4>VI. Abdomen</h4>
                         <label>Abdomen: </label>
                         <input
@@ -1060,7 +1241,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Contour: </label>
                         <input
                           type="text"
@@ -1069,7 +1249,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Liver: </label>
                         <input
                           type="text"
@@ -1078,7 +1257,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Spleen: </label>
                         <input
                           type="text"
@@ -1087,7 +1265,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Kidneys: </label>
                         <input
                           type="text"
@@ -1096,7 +1273,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <h4>VII. Extremities</h4>
                         <label>Extremities: </label>
                         <input
@@ -1106,7 +1282,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Upper Extremities: </label>
                         <input
                           type="text"
@@ -1115,7 +1290,6 @@ function AdminProfile() {
                           onChange={handleChange}
                         />
                         <br />
-
                         <label>Lower Extremities: </label>
                         <input
                           type="text"
@@ -1125,7 +1299,7 @@ function AdminProfile() {
                         />
                         <br />
                       </form>
-                      <div className="modal-buttons">
+                      <div className="edit-account-btn">
                         <button
                           className="close-btn"
                           onClick={closeEditProfileModal}
@@ -1169,7 +1343,7 @@ function AdminProfile() {
                     },
                   }}
                 >
-                  <div className="modal-content">
+                  <div className="scan-bmi-modal">
                     <h3>Scan BMI</h3>
                     <div className="bmi-form">
                       <label>
@@ -1451,7 +1625,120 @@ function AdminProfile() {
                 </div>
               </Modal>
             </div>
-            <div className="archive-staff">
+            <div className="column-five">
+              <div className="student-data-ix">
+                <button
+                  className="add-vaccine-btn"
+                  onClick={() => openVaccineModal("add")}
+                >
+                  Add
+                </button>
+                <h3>Immunizations Administered</h3>
+                <table className="vaccine-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Vaccine</th>
+                      <th>Remarks</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vaccineData.map((item) => (
+                      <tr key={item.id}>
+                        <td>{item.date}</td>
+                        <td>{item.vaccine}</td>
+                        <td>{item.remarks}</td>
+                        <td>
+                          <button
+                            className="edit-vaccine-btn"
+                            onClick={() => openVaccineModal("edit", item)}
+                          >
+                            <DriveFileRenameOutlineRoundedIcon
+                              style={{ color: "green", cursor: "pointer" }}
+                            />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <Modal
+                  isOpen={isVaccineModalOpen}
+                  onRequestClose={closeVaccineModal}
+                  style={{
+                    overlay: {
+                      backgroundColor: "rgba(0, 0, 0, 0.3)",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      zIndex: 1,
+                      boxShadow: "none",
+                    },
+                    content: {
+                      width: "700px",
+                      height: "300px",
+                      margin: "auto",
+                      borderRadius: "24px",
+                      border: "none",
+                      backgroundColor: "#f8f8ff",
+                      color: "black",
+                    },
+                  }}
+                >
+                  <div className="vaccine-content">
+                    <div className="vaccine-modal">
+                      <h3>
+                        {vaccineModalType === "add"
+                          ? "Add Vaccine"
+                          : "Edit Vaccine"}
+                      </h3>
+                      <label>Date:</label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={vaccineFormData.date}
+                        onChange={handleVaccineChange}
+                      />
+                      <label>Vaccine:</label>
+                      <input
+                        type="text"
+                        name="vaccine"
+                        value={vaccineFormData.vaccine}
+                        onChange={handleVaccineChange}
+                      />
+                      <label>Remarks:</label>
+                      <input
+                        type="text"
+                        name="remarks"
+                        value={vaccineFormData.remarks}
+                        onChange={handleVaccineChange}
+                      />
+                    </div>
+                    <div className="vaccine-btn">
+                      <button className="close-btn" onClick={closeVaccineModal}>
+                        Close
+                      </button>
+                      <button
+                        className={
+                          vaccineModalType === "add"
+                            ? "save-vaccine-btn"
+                            : "edit-vaccine-btn"
+                        }
+                        onClick={handleVaccineSave}
+                      >
+                        {vaccineModalType === "add" ? "Add" : "Save"}
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+              </div>
+            </div>
+
+            <div
+              className="archive-staff"
+              style={{ fontSize: "14px", margin: "1vw" }}
+            >
               Last edited by: (staff name) <br />
               Time stamp: Mar 16 08:12:04
             </div>

@@ -231,7 +231,8 @@
 .column-one,
 .column-two,
 .column-three,
-.column-four {
+.column-four,
+.column-five {
   display: flex;
   justify-content: space-between;
   column-gap: 20px;
@@ -243,7 +244,8 @@
 .student-data-iv,
 .student-data-v,
 .student-data-vii,
-.student-data-viii {
+.student-data-viii,
+.student-data-ix {
   background-color: rgba(138, 138, 138, 0.2);
   padding: 20px;
   margin-top: 10px;
@@ -252,12 +254,13 @@
   min-width: 480px;
 }
 .student-data-vii,
-.student-data-viii {
+.student-data-viii,
+.student-data-ix {
   background-color: #c0c2c2;
 }
 
 .add-assessment,
-.add-follow-up {
+.add-vaccine-btn {
   background-color: #003163;
   width: 70px;
   padding: 2px 20px;
@@ -269,7 +272,7 @@
 }
 
 .add-assessment:hover,
-.add-follow-up:hover {
+.add-vaccine-btn:hover {
   background-color: white;
   border: 2px solid #003163;
   color: #003163;
@@ -297,14 +300,14 @@ select option {
   background-color: white; /* Background color of options */
 }
 
-.modal-content {
-  background-color: #003163;
+.create-account-modal {
+  background-color: #f8f8ff;
   color: white;
   padding: 20px;
   border-radius: 24px;
-  height: fit-content;
-  width: 500px;
-  max-width: 90%;
+  height: 80vh;
+  width: 30vw;
+  max-width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   position: relative; /* For proper alignment */
   margin: auto;
@@ -316,7 +319,7 @@ select option {
   width: calc(100% - 20px); /* Full width minus padding */
   padding: 7px;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
@@ -324,15 +327,22 @@ select option {
 
 .form label {
   margin-right: 10px;
+  color: gray;
+  font-size: 15px;
 }
-.create-account-btn {
+.create-account-btn,
+.edit-account-btn,
+.vaccine-btn {
   display: flex; /* Align buttons horizontally */
   justify-content: flex-end;
   gap: 20px; /* Space between buttons */
   margin-top: 20px; /* Margin above the buttons */
 }
 
-.create-account-btn .save-btn {
+.create-account-btn .save-btn,
+.edit-account-btn .save-btn,
+.vaccine-btn .save-vaccine-btn,
+.vaccine-btn .edit-vaccine-btn {
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
@@ -341,13 +351,81 @@ select option {
   color: white;
 }
 
-.create-account-btn .close-btn {
+.create-account-btn .close-btn,
+.edit-account-btn .close-btn,
+.vaccine-btn .close-btn {
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
   background-color: #808080;
   color: white;
   border: 1px solid #ddd; /* Border for close button */
+}
+.create-account-modal h3 {
+  text-align: center;
+  color: #003163;
+}
+
+.scan-bmi-modal {
+  background-color: #f8f8ff;
+  color: black;
+  padding: 20px;
+  border-radius: 24px;
+  height: fit-content;
+  /* max-height: 100%; */
+  width: 400vw;
+  max-width: 95%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative; /* For proper alignment */
+  margin: auto;
+  top: 40%; /* Center the modal vertically */
+  transform: translateY(-50%);
+  overflow-y: hidden;
+}
+body.no-scroll {
+  overflow: hidden; /* Hides scrollbar when modal is open */
+}
+
+.edit-profile-modal h3 {
+  text-align: center;
+}
+.edit-profile-modal {
+  background-color: #f8f8ff;
+  color: black;
+  padding: 20px;
+  border-radius: 24px;
+  height: fit-content;
+  /* max-height: 100%; */
+  width: 400vw;
+  max-width: 95%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative; /* For proper alignment */
+  margin: auto;
+  top: 40%; /* Center the modal vertically */
+  transform: translateY(-50%);
+  overflow-y: hidden;
+}
+
+.edit-profile-modal input[type="text"] {
+  width: calc(100% - 20px); /* Full width minus padding */
+  padding: 7px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.edit-profile-modal label {
+  margin-right: 10px;
+}
+
+.edit-profile-modal input[type="radio"] {
+  accent-color: #007bff; /* Changes the color of the radio button */
+  width: 15px;
+  height: 15px;
+  margin-left: 0.2vw;
+  margin-top: 1vh;
 }
 
 .x-ray {
@@ -417,11 +495,13 @@ select option {
   color: white;
 }
 
-.assessment-modal {
+.assessment-modal,
+.vaccine-modal {
   display: flex;
   flex-direction: column;
 }
 
-.assessment-modal h3 {
+.assessment-modal h3,
+.vaccine-modal h3 {
   text-align: center;
 }
