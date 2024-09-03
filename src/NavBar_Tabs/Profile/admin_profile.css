@@ -12,18 +12,77 @@
 .adminProfile::-webkit-scrollbar {
   display: none;
 }
-.buttons {
-  /* background-color: aquamarine; */
+.chart-name {
+  text-align: center;
+  margin: 2vh 2vw;
+}
+.back-to-admin {
   display: flex;
-  justify-content: space-between;
+  width: 10vw;
+  background-color: #003163;
+  padding: 5px 15px;
+  border-radius: 24px;
+  cursor: pointer;
+  border: 1px #003163 solid;
+  margin-top: 2vh;
 }
 
-.dept,
+.back-to-admin:hover {
+  background-color: #8a8a8a;
+  border: 1px #003163 solid;
+}
+.back-to-admin-btn {
+  color: white;
+  font-size: 16px;
+  padding: 2px 5px;
+}
+.back-to-admin-btn-link {
+  text-decoration: none; /* Removes the default underline of a link */
+}
+
 .admin-button {
   display: flex;
   justify-content: space-between;
+  margin: 4vh 1vw 1vh 0.2vw;
+  width: 35vw;
+}
+.health-record-modal-content {
+  text-align: center;
+}
+
+.health-record-password-input {
+  width: 80%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.health-record-modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.close-btn,
+.submit-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-btn {
+  background-color: #ff6666;
+  color: white;
+}
+
+.submit-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.dept {
+  display: flex;
+  justify-content: space-between;
   margin: 1vh 1vw;
-  /* background-color: aqua; */
   width: 28vw;
 }
 
@@ -31,26 +90,25 @@
   margin-top: 6vh;
 }
 
-.admin-button {
-  margin: 2vh 2vw 4vh 2vw;
+.buttons {
+  display: flex;
 }
-
 .admin-search {
   /* background-color: azure; */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5vw;
-  margin-top: 4vh;
+  margin-right: 2vw;
+  margin-top: 4.5vh;
 }
 
-.search-input {
-  width: 320px;
+.admin-search-input {
+  width: 500px;
   padding: 2px;
-  margin-right: 0.5vw;
   border: 2px solid #8a8a8a;
   border-radius: 6px;
   outline: none;
+  margin-right: 10px;
 }
 
 .button-jhs,
@@ -88,7 +146,8 @@
 .button-create,
 .button-manage,
 .button-bmi,
-.edit-profile {
+.edit-profile,
+.health-record-btn {
   background-color: #003163;
   border: 1px white solid;
   color: white;
@@ -100,13 +159,11 @@
   border-radius: 12px;
 }
 
-.button-create {
-  margin-left: 8vw;
-}
 .button-create:hover,
 .button-manage:hover,
 .button-bmi:hover,
-.edit-profile:hover {
+.edit-profile:hover,
+.health-record-btn:hover {
   background-color: white;
   border: 1px solid #003163;
   color: #003163;
@@ -259,7 +316,7 @@
   background-color: #c0c2c2;
 }
 
-.add-assessment,
+.add-assessment-btn,
 .add-vaccine-btn {
   background-color: #003163;
   width: 70px;
@@ -486,7 +543,8 @@ body.no-scroll {
   border-bottom: none; /* Remove bottom border for the last row */
 }
 
-.edit-assessment-btn {
+.edit-assessment-btn,
+.save-assessment-btn {
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;

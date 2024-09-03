@@ -19,6 +19,7 @@ import Layout from "./Components/Layout"; // Main layout
 import ProfileLayout from "./Components/layout_profile";
 import AdminProfile from "./NavBar_Tabs/Profile/admin_profile";
 import Manage from "./NavBar_Tabs/Profile/manage";
+import HealthRecord from "./NavBar_Tabs/Profile/health_record";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/user" element={<StudentProfile />} />
           <Route path="/admin" element={<AdminProfile />} />
           <Route path="/manage" element={<Manage />} />
+          <Route path="/health-record" element={<HealthRecord />} />
         </Route>
 
         {/* Routes that use the Profile Layout */}

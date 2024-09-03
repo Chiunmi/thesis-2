@@ -2,6 +2,12 @@ import { useLocation, Link } from "react-router-dom";
 import "./left.css";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
+import FileCopyRoundedIcon from "@mui/icons-material/FileCopyRounded";
+import EventAvailableRoundedIcon from "@mui/icons-material/EventAvailableRounded";
+import MonitorHeartRoundedIcon from "@mui/icons-material/MonitorHeartRounded";
+import ArchiveRoundedIcon from "@mui/icons-material/ArchiveRounded";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Left = () => {
   const location = useLocation();
@@ -30,7 +36,7 @@ const Left = () => {
           </li>
           <li className={location.pathname === "/telemed" ? "active" : ""}>
             <Link to="/telemed">
-              <MedicalServicesIcon
+              <VideocamRoundedIcon
                 className="left-icon"
                 style={{ color: "8A8A8A", fontSize: "24px" }}
               />
@@ -41,7 +47,7 @@ const Left = () => {
             className={location.pathname === "/request-forms" ? "active" : ""}
           >
             <Link to="/request-forms">
-              <MedicalServicesIcon
+              <FileCopyRoundedIcon
                 className="left-icon"
                 style={{ color: "8A8A8A", fontSize: "24px" }}
               />
@@ -50,7 +56,7 @@ const Left = () => {
           </li>
           <li className={location.pathname === "/events" ? "active" : ""}>
             <Link to="/events">
-              <MedicalServicesIcon
+              <EventAvailableRoundedIcon
                 className="left-icon"
                 style={{ color: "8A8A8A", fontSize: "24px" }}
               />
@@ -59,7 +65,7 @@ const Left = () => {
           </li>
           <li className={location.pathname === "/health-tips" ? "active" : ""}>
             <Link to="/health-tips">
-              <MedicalServicesIcon
+              <MonitorHeartRoundedIcon
                 className="left-icon"
                 style={{ color: "8A8A8A", fontSize: "24px" }}
               />
@@ -68,7 +74,7 @@ const Left = () => {
           </li>
           <li className={location.pathname === "/archive" ? "active" : ""}>
             <Link to="/archive">
-              <MedicalServicesIcon
+              <ArchiveRoundedIcon
                 className="left-icon"
                 style={{ color: "8A8A8A", fontSize: "24px" }}
               />
@@ -78,7 +84,16 @@ const Left = () => {
         </ul>
 
         <div className="logout">
-          <Link to="/login">Logout</Link>
+          <li>
+            {" "}
+            <Link to="/login">
+              <LogoutIcon
+                className="left-icon"
+                style={{ color: "8A8A8A", fontSize: "24px" }}
+              />{" "}
+              Logout
+            </Link>
+          </li>
         </div>
       </div>
     </div>

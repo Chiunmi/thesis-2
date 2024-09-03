@@ -8,6 +8,10 @@
   max-height: fit-content;
 }
 
+.admin-inventory::-webkit-scrollbar {
+  display: none;
+}
+
 .inventory-status {
   width: 100%;
   height: fit-content;
@@ -39,7 +43,7 @@
   cursor: pointer;
 }
 
-.back-button::hover {
+.back-button:hover {
   background-color: #c0c2c2;
   border: none;
   color: #003163;
@@ -110,6 +114,33 @@ tr:last-child td {
   box-shadow: none;
 }
 
+.edit-stock-btn {
+  padding: 5px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #003163;
+  border: 1px white solid;
+  margin-right: 0.5vw;
+  margin-left: 0.5vw;
+  color: white;
+}
+
+.edit-stock-btn:hover {
+  background-color: white;
+  border: 1px solid #003163;
+  color: #003163;
+}
+
+.edit-stock-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-stock-modal h3 {
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
 .stock-btn {
   display: flex; /* Align buttons horizontally */
   justify-content: flex-end;
@@ -120,7 +151,7 @@ tr:last-child td {
 .stock-modal input {
   margin-left: 10px;
 }
-.stock-btn .add-stock-btn {
+.stock-btn .save-stock-btn {
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
@@ -137,7 +168,12 @@ tr:last-child td {
   border: 1px white solid;
   color: white;
 }
-
+.stock-btn .save-stock-btn:hover,
+.stock-btn .close-btn:hover {
+  background-color: #c0c2c2;
+  border: 1px white solid;
+  color: #003163;
+}
 .stock-btn .close-btn {
   padding: 10px 20px;
   border-radius: 10px;

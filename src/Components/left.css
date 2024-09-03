@@ -10,7 +10,8 @@
   z-index: 12;
 }
 
-.sidebar-list {
+.sidebar-list,
+.logout {
   margin: 140px 0px 0px 16px;
   display: flex;
   flex: 1;
@@ -28,7 +29,8 @@
   z-index: 15;
 }
 
-.sidebar-list li {
+.sidebar-list li,
+.logout li {
   list-style-type: none;
   line-height: 1;
   display: flex;
@@ -36,7 +38,8 @@
   cursor: pointer;
 }
 
-.sidebar-list li a {
+.sidebar-list li a,
+.logout li a {
   padding: 16px;
   color: black;
   text-align: left;
@@ -48,21 +51,29 @@
 }
 
 .sidebar-list li:hover,
+.logout li:hover {
+  background-color: rgba(0, 49, 99, 0.7);
+  border-radius: 26px;
+  width: 180px;
+  height: 50px;
+  color: white;
+}
 .sidebar-list li.active {
   background-color: #003163;
   border-radius: 26px;
-  /* margin-right: 20px;  */
   width: 180px;
   height: 50px;
 }
-
-.sidebar-list li:hover {
-  background-color: #003163;
+.sidebar-list li:hover a,
+.sidebar-list li.active a,
+.logout li a:hover {
+  color: white; /* Text color on hover and active */
 }
 
-.sidebar-list li:hover a,
-.sidebar-list li.active a {
-  color: white; /* Text color on hover and active */
+.logout {
+  display: flex;
+  justify-content: center;
+  margin-top: 23vh;
 }
 
 .left-link {

@@ -13,14 +13,14 @@ import {
 import Modal from "react-modal";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import "./manage.css";
 
 const Manage = () => {
-  const [visible, setVisible] = useState(false);
-  const [actionType, setActionType] = useState("");
+  const [editModalVisible, setEditModalVisible] = useState(false); // For edit modal
+  const [removeModalVisible, setRemoveModalVisible] = useState(false); // For remove modal
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [quantityInput, setQuantityInput] = useState({}); // Use an object to track quantities by product ID
 
   const inventoryData = [
     {
@@ -62,6 +62,43 @@ const Manage = () => {
     currentQty: item.currentQty,
   }));
 
+  const openEditModal = () => {
+    // Initialize the quantityInput state with current quantities
+    const initialQuantities = {};
+    inventoryData.forEach((product) => {
+      initialQuantities[product.id] = product.currentQty;
+    });
+    setQuantityInput(initialQuantities);
+    setEditModalVisible(true);
+  };
+
+  const handleSaveChanges = () => {
+    // Update all products with the edited quantities
+    const updatedData = inventoryData.map((item) => {
+      if (quantityInput[item.id] !== undefined) {
+        return {
+          ...item,
+          initialQty: Number(quantityInput[item.id]), // Set the input number to initialQty
+          currentQty: 0, // Reset currentQty
+        };
+      }
+      return item;
+    });
+
+    console.log(updatedData); // You can set this updated data to state or handle it according to your data flow
+
+    // Close the modal
+    setEditModalVisible(false);
+  };
+
+  const handleRemoveStock = () => {
+    // Implement the logic to remove stock
+    console.log("Removing stock for:", selectedProduct.productName);
+
+    setRemoveModalVisible(false); // Close the remove modal
+    setSelectedProduct(null);
+  };
+
   return (
     <div className="admin-inventory">
       <div className="back">
@@ -101,6 +138,80 @@ const Manage = () => {
           <h2>Stock Management</h2>
           {/* Stock Search Input */}
           <div className="stock-search">
+            <button className="edit-stock-btn" onClick={openEditModal}>
+              Edit Stocks
+            </button>
+            <Modal
+              isOpen={editModalVisible} // Use new state variable
+              onRequestClose={() => setEditModalVisible(false)}
+              style={{
+                overlay: {
+                  backgroundColor: "rgba(0, 0, 0, 0.3)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  zIndex: 1,
+                  boxShadow: "none",
+                },
+                content: {
+                  width: "600px",
+                  height: "400px",
+                  margin: "auto",
+                  borderRadius: "24px",
+                  border: "none",
+                  backgroundColor: "#f8f8ff",
+                  color: "black",
+                },
+              }}
+            >
+              <div className="edit-stock-modal">
+                <h3>Edit Product Quantities</h3>
+                <table className="stock-table">
+                  <thead>
+                    <tr>
+                      <th>Product ID</th>
+                      <th>Product Name</th>
+                      <th>Current Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {inventoryData.map((product) => (
+                      <tr key={product.id}>
+                        <td>{product.productNo}</td>
+                        <td>{product.productName}</td>
+                        <td>
+                          <input
+                            type="number"
+                            value={quantityInput[product.id]}
+                            onChange={(e) =>
+                              setQuantityInput({
+                                ...quantityInput,
+                                [product.id]: e.target.value,
+                              })
+                            }
+                            className="quantity-input"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="stock-btn">
+                  <button
+                    className="close-btn"
+                    onClick={() => setEditModalVisible(false)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="save-stock-btn"
+                    onClick={handleSaveChanges}
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </Modal>
             <input
               type="text"
               className="stock-search-input"
@@ -134,32 +245,22 @@ const Manage = () => {
                     {item.currentQty === 0 ? "Out of Stock" : "In Stock"}
                   </td>
                   <td>
-                    {/* Add Stock Icon */}
-                    <ControlPointRoundedIcon
-                      onClick={() => {
-                        setActionType("add"); // Set action to add
-                        setSelectedProduct(item); // Set selected product
-                        setVisible(true);
-                      }}
-                      style={{
-                        marginRight: "10px",
-                        cursor: "pointer",
-                        color: "green",
-                      }}
-                    />
                     {/* Remove Stock Icon */}
                     <RemoveCircleRoundedIcon
                       onClick={() => {
-                        setActionType("remove"); // Set action to remove
-                        setSelectedProduct(item); // Set selected product
-                        setVisible(true);
+                        setSelectedProduct(item);
+                        setRemoveModalVisible(true);
                       }}
-                      style={{ cursor: "pointer", color: "red" }}
+                      style={{
+                        cursor: "pointer",
+                        color: "red",
+                        marginLeft: "1vw",
+                      }}
                     />
-                    {/* Modal Component */}
+                    {/* Remove Modal Component */}
                     <Modal
-                      isOpen={visible}
-                      onRequestClose={() => setVisible(false)}
+                      isOpen={removeModalVisible} // State to control the modal's visibility
+                      onRequestClose={() => setRemoveModalVisible(false)}
                       style={{
                         overlay: {
                           backgroundColor: "rgba(0, 0, 0, 0.3)",
@@ -171,7 +272,7 @@ const Manage = () => {
                         },
                         content: {
                           width: "500px",
-                          height: "250px",
+                          height: "200px",
                           margin: "auto",
                           marginLeft: "43vw",
                           borderRadius: "24px",
@@ -181,53 +282,38 @@ const Manage = () => {
                         },
                       }}
                     >
-                      <div className="modal-content">
+                      <div className="add-stock-modal">
                         <div className="stock-modal">
-                          {/* Conditionally render based on actionType and selectedProduct */}
-                          {actionType === "add" ? (
-                            <>
-                              <p>Are you sure you want to add stock?</p>
-                              <h3>
-                                Product Name: {selectedProduct?.productName}
-                              </h3>
-                              <label>
-                                Quantity:
-                                <input
-                                  type="number"
-                                  placeholder="Input number"
-                                />
-                              </label>
-                            </>
-                          ) : (
-                            <>
-                              <p>Are you sure you want to remove stock?</p>
-                              <h3>
-                                Product Name: {selectedProduct?.productName}
-                              </h3>
-                              <label>
-                                Quantity:
-                                <input
-                                  type="number"
-                                  placeholder="Input number"
-                                />
-                              </label>
-                            </>
-                          )}
+                          <p>Are you sure you want to remove stock?</p>
+                          <h3>Product Name: {selectedProduct?.productName}</h3>
+                          <label>
+                            Quantity to Remove:
+                            <input
+                              type="number"
+                              placeholder="Input number"
+                              value={quantityInput[selectedProduct?.id] || ""} // Use the selected product's ID to manage its quantity input
+                              onChange={(e) =>
+                                setQuantityInput({
+                                  ...quantityInput,
+                                  [selectedProduct.id]: e.target.value,
+                                })
+                              }
+                            />
+                          </label>
                         </div>
                         <div className="stock-btn">
-                          {/* Close Button */}
                           <button
                             className="close-btn"
-                            onClick={() => setVisible(false)}
+                            onClick={() => setRemoveModalVisible(false)}
                           >
                             Close
                           </button>
-                          {/* Action Button Changes Based on actionType */}
-                          {actionType === "add" ? (
-                            <button className="add-stock-btn">Add</button>
-                          ) : (
-                            <button className="remove-stock-btn">Remove</button>
-                          )}
+                          <button
+                            className="remove-stock-btn"
+                            onClick={handleRemoveStock} // Keep the logic for removing stock
+                          >
+                            Remove
+                          </button>
                         </div>
                       </div>
                     </Modal>
