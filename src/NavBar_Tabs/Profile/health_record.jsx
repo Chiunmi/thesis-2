@@ -7,297 +7,117 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
-import Chart from "./chart";
+import axios from 'axios';
 
+import { toast } from 'react-hot-toast';
 import Modal from "react-modal";
-const studentData = {
-  JHS: {
-    "Grade 7": {
-      "G7-Compassion": [
-        {
-          name: "Jenine Carpio",
-          section: "G7-Counsel",
-          age: 13,
-          sex: "Female",
-          civilstatus: "Single",
-          birthdate: "June 25, 2010",
-          address: "Amadeo, Cavite",
-          telNum: "09750862327",
-          religion: "Catholic",
-          guardian: "Jessica Carpio",
-          guradianAddress: "Dagatan, Amadeo, Cavite",
-          guardianNum: "09558574497",
-          department: "COI",
-
-          respiratory: "N/A",
-          digestive: "N/A",
-          nervous: "N/A",
-          excretory: "N/A",
-          endocrine: "N/A",
-          circulatory: "N/A",
-          skeletal: "N/A",
-          muscular: "N/A",
-          reproductive: "N/A",
-          lymphatic: "N/A",
-
-          smoke: "No",
-          drink: "No",
-          allergy: "N/A",
-          specifyAllergy: "N/A",
-        },
-        {
-          name: "Bdjgd Loejd C.",
-          section: "G7-Compassion",
-          age: 13,
-          birthdate: "2008-07-21",
-        },
-      ],
-      "G7-Courage": [
-        {
-          name: "Csjfjds Opsdfkdf S.",
-          section: "G7-Courage",
-          age: 13,
-          birthdate: "2008-09-14",
-        },
-      ],
-    },
-    "Grade 8": {
-      "G8-Compassion": [
-        {
-          name: "Ahehi, Lobarn A.",
-          section: "G8-Compassion",
-          age: 13,
-          birthdate: "2008-05-12",
-        },
-        {
-          name: "Bdjgd Loejd C.",
-          section: "G8-Compassion",
-          age: 13,
-          birthdate: "2008-07-21",
-        },
-      ],
-      "G8-Courage": [
-        {
-          name: "Csjfjds Opsdfkdf S.",
-          section: "G8-Courage",
-          age: 13,
-          birthdate: "2008-09-14",
-        },
-      ],
-    },
-  },
-  SHS: {
-    "Grade 11": {
-      STEM: {
-        "Section 1": [
-          {
-            name: "Ahehi, Lobarn A.",
-            section: "STEM - Section 1",
-            age: 16,
-            birthdate: "2007-05-12",
-          },
-        ],
-        "Section 2": [
-          {
-            name: "Bdjgd Loejd C.",
-            section: "STEM - Section 2",
-            age: 16,
-            birthdate: "2007-07-21",
-          },
-        ],
-      },
-      ABM: {
-        "Section A": [
-          {
-            name: "Example Student 1",
-            section: "ABM - Section A",
-            age: 17,
-            birthdate: "2006-02-20",
-          },
-        ],
-      },
-    },
-    "Grade 12": {
-      STEM: {
-        "Section 1": [
-          {
-            name: "Ahehi, Lobarn A.",
-            section: "STEM - Section 1",
-            age: 16,
-            birthdate: "2007-05-12",
-          },
-        ],
-        "Section 2": [
-          {
-            name: "Bdjgd Loejd C.",
-            section: "STEM - Section 2",
-            age: 16,
-            birthdate: "2007-07-21",
-          },
-        ],
-      },
-      ABM: {
-        "Section A": [
-          {
-            name: "Example Student 1",
-            section: "ABM - Section A",
-            age: 17,
-            birthdate: "2006-02-20",
-          },
-        ],
-      },
-    },
-  },
-  College: {
-    "1st Year": {
-      "College of Informatics": {
-        "Computer Science": {
-          "CS-101": [
-            {
-              name: "Ahehi, Lobarn A.",
-              section: "CS-101",
-              age: 18,
-              birthdate: "2005-05-12",
-            },
-            {
-              name: "Bdjgd Loejd C.",
-              section: "CS-101",
-              age: 18,
-              birthdate: "2005-07-21",
-            },
-          ],
-          "CS-102": [
-            {
-              name: "Csjfjds Opsdfkdf S.",
-              section: "CS-102",
-              age: 18,
-              birthdate: "2005-09-14",
-            },
-          ],
-        },
-        "Information Technology": {
-          "IT-101": [
-            {
-              name: "Doe, John",
-              section: "IT-101",
-              age: 18,
-              birthdate: "2005-11-30",
-            },
-          ],
-        },
-      },
-      "College of Education": {
-        "Education Program": {
-          "ED-101": [
-            {
-              name: "Alex, Jane D.",
-              section: "ED-101",
-              age: 18,
-              birthdate: "2005-02-14",
-            },
-          ],
-        },
-      },
-    },
-    "2nd Year": {
-      "College of Informatics": {
-        "Computer Science": {
-          "CS-201": [
-            {
-              name: "Emily Watson",
-              section: "CS-201",
-              age: 19,
-              birthdate: "2004-04-13",
-            },
-          ],
-          "CS-202": [
-            {
-              name: "William Harris",
-              section: "CS-202",
-              age: 19,
-              birthdate: "2004-08-24",
-            },
-          ],
-        },
-      },
-      "College of Business": {
-        "Business Administration": {
-          "BA-201": [
-            {
-              name: "George Lucas",
-              section: "BA-201",
-              age: 19,
-              birthdate: "2004-05-09",
-            },
-          ],
-        },
-      },
-    },
-  },
-};
 
 function HealthRecord() {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedGrade, setSelectedGrade] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedProgram, setSelectedProgram] = useState("");
-  const [selectedStrandOrProgram, setSelectedStrandOrProgram] = useState("");
-  const [selectedSection, setSelectedSection] = useState("");
-  const [selectedStudent, setSelectedStudent] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedGrade, setSelectedGrade] = useState("");
+    const [selectedDepartment, setSelectedDepartment] = useState("");
+    const [selectedStrand, setSelectedStrand] = useState("");
+    const [selectedCourse, setSelectedCourse] = useState("");
+    const [selectedSection, setSelectedSection] = useState("");
+    const [students, setStudents] = useState([]);
+    const [selectedStudent, setSelectedStudent] = useState(null);
+    const [searchName, setSearchName] = useState("");
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setSelectedYear("");
-    setSelectedGrade("");
-    setSelectedDepartment("");
-    setSelectedProgram("");
-    setSelectedStrandOrProgram("");
-    setSelectedSection("");
-    setSelectedStudent(null);
-  };
+    const resetSelections = () => {
+        setSelectedGrade("");
+        setSelectedStrand("");
+        setSelectedCourse("");
+        setSelectedSection("");
+        setSelectedDepartment("");
+        setStudents([]);
+        setSelectedStudent(null);
+        setSearchName('');
+    };
 
-  const handleGradeChange = (grade) => {
-    setSelectedGrade(grade);
-    setSelectedStrandOrProgram("");
-    setSelectedSection("");
-    setSelectedStudent(null);
-  };
+    const handleCategoryChange = (category) => {
+        setSelectedCategory(category);
+        resetSelections();
+    };
 
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
-    setSelectedDepartment("");
-    setSelectedProgram("");
-    setSelectedSection("");
-    setSelectedStudent(null);
-  };
+    const handleGradeChange = (grade) => {
+        setSelectedGrade(grade);
+        setSelectedSection("");
+        setStudents([]);
+        setSelectedStudent(null);
+    };
 
-  const handleDepartmentChange = (department) => {
-    setSelectedDepartment(department);
-    setSelectedProgram("");
-    setSelectedSection("");
-    setSelectedStudent(null);
-  };
+    const handleStrandChange = (strand) => {
+        setSelectedStrand(strand);
+        setSelectedSection("");
+        setStudents([]);
+        setSelectedStudent(null);
+    };
 
-  const handleProgramChange = (program) => {
-    setSelectedProgram(program);
-    setSelectedSection("");
-    setSelectedStudent(null);
-  };
+    const handleCourseChange = (course) => {
+        setSelectedCourse(course);
+        setSelectedSection("");
+        setStudents([]);
+        setSelectedStudent(null);
+    };
 
-  const handleStrandOrProgramChange = (strandOrProgram) => {
-    setSelectedStrandOrProgram(strandOrProgram);
-    setSelectedSection("");
-    setSelectedStudent(null);
-  };
+    const handleDepartmentChange = (course) => {
+        setSelectedDepartment(course);
+        setSelectedCourse("");
+        setSelectedSection("");
+        setStudents([]);
+        setSelectedStudent(null);
+    };
 
-  const handleSectionChange = (section) => {
-    setSelectedSection(section);
-    setSelectedStudent(null);
-  };
+    const handleSectionChange = async (section) => {
+        setSelectedSection(section);
+        setSelectedStudent(null);
+
+        // Make API call to fetch filtered students
+        try {
+            const response = await axios.get('/medical', {
+                params: {
+                    educationLevel: selectedCategory,
+                    yearlvl: selectedGrade,
+                    strand: selectedStrand,
+                    course: selectedCourse,
+                    section: section
+                }
+            });
+            setStudents(response.data);
+        } catch (error) {
+            console.error('Error fetching students:', error);
+        }
+    };
+
+    const fetchProfile = async (studentId) => {
+        try {
+            const response = await axios.get(`/profile/${studentId}`);
+            setSelectedStudent(response.data);
+            console.log('Profile', selectedStudent);
+        } catch (error) {
+            console.error("Error fetching student profile:", error);
+        }
+    };
+
+    const searchStudents = async () => {
+        try {
+            const response = await axios.get('/medical/search', {
+                params: {
+                    name: searchName
+                }
+            });
+            setStudents(response.data);
+            setSelectedCategory("");
+            setSelectedGrade('');
+            setSelectedCourse('');
+            setSelectedSection('');
+        } catch (error) {
+            console.error('Error searching students:', error);
+        }
+    };
+
 
   const [isScanBMIModalOpen, setScanBMIModalOpen] = useState(false);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(""); // 'add' or 'edit'
   const [formData, setFormData] = useState({
@@ -348,14 +168,43 @@ function HealthRecord() {
   };
 
   const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false);
+  const [studentFormData, setStudentFormData] = useState({});
 
   const openEditProfileModal = () => {
     setEditProfileModalOpen(true);
+    setStudentFormData(selectedStudent.medical)
   };
 
   const closeEditProfileModal = () => {
     setEditProfileModalOpen(false);
   };
+
+  const handleStudentFormDataChange = (event) => {
+    const { name, value } = event.target;
+    setStudentFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleStudentSave = async () => {
+    try{
+      const response = await axios.patch(`/medical/${studentFormData._id}`, studentFormData);
+
+      setSelectedStudent((prev) => ({
+        ...prev,
+        medical: {
+          ...prev.medical,
+          ...studentFormData,
+        },
+      }));
+
+      setEditProfileModalOpen(false);
+      toast.success('Student information updated successfully');
+    }catch (err) {
+      toast.error(err.response.data.error)
+    }
+  }
 
   const assessmentData = [
     {
@@ -514,194 +363,101 @@ function HealthRecord() {
           </button>
         </div>
         <div className="admin-search">
-          <input
-            type="text"
-            className="admin-search-input"
-            placeholder="Search..."
-          />
-          <SearchRoundedIcon />
-        </div>
+        <input 
+          type="text" 
+          className="admin-search-input"
+          placeholder="Search by name" 
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+        />
+         
+          <button 
+                onClick={() => searchStudents()}
+                disabled={!searchName.trim()}
+                > <SearchRoundedIcon />
+          </button>
+          </div>
       </div>
 
       <div className="container">
         {/* Category Dropdown */}
-        <select
-          onChange={(e) => handleCategoryChange(e.target.value)}
-          value={selectedCategory}
-        >
-          <option value="">Select Category</option>
-          <option value="JHS">Junior High School</option>
-          <option value="SHS">Senior High School</option>
-          <option value="College">College</option>
+        <select onChange={(e) => handleCategoryChange(e.target.value)} value={selectedCategory}>
+            <option value="">Select Category</option>
+            <option value="JHS">Junior High School</option>
+            <option value="SHS">Senior High School</option>
+            <option value="College">College</option>
         </select>
 
-        {/* Grade/Year Dropdown (Only for JHS and SHS) */}
-        {selectedCategory && selectedCategory !== "College" && (
-          <select
-            onChange={(e) => handleGradeChange(e.target.value)}
-            value={selectedGrade}
-          >
-            <option value="">
-              Select {selectedCategory === "College" ? "Year" : "Grade"}
-            </option>
-            {Object.keys(studentData[selectedCategory] || {}).map((grade) => (
-              <option key={grade} value={grade}>
-                {grade}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* Year Level Dropdown (Only for College) */}
-        {selectedCategory === "College" && (
-          <select
-            onChange={(e) => handleYearChange(e.target.value)}
-            value={selectedYear}
-          >
-            <option value="">Select Year Level</option>
-            {Object.keys(studentData[selectedCategory] || {}).map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* Department Dropdown */}
-        {selectedYear && (
-          <select
-            onChange={(e) => handleDepartmentChange(e.target.value)}
-            value={selectedDepartment}
-          >
-            <option value="">Select Department</option>
-            {Object.keys(studentData[selectedCategory][selectedYear] || {}).map(
-              (department) => (
-                <option key={department} value={department}>
-                  {department}
-                </option>
-              )
-            )}
-          </select>
-        )}
-
-        {/* Program Dropdown */}
-        {selectedDepartment && (
-          <select
-            onChange={(e) => handleProgramChange(e.target.value)}
-            value={selectedProgram}
-          >
-            <option value="">Select Program</option>
-            {Object.keys(
-              studentData[selectedCategory][selectedYear][selectedDepartment] ||
-                {}
-            ).map((program) => (
-              <option key={program} value={program}>
-                {program}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* Section Dropdown */}
-        {selectedProgram && (
-          <select
-            onChange={(e) => handleSectionChange(e.target.value)}
-            value={selectedSection}
-          >
-            <option value="">Select Section</option>
-            {Object.keys(
-              studentData[selectedCategory][selectedYear][selectedDepartment][
-                selectedProgram
-              ] || {}
-            ).map((section) => (
-              <option key={section} value={section}>
-                {section}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* JHS Sections Dropdown */}
-        {selectedGrade && selectedCategory === "JHS" && (
-          <select
-            onChange={(e) => handleSectionChange(e.target.value)}
-            value={selectedSection}
-          >
-            <option value="">Select Section</option>
-            {Object.keys(
-              studentData[selectedCategory]?.[selectedGrade] || {}
-            ).map((section) => (
-              <option key={section} value={section}>
-                {section}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* SHS Strand/Program Dropdown */}
-        {selectedGrade && selectedCategory === "SHS" && (
-          <select
-            onChange={(e) => handleStrandOrProgramChange(e.target.value)}
-            value={selectedStrandOrProgram}
-          >
-            <option value="">Select Strand</option>
-            {Object.keys(
-              studentData[selectedCategory]?.[selectedGrade] || {}
-            ).map((strand) => (
-              <option key={strand} value={strand}>
-                {strand}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* SHS Sections Dropdown */}
-        {selectedStrandOrProgram && selectedCategory === "SHS" && (
-          <select
-            onChange={(e) => handleSectionChange(e.target.value)}
-            value={selectedSection}
-          >
-            <option value="">Select Section</option>
-            {Object.keys(
-              studentData[selectedCategory]?.[selectedGrade]?.[
-                selectedStrandOrProgram
-              ] || {}
-            ).map((section) => (
-              <option key={section} value={section}>
-                {section}
-              </option>
-            ))}
-          </select>
-        )}
-
-        {/* List of Students */}
-        {selectedSection && !selectedStudent && (
-          <div className="name-list">
-            <h3>{selectedSection}</h3>
-            <ul>
-              {(selectedCategory === "JHS"
-                ? studentData[selectedCategory]?.[selectedGrade]?.[
-                    selectedSection
-                  ]
-                : selectedCategory === "SHS"
-                ? studentData[selectedCategory]?.[selectedGrade]?.[
-                    selectedStrandOrProgram
-                  ]?.[selectedSection]
-                : studentData[selectedCategory]?.[selectedYear]?.[
-                    selectedDepartment
-                  ]?.[selectedProgram]?.[selectedSection]
-              ).map((student) => (
-                <li
-                  className="student-name"
-                  key={student.name}
-                  onClick={() => setSelectedStudent(student)}
-                >
-                  {student.name}
-                </li>
+        {selectedCategory && (
+          <select onChange={(e) => handleGradeChange(e.target.value)} value={selectedGrade}>
+              <option value="">Select Grade Level</option>
+              {selectedCategory === 'JHS' && ['7', '8', '9', '10'].map(grade => (
+                  <option key={grade} value={grade}>{grade}</option>
               ))}
-            </ul>
-          </div>
+              {selectedCategory === 'SHS' && ['11', '12'].map(grade => (
+                  <option key={grade} value={grade}>{grade}</option>
+              ))}
+              {selectedCategory === 'College' && ['1', '2', '3', '4'].map(grade => (
+                  <option key={grade} value={grade}>{grade}</option>
+              ))}
+            </select>
         )}
+
+        {selectedCategory === 'SHS' && selectedGrade && (
+          <select onChange={(e) => handleStrandChange(e.target.value)} value={selectedStrand}>
+              <option value="">Select Strand</option>
+              {['STEM', 'HUMMS', 'ABM', 'IT'].map(strand => (
+                  <option key={strand} value={strand}>{strand}</option>
+              ))}
+          </select>
+        )}
+
+        {selectedCategory === 'College' && selectedGrade && (
+          <select onChange={(e) => handleDepartmentChange(e.target.value)} value={selectedDepartment}>
+              <option value="">Select Department</option>
+              {['COI', 'YES'].map(course => (
+                  <option key={course} value={course}>{course}</option>
+              ))}
+          </select>
+        )}
+
+        {selectedCategory === 'College' && selectedGrade && selectedDepartment && (
+            <select onChange={(e) => handleCourseChange(e.target.value)} value={selectedCourse}>
+                <option value="">Select Course</option>
+                {['BSCS', 'BSA', 'BSIT', 'BSE'].map(course => (
+                    <option key={course} value={course}>{course}</option>
+                ))}
+            </select>
+        )}
+
+        {((selectedCategory === 'JHS' && selectedGrade) || 
+        (selectedCategory === 'SHS' && selectedStrand) || 
+        (selectedCategory === 'College' && selectedCourse)) && (
+            <select onChange={(e) => handleSectionChange(e.target.value)} value={selectedSection}>
+                <option value="">Select Section</option>
+                {['A', 'B', 'C', 'D'].map((section) => (
+                    <option key={section} value={section}>{section}</option>
+                ))}
+            </select>
+        )}
+
+        {selectedSection && students.length === 0 ? (
+            <p>No students</p>
+          ) : students.length > 0 && !selectedStudent ? (
+              <div>
+                  <h3>Filtered Students:</h3>
+                  <ul>
+                      {students.map((student, index) => (
+                          <li 
+                              key={index}
+                              onClick={() => fetchProfile(student.personal.userId)}
+                          >
+                              {student.personal.firstName} {student.personal.lastname} (ID: {student.personal.userId})
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          ) : null}
 
         {/* Display Selected Student Information */}
         {selectedStudent && (
@@ -713,16 +469,16 @@ function HealthRecord() {
                   className="selected-section-header"
                   onClick={() => setSelectedStudent(null)}
                 >
-                  {selectedSection}
+                  { selectedStudent.education.yearlvl + selectedStudent.education.section}
                 </h3>
-              </div>{" "}
+              </div>
             </div>
 
             <div className="column-one">
               <div className="student-data-i">
                 <h3>{selectedStudent.name}</h3>
                 <div className="archive-student-pic">
-                  <img src={jen} alt="" className="jen" />
+                  <img src={selectedStudent.pfp ? selectedStudent.pfp : jen} alt="this is a pfp" className="jen"/>
                 </div>
 
                 <div className="profile-btn">
@@ -753,7 +509,7 @@ function HealthRecord() {
                         maxHeight: "fit-content",
                         margin: "auto",
                         marginTop: "5vh",
-                        paddingTop: "265vh",
+                        paddingTop: "185vh",
                         backgroundColor: "rgba(0, 0, 0, 0)",
                         border: "none",
                         overflowY: "auto",
@@ -763,182 +519,85 @@ function HealthRecord() {
                     <div className="edit-profile-modal">
                       <h3>Edit Profile</h3>
                       <form>
-                        <h4>I. Personal Information</h4>
-                        <label>Full Name: </label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={selectedStudent.name}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Gr./Section: </label>
-                        <input
-                          type="text"
-                          name="section"
-                          value={selectedStudent.section}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Age: </label>
-                        <input
-                          type="number"
-                          name="age"
-                          value={selectedStudent.age}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Civil Status: </label>
-                        <input
-                          type="text"
-                          name="civilstatus"
-                          value={selectedStudent.civilstatus}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Birthdate: </label>
-                        <input
-                          type="date"
-                          name="birthdate"
-                          value={selectedStudent.birthdate}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Address: </label>
-                        <input
-                          type="text"
-                          name="address"
-                          value={selectedStudent.address}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Tel. No.: </label>
-                        <input
-                          type="tel"
-                          name="telNum"
-                          value={selectedStudent.telNum}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Religion: </label>
-                        <input
-                          type="text"
-                          name="religion"
-                          value={selectedStudent.religion}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Guardian: </label>
-                        <input
-                          type="text"
-                          name="guardian"
-                          value={selectedStudent.guardian}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Guardian's Address: </label>
-                        <input
-                          type="text"
-                          name="guardianAddress"
-                          value={selectedStudent.guardianAddress}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Guardian's Number: </label>
-                        <input
-                          type="tel"
-                          name="guardianNum"
-                          value={selectedStudent.guardianNum}
-                          onChange={handleChange}
-                        />
-                        <br />
-                        <label>Department: </label>
-                        <input
-                          type="text"
-                          name="department"
-                          value={selectedStudent.department}
-                          onChange={handleChange}
-                        />
-                        <br />
                         <h4>II. Illnesses Involving Systems</h4>
                         <label>Respiratory: </label>
                         <input
                           type="text"
                           name="respiratory"
-                          value={selectedStudent.respiratory}
-                          onChange={handleChange}
+                          value={studentFormData.respiratory}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Digestive: </label>
                         <input
                           type="text"
                           name="digestive"
-                          value={selectedStudent.digestive}
-                          onChange={handleChange}
+                          value={studentFormData.digestive}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Nervous: </label>
                         <input
                           type="text"
                           name="nervous"
-                          value={selectedStudent.nervous}
-                          onChange={handleChange}
+                          value={studentFormData.nervous}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Excretory: </label>
                         <input
                           type="text"
                           name="excretory"
-                          value={selectedStudent.excretory}
-                          onChange={handleChange}
+                          value={studentFormData.excretory}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Endocrine: </label>
                         <input
                           type="text"
                           name="endocrine"
-                          value={selectedStudent.endocrine}
-                          onChange={handleChange}
+                          value={studentFormData.endocrine}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Circulatory: </label>
                         <input
                           type="text"
                           name="circulatory"
-                          value={selectedStudent.circulatory}
-                          onChange={handleChange}
+                          value={studentFormData.circulatory}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Skeletal: </label>
                         <input
                           type="text"
                           name="skeletal"
-                          value={selectedStudent.skeletal}
-                          onChange={handleChange}
+                          value={studentFormData.skeletal}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Muscular: </label>
                         <input
                           type="text"
                           name="muscular"
-                          value={selectedStudent.muscular}
-                          onChange={handleChange}
+                          value={studentFormData.muscular}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Reproductive: </label>
                         <input
                           type="text"
                           name="reproductive"
-                          value={selectedStudent.reproductive}
-                          onChange={handleChange}
+                          value={studentFormData.reproductive}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Lymphatic: </label>
                         <input
                           type="text"
                           name="lymphatic"
-                          value={selectedStudent.lymphatic}
-                          onChange={handleChange}
+                          value={studentFormData.lymphatic}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <h4>III. Habits and Allergies</h4>
@@ -946,52 +605,52 @@ function HealthRecord() {
                         <input
                           type="radio"
                           name="smoke"
-                          value="Yes"
-                          checked={selectedStudent.smoke === "Yes"}
-                          onChange={handleChange}
-                        />{" "}
+                          value="true"
+                          checked={studentFormData.smoke === true}
+                          onChange={handleStudentFormDataChange}
+                        />
                         Yes
                         <input
                           type="radio"
                           name="smoke"
-                          value="No"
-                          checked={selectedStudent.smoke === "No"}
-                          onChange={handleChange}
-                        />{" "}
+                          value="false"
+                          checked={studentFormData.smoke === false}
+                          onChange={handleStudentFormDataChange}
+                        />
                         No
                         <br />
                         <label>Do you drink?: </label>
                         <input
                           type="radio"
                           name="drink"
-                          value="Yes"
-                          checked={selectedStudent.drink === "Yes"}
-                          onChange={handleChange}
-                        />{" "}
+                          value="true"
+                          checked={studentFormData.drink === true}
+                          onChange={handleStudentFormDataChange}
+                        />
                         Yes
                         <input
                           type="radio"
                           name="drink"
-                          value="No"
-                          checked={selectedStudent.drink === "No"}
-                          onChange={handleChange}
-                        />{" "}
+                          value="false"
+                          checked={studentFormData.drink === false}
+                          onChange={handleStudentFormDataChange}
+                        />
                         No
                         <br />
                         <label>Allergy?: </label>
                         <input
                           type="text"
                           name="allergy"
-                          value={selectedStudent.allergy}
-                          onChange={handleChange}
+                          value={studentFormData.allergy}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>If so, specify: </label>
                         <input
                           type="text"
-                          name="specifyAllergy"
-                          value={selectedStudent.specifyAllergy}
-                          onChange={handleChange}
+                          name="specificAllergy"
+                          value={studentFormData.specificAllergy}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <h4>IV. Physical Examinations</h4>
@@ -999,80 +658,80 @@ function HealthRecord() {
                         <input
                           type="text"
                           name="eyes"
-                          value={selectedStudent.eyes}
-                          onChange={handleChange}
+                          value={studentFormData.eyes}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Ear: </label>
                         <input
                           type="text"
                           name="ear"
-                          value={selectedStudent.ear}
-                          onChange={handleChange}
+                          value={studentFormData.ear}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Nose: </label>
                         <input
                           type="text"
                           name="nose"
-                          value={selectedStudent.nose}
-                          onChange={handleChange}
+                          value={studentFormData.nose}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Throat: </label>
                         <input
                           type="text"
                           name="throat"
-                          value={selectedStudent.throat}
-                          onChange={handleChange}
+                          value={studentFormData.throat}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Tonsils: </label>
                         <input
                           type="text"
                           name="tonsils"
-                          value={selectedStudent.tonsils}
-                          onChange={handleChange}
+                          value={studentFormData.tonsils}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Teeth: </label>
                         <input
                           type="text"
                           name="teeth"
-                          value={selectedStudent.teeth}
-                          onChange={handleChange}
+                          value={studentFormData.teeth}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Tongue: </label>
                         <input
                           type="text"
                           name="tongue"
-                          value={selectedStudent.tongue}
-                          onChange={handleChange}
+                          value={studentFormData.tongue}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Neck: </label>
                         <input
                           type="text"
                           name="neck"
-                          value={selectedStudent.neck}
-                          onChange={handleChange}
+                          value={studentFormData.neck}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Thyroids: </label>
                         <input
                           type="text"
                           name="thyroids"
-                          value={selectedStudent.thyroids}
-                          onChange={handleChange}
+                          value={studentFormData.thyroids}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Cervical Glands: </label>
                         <input
                           type="text"
                           name="cervicalGlands"
-                          value={selectedStudent.cervicalGlands}
-                          onChange={handleChange}
+                          value={studentFormData.cervicalGlands}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <h4>V. Chest and Cardiovascular System</h4>
@@ -1080,80 +739,80 @@ function HealthRecord() {
                         <input
                           type="text"
                           name="chest"
-                          value={selectedStudent.chest}
-                          onChange={handleChange}
+                          value={studentFormData.chest}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Contour: </label>
                         <input
                           type="text"
                           name="contour"
-                          value={selectedStudent.contour}
-                          onChange={handleChange}
+                          value={studentFormData.contour}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Heart: </label>
                         <input
                           type="text"
                           name="heart"
-                          value={selectedStudent.heart}
-                          onChange={handleChange}
+                          value={studentFormData.heart}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Rate: </label>
                         <input
                           type="text"
                           name="rate"
-                          value={selectedStudent.rate}
-                          onChange={handleChange}
+                          value={studentFormData.rate}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Rhythm: </label>
                         <input
                           type="text"
                           name="rhythm"
-                          value={selectedStudent.rhythm}
-                          onChange={handleChange}
+                          value={studentFormData.rhythm}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>BP: </label>
                         <input
                           type="text"
                           name="bp"
-                          value={selectedStudent.bp}
-                          onChange={handleChange}
+                          value={studentFormData.bp}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Height: </label>
                         <input
                           type="text"
                           name="height"
-                          value={selectedStudent.height}
-                          onChange={handleChange}
+                          value={studentFormData.height}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Weight: </label>
                         <input
                           type="text"
                           name="weight"
-                          value={selectedStudent.weight}
-                          onChange={handleChange}
+                          value={studentFormData.weight}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>BMI: </label>
                         <input
                           type="text"
                           name="bmi"
-                          value={selectedStudent.bmi}
-                          onChange={handleChange}
+                          value={studentFormData.bmi}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Lungs: </label>
                         <input
                           type="text"
                           name="lungs"
-                          value={selectedStudent.lungs}
-                          onChange={handleChange}
+                          value={studentFormData.lungs}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <h4>VI. Abdomen</h4>
@@ -1161,40 +820,40 @@ function HealthRecord() {
                         <input
                           type="text"
                           name="abdomen"
-                          value={selectedStudent.abdomen}
-                          onChange={handleChange}
+                          value={studentFormData.abdomen}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Contour: </label>
                         <input
                           type="text"
-                          name="contour"
-                          value={selectedStudent.contour}
-                          onChange={handleChange}
+                          name="ABcontour"
+                          value={studentFormData.ABcontour}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Liver: </label>
                         <input
                           type="text"
                           name="liver"
-                          value={selectedStudent.liver}
-                          onChange={handleChange}
+                          value={studentFormData.liver}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Spleen: </label>
                         <input
                           type="text"
                           name="spleen"
-                          value={selectedStudent.spleen}
-                          onChange={handleChange}
+                          value={studentFormData.spleen}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Kidneys: </label>
                         <input
                           type="text"
                           name="kidneys"
-                          value={selectedStudent.kidneys}
-                          onChange={handleChange}
+                          value={studentFormData.kidneys}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <h4>VII. Extremities</h4>
@@ -1202,24 +861,24 @@ function HealthRecord() {
                         <input
                           type="text"
                           name="extremities"
-                          value={selectedStudent.extremities}
-                          onChange={handleChange}
+                          value={studentFormData.extremities}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Upper Extremities: </label>
                         <input
                           type="text"
                           name="upperExtremities"
-                          value={selectedStudent.upperExtremities}
-                          onChange={handleChange}
+                          value={studentFormData.upperExtremities}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                         <label>Lower Extremities: </label>
                         <input
                           type="text"
                           name="lowerExtremities"
-                          value={selectedStudent.lowerExtremities}
-                          onChange={handleChange}
+                          value={studentFormData.lowerExtremities}
+                          onChange={handleStudentFormDataChange}
                         />
                         <br />
                       </form>
@@ -1230,7 +889,7 @@ function HealthRecord() {
                         >
                           Close
                         </button>
-                        <button className="save-btn" onClick={handleSave}>
+                        <button className="save-btn" onClick={handleStudentSave}>
                           Save
                         </button>
                       </div>
@@ -1294,87 +953,88 @@ function HealthRecord() {
                   </div>
                 </Modal>
                 <h4> I. </h4>
-                <p> Full Name: {selectedStudent.name}</p>
-                <p>Gr./Section: {selectedStudent.section}</p>
-                <p>Age: {selectedStudent.age}</p>
-                <p>Civil Status: {selectedStudent.civilstatus}</p>
-                <p>Birthdate: {selectedStudent.birthdate}</p>
-                <p>Address: {selectedStudent.address}</p>
-                <p>Tel. No.: {selectedStudent.telNum}</p>
-                <p>Religion: {selectedStudent.religion}</p>
-                <p>Guardian: {selectedStudent.guardian}</p>
-                <p>Guradian's Address: {selectedStudent.guradianAddress}</p>
-                <p> Guardian's Number: {selectedStudent.guardianNum}</p>
-                <p> Department: {selectedStudent.department}</p>
+                <p> Full Name: {selectedStudent.personal.firstName + " " + selectedStudent.personal.lastName}</p>
+                <p>Gr./Section: {selectedStudent.education.yearlvl + " " + selectedStudent.education.section}</p>
+                <p>Civil Status: {selectedStudent.personal.civilStatus}</p>
+                <p>Birthdate: {selectedStudent.personal.dateOfBirth}</p>
+                <p>Address: {selectedStudent.personal.address}</p>
+                <p>Tel. No.: {selectedStudent.personal.telNo}</p>
+                <p>Religion: {selectedStudent.personal.religion}</p>
+                <p>Guardian: {selectedStudent.personal.guardian}</p>
+                <p>Guradian's Address: {selectedStudent.personal.guardianAddress}</p>
+                <p> Guardian's Number: {selectedStudent.personal.guardianTelNo}</p>
+                <p> Department: {selectedStudent.personal.department}</p>
               </div>
               <div className="student-data-ii">
-                {" "}
                 <h4> II. </h4>
                 <h4>
-                  {" "}
-                  Have you ever suffered illnesses involving any of the
-                  following systems? Specify.
+                Have you ever suffered illnesses involving any of the
+                following systems? Specify.
                 </h4>
-                <p>Respiratory : {selectedStudent.respiratory}</p>
-                <p>Digestive : {selectedStudent.digestive}</p>
-                <p>Nervous : {selectedStudent.nervous}</p>
-                <p>Excretory: {selectedStudent.excretory}</p>
-                <p>Endocrine : {selectedStudent.endocrine}</p>
-                <p>Circulatory : {selectedStudent.circulatory}</p>
-                <p>Skeletal : {selectedStudent.skeletal}</p>
-                <p>Muscular : {selectedStudent.muscular}</p>
-                <p>Reproductive : {selectedStudent.reproductive}</p>
-                <p>Lymphatic : {selectedStudent.lymphatic}</p>
+                <p>Respiratory : {selectedStudent.medical.respiratory}</p>
+                <p>Digestive : {selectedStudent.medical.digestive}</p>
+                <p>Nervous : {selectedStudent.medical.nervous}</p>
+                <p>Excretory: {selectedStudent.medical.excretory}</p>
+                <p>Endocrine : {selectedStudent.medical.endocrine}</p>
+                <p>Circulatory : {selectedStudent.medical.circulatory}</p>
+                <p>Skeletal : {selectedStudent.medical.skeletal}</p>
+                <p>Muscular : {selectedStudent.medical.muscular}</p>
+                <p>Reproductive : {selectedStudent.medical.reproductive}</p>
+                <p>Lymphatic : {selectedStudent.medical.lymphatic}</p>
                 <br />
                 <h4> III. </h4>
-                <p>Do you smoke? : {selectedStudent.smoke}</p>
-                <p>Do you drink? : {selectedStudent.drink}</p>
-                <p>Allergy? : {selectedStudent.allergy}</p>
-                <p>If so, specify? : {selectedStudent.specifyAllergy}</p>
+                <p>Do you smoke? : {selectedStudent.medical.smoke ? "Yes": "No"}</p>
+                <p>Do you drink? : {selectedStudent.medical.drink ? "Yes": "No"}</p>
+                <p>
+                  Allergy? : 
+                  {selectedStudent.medical.allergy === "N/A" 
+                    ? selectedStudent.medical.specificAllergy 
+                    : selectedStudent.medical.allergy}
+                </p>
               </div>
             </div>
             <h3>Physical Examination</h3>
             <div className="column-two">
               <div className="student-data-iii">
                 <h4> IV. </h4>
-                <p>Eyes : {selectedStudent.respiratory}</p>
-                <p>Ear : {selectedStudent.digestive}</p>
-                <p>Nose : {selectedStudent.nervous}</p>
-                <p>Throat: {selectedStudent.excretory}</p>
-                <p>Tonsils : {selectedStudent.endocrine}</p>
-                <p>Teeth : {selectedStudent.circulatory}</p>
-                <p>Tongue : {selectedStudent.skeletal}</p>
-                <p>Necj : {selectedStudent.muscular}</p>
-                <p>Thyroids : {selectedStudent.reproductive}</p>
-                <p>Cervical Glands : {selectedStudent.lymphatic}</p>
+                <p>Eyes : {selectedStudent.medical.eyes}</p>
+                <p>Ear : {selectedStudent.medical.ear}</p>
+                <p>Nose : {selectedStudent.medical.nose}</p>
+                <p>Throat: {selectedStudent.medical.throat}</p>
+                <p>Tonsils : {selectedStudent.medical.tonsils}</p>
+                <p>Teeth : {selectedStudent.medical.teeth}</p>
+                <p>Tongue : {selectedStudent.medical.tongue}</p>
+                <p>Neck : {selectedStudent.medical.neck}</p>
+                <p>Thyroids : {selectedStudent.medical.thyroids}</p>
+                <p>Cervical Glands : {selectedStudent.medical.cervicalGlands}</p>
                 <br />
                 <h4> V. </h4>
 
-                <p>Chest : {selectedStudent.smoke}</p>
-                <p>Contour : {selectedStudent.smoke}</p>
-                <p>Heart : {selectedStudent.drink}</p>
-                <p>Rate : {selectedStudent.drink}</p>
-                <p>Rhythm : {selectedStudent.drink}</p>
-                <p>BP : {selectedStudent.bp}</p>
-                <p>Height : {selectedStudent.height}</p>
-                <p>Weight : {selectedStudent.weight}</p>
-                <p>BMI : {selectedStudent.bmi}</p>
-                <p>Lungs : {selectedStudent.lungs}</p>
+                <p>Chest : {selectedStudent.medical.chest}</p>
+                <p>Contour : {selectedStudent.medical.contour}</p>
+                <p>Heart : {selectedStudent.medical.heart}</p>
+                <p>Rate : {selectedStudent.medical.rate}</p>
+                <p>Rhythm : {selectedStudent.medical.rhythm}</p>
+                <p>BP : {selectedStudent.medical.bp}</p>
+                <p>Height : {selectedStudent.medical.height}</p>
+                <p>Weight : {selectedStudent.medical.weight}</p>
+                <p>BMI : {selectedStudent.medical.bmi}</p>
+                <p>Lungs : {selectedStudent.medical.lungs}</p>
               </div>
 
               <div className="student-data-iv">
                 <h4> VI. </h4>
 
-                <p>Abdomen : {selectedStudent.smoke}</p>
-                <p>Contour : {selectedStudent.smoke}</p>
-                <p>Liver : {selectedStudent.drink}</p>
-                <p>Spleen : {selectedStudent.drink}</p>
-                <p>Kidneys : {selectedStudent.drink}</p>
+                <p>Abdomen : {selectedStudent.medical.abdomen}</p>
+                <p>Contour : {selectedStudent.medical.ABcontour}</p>
+                <p>Liver : {selectedStudent.medical.liver}</p>
+                <p>Spleen : {selectedStudent.medical.spleen}</p>
+                <p>Kidneys : {selectedStudent.medical.kidneys}</p>
                 <br />
                 <h4> VII. </h4>
-                <p>Extremities : {selectedStudent.extremities}</p>
-                <p>Upper : {selectedStudent.upperExtremities}</p>
-                <p>Lower : {selectedStudent.lowerExtremities}</p>
+                <p>Extremities : {selectedStudent.medical.extremities}</p>
+                <p>Upper : {selectedStudent.medical.upperExtremities}</p>
+                <p>Lower : {selectedStudent.medical.lowerExtremities}</p>
               </div>
             </div>
             <h3>Laboratory Examination</h3>

@@ -1,4 +1,10 @@
 import { Route, Routes } from "react-router-dom";
+import axios from 'axios';
+import { Toaster } from 'react-hot-toast';
+
+axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.withCredentials = true;
+
 import "./App.css";
 
 // Import your components
@@ -15,6 +21,7 @@ import AboutUs from "./NavBar_Tabs/About Us/about-us";
 import StudentProfile from "./NavBar_Tabs/Profile/student-profile";
 import NotFound from "./not-found";
 import Login from "./Components/login";
+import Register from "./Components/register";
 import Layout from "./Components/Layout"; // Main layout
 import ProfileLayout from "./Components/layout_profile";
 import AdminProfile from "./NavBar_Tabs/Profile/admin_profile";
@@ -24,6 +31,7 @@ import HealthRecord from "./NavBar_Tabs/Profile/health_record";
 function App() {
   return (
     <div>
+      <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
       <Routes>
         {/* Routes that use the Main Layout */}
         <Route element={<Layout />}>
@@ -37,7 +45,7 @@ function App() {
           <Route path="/archive" element={<Archive />} />
           <Route path="/location" element={<Location />} />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/user" element={<StudentProfile />} />
+          <Route path="/user/:id" element={<StudentProfile />} />
           <Route path="/admin" element={<AdminProfile />} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/health-record" element={<HealthRecord />} />
@@ -48,6 +56,7 @@ function App() {
 
         {/* Routes that do not use any layout */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
