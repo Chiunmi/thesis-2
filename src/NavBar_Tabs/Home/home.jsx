@@ -1,22 +1,30 @@
-import Layout from "../../Components/Layout";
-import Left from "../../Components/left";
-import Navbar from "../../Components/Navbar";
+import "./home.css";
 import Right from "../../Components/right";
-import Announcement from "./announcement";
-import Welcome from "./Welcome";
 
 function Home() {
   return (
-    <Layout>
-      <div>
-        {/* <h1>This is Home</h1> */}
-        <Navbar />
-        <Left />
+    <div className="home-page">
+      <div className="welcome">
+        <span className="hello">Hello, Jenine!</span>
 
-        {/* <Announcement />
-      <Welcome /> */}
+        <div className="welcome-content">
+          <h1>
+            Welcome to Philippine Christian University Clinic! Have a healthy
+            day :)
+          </h1>
+          <p>
+            A distinctive Christian University integrating faith, character and
+            service, transforming global Learners for enlightenment, leadership
+            and human development in the 21st century.
+          </p>
+          <div className="buttons">
+            <button className="learnMore">Learn More</button>
+            <button className="upgrade">View Profile</button>
+          </div>
+        </div>
       </div>
-    </Layout>
+      <Right />
+    </div>
   );
 }
 
