@@ -9,6 +9,8 @@ import MonitorHeartRoundedIcon from "@mui/icons-material/MonitorHeartRounded";
 import ArchiveRoundedIcon from "@mui/icons-material/ArchiveRounded";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+import LogoutButton from "./buttons/LogoutButton";
+
 const Left = () => {
   const location = useLocation();
 
@@ -82,19 +84,8 @@ const Left = () => {
             </Link>
           </li>
         </ul>
-
-        <div className="logout">
-          <li>
-            {" "}
-            <Link to="/login">
-              <LogoutIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />{" "}
-              Logout
-            </Link>
-          </li>
-        </div>
+        
+        <LogoutButton/>
       </div>
     </div>
   );

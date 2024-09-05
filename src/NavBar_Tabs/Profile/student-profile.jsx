@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../Components/Layout";
-import meme from "./../../assets/meme.jpg";
+import meme from "../../assets/meme.jpg";
 import Modal from "react-modal";
 import "./student-profile.css";
 function StudentProfile() {

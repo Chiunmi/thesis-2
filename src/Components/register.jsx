@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-    import { toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
-const Login = () => {
+const Register = () => {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const navigate = useNavigate();
@@ -11,8 +11,7 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try{
-            //sends request to backend
-            const response = await axios.post('/login', {
+            const response = await axios.post('/register', {
                 username,
                 password
             });
@@ -21,25 +20,14 @@ const Login = () => {
                 navigate('/'); 
             }
             
-        }catch(err){
+        } catch (err) {
             toast.error(err.response.data.error)
         }
-    }
-
-    const handleLogin = () => {
-        window.location.href = 'http://localhost:3000/auth/google';
     };
 
-
     return (
-    <>
         <div>
-            <h1>Login</h1>
-            <button onClick={handleLogin}>Login with google</button>
-        </div>
-
-        <div>
-            <h1>Login manual</h1>
+            <h1>Register</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Username: </label>
@@ -59,16 +47,15 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type='submit'>Login</button>
+                <button type='submit'>Register</button>
             </form>
             <div>
-                <Link to="/register">
-                <button>Register</button>
+                <Link to="/login">
+                <button>Login</button>
                 </Link>
             </div>
         </div>
-    </>
     )
 }
 
-export default Login
+export default Register

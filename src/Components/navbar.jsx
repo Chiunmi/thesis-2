@@ -3,9 +3,19 @@ import logo from "../assets/logo.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import "./navbar.css";
+import { useUser } from '../context/UserContext';
 
 const Navbar = () => {
+  const { user } = useUser();
   const location = useLocation();
+
+    if (!user) {
+      return (
+          <div>
+              <p>Loading...</p>
+          </div>
+      );
+  }
 
   return (
     <div className="navigation-bar">
@@ -41,8 +51,7 @@ const Navbar = () => {
                 style={{ color: "white", fontSize: "32px" }}
               />
             </li>
-            <Link to="/user"> Neil Christian Gabriel </Link>{" "}
-            {/* Correct path */}
+            <Link to={user.role === 'admin' ? '/admin' : `/user/${user._id}`}className='navbar-link'>{user.username}</Link>
           </ul>
         </div>
       </div>
