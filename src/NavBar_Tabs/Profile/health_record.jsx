@@ -7,7 +7,6 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
-import Chart from "./chart";
 
 import Modal from "react-modal";
 const studentData = {
