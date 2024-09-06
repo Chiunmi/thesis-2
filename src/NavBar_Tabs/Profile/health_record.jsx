@@ -204,9 +204,17 @@ function HealthRecord() {
   };
   
 
-  const isDetailsBlank = (item) => {
-    return !item.date && !item.complaints && !item.actions;
+  const isDetailsBlank = (item, followUp = null) => {
+    if (followUp) {
+      // Check follow-up complaints and actions
+      return !followUp.followUpComplaints && !followUp.followUpActions;
+    } else {
+      // Check assessment date, complaints, and actions
+      return !item.date && !item.complaints && !item.actions;
+    }
   };
+  
+
 
   const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false);
   const [studentFormData, setStudentFormData] = useState({});
@@ -1170,7 +1178,7 @@ function HealthRecord() {
                               <td>{followUp.followUpComplaints}</td>
                               <td>{followUp.followUpActions}</td>
                               <td>
-                                {isDetailsBlank(index) ? (
+                                {isDetailsBlank(item, followUp) ? (
                                   <PostAddRoundedIcon
                                     style={{ color: "blue", cursor: "pointer" }}
                                     onClick={() => openEditModal(item)}
@@ -1187,6 +1195,12 @@ function HealthRecord() {
                         ) : (
                           <tr key={`no-follow-up-${item._id}`}>
                             <td colSpan="3">No follow-ups available</td>
+                            <td>
+                                  <PostAddRoundedIcon
+                                    style={{ color: "blue", cursor: "pointer" }}
+                                    onClick={() => openEditModal(item)}
+                                  />
+                            </td>
                           </tr>
                         )
                       )
