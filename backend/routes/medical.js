@@ -111,8 +111,6 @@ router.post('/assessment', async (req, res) => {
     }
 });
 
-const mongoose = require('mongoose');
-
 router.patch('/assessment/:id', async (req, res) => {
     try {
         const Id = req.params.id;
@@ -133,18 +131,18 @@ router.patch('/assessment/:id', async (req, res) => {
 });
 
 
-router.post('/assessment/:id/followup', async (req, res) => {
+router.patch('/assessment/:id/followup', async (req, res) => {
     try {
         const assessmentId = req.params.id;
         const { followUpComplaints, followUpActions } = req.body;
 
         const assessment = await Assessment.findById(assessmentId);
-
+        
         if (!assessment) {
-            return res.status(404).json({ error: 'Assessment not found' });
+            return res.status(404).json({ error: 'Assessment not found' });        
         }
 
-        assessment.followUps.push({ followUpComplaints, followUpActions });
+        assessment.followUps = { followUpComplaints, followUpActions };
 
         // Save the updated assessment
         const updatedAssessment = await assessment.save();
@@ -154,6 +152,32 @@ router.post('/assessment/:id/followup', async (req, res) => {
         res.status(500).json({ error: 'Error adding follow-up' });
     }
 });
+
+router.patch('/assessment/:id/followup/update', async (req, res) => {
+    try {
+        const assessmentId = req.params.id;
+        const { followUpComplaints, followUpActions } = req.body;
+
+        const assessment = await Assessment.findById(assessmentId);
+        console.log('assessment:', assessment);
+        if (!assessment) {
+            return res.status(404).json({ error: 'Follow-up not found for this assessment' });
+        }
+
+        // Update the existing follow-up
+        assessment.followUps.followUpComplaints = followUpComplaints;
+        assessment.followUps.followUpActions = followUpActions;
+        assessment.followUps.date = new Date(); // Update the date
+
+        // Save the updated assessment
+        const updatedAssessment = await assessment.save();
+        res.status(200).json(updatedAssessment);
+    } catch (err) {
+        console.error('Error updating follow-up:', err);
+        res.status(500).json({ error: 'Error updating follow-up' });
+    }
+});
+
 
 
 

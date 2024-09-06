@@ -120,13 +120,12 @@ function HealthRecord() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(""); // 'add' or 'edit'
   const [formData, setFormData] = useState({});
+  const [followUpFormData, setFollowUpFormData] = useState({});
 
   const openAddModal = () => {
     setFormData({ complaints: "", actions: "" });
     setModalType("add");
     setIsModalOpen(true);
-    console.log('selectedStudent.assessment:', selectedStudent.assessment);
-    console.log('yes', selectedStudent.assessment[0].followUps)
   };  
   
   const openEditAssessmentModal = (item) => {
@@ -135,20 +134,33 @@ function HealthRecord() {
     setIsModalOpen(true);
   }
 
-  const openEditModal = () => {
-    setFormData({ followUpComplaints: "", followUpActions: "" });
-    setModalType("edit");
+  const openAddFollowUpModal = (item) => {
+    setFollowUpFormData({ _id: item._id, complaints: "", actions: "" });
+    setModalType("followUpAdd");
     setIsModalOpen(true);
-  };
+  }
+
+  const openEditFollowUpModal = (item) => {
+    setFollowUpFormData({ 
+      _id: item._id,
+      followUpComplaints: item.followUps.followUpComplaints, 
+      followUpActions: item.followUps.followUpActions 
+    });
+    setModalType("followUpEdit");
+    setIsModalOpen(true);
+  }
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setFormData({
-      date: "",
-      symptoms: "",
-      action: "",
-    });
   };
+
+  const handleFollowUpChange = (e) => {
+    const { name, value } = e.target;
+    setFollowUpFormData({
+      ...followUpFormData,
+      [name]: value,
+    }); 
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -199,22 +211,43 @@ function HealthRecord() {
         } catch (error) {
           console.error("Error saving assessment:", error);
         }
+    } else if (modalType === "followUpAdd") {
+        try {
+          const response = await axios.patch(`/medical/assessment/${followUpFormData._id}/followup`, {
+            followUpActions: followUpFormData.followUpActions,
+            followUpComplaints: followUpFormData.followUpComplaints
+          });
+          const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+          const updatedStudent = updatedStudentResponse.data;
+          setSelectedStudent((prev) => ({
+            ...prev,
+            assessment: updatedStudent.assessment,
+          }));
+
+        } catch (error) {
+          console.error("Error saving assessment:", error);
+        }
+    } else if (modalType === "followUpEdit") {
+        try {
+          console.log('followUpFormData', followUpFormData);
+          const response = await axios.patch(`/medical/assessment/${followUpFormData._id}/followup/update`, {
+            followUpActions: followUpFormData.followUpActions,
+            followUpComplaints: followUpFormData.followUpComplaints
+          });
+
+          const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+          const updatedStudent = updatedStudentResponse.data;
+          setSelectedStudent((prev) => ({
+            ...prev,
+            assessment: updatedStudent.assessment,
+          }));
+
+        } catch (error) {
+          console.error("Error saving assessment:", error);
+        }
     }
     closeModal();
   };
-  
-
-  const isDetailsBlank = (item, followUp = null) => {
-    if (followUp) {
-      // Check follow-up complaints and actions
-      return !followUp.followUpComplaints && !followUp.followUpActions;
-    } else {
-      // Check assessment date, complaints, and actions
-      return !item.date && !item.complaints && !item.actions;
-    }
-  };
-  
-
 
   const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false);
   const [studentFormData, setStudentFormData] = useState({});
@@ -254,60 +287,6 @@ function HealthRecord() {
       toast.error(err.response.data.error)
     }
   }
-
-  const assessmentData = [
-    {
-      id: 1,
-      date: "09/01/24",
-      symptoms: "Masakit ulo",
-      action: "Gave gatorade and itlog ",
-    },
-    {
-      id: 2,
-      date: "09/02/24",
-      symptoms: "Sore throat",
-      action: "Administered cough syrup",
-    },
-    {
-      id: 3,
-      date: "09/03/24",
-      symptoms: "Fever",
-      action: "Provided antipyretics",
-    },
-    {
-      id: 4,
-      date: "09/04/24",
-      symptoms: "Headache",
-      action: "Recommended rest and hydration",
-    },
-  ];
-
-  const followUpData = [
-    {
-      id: 1,
-      date: "09/01/24",
-      symptoms: "Masakit ulo",
-      action: "Followed up on treatment efficacy",
-    },
-    {
-      id: 2,
-      date: "09/02/24",
-      symptoms: "Sore throat",
-      action: "Checked for improvement",
-    },
-    {
-      id: 3,
-      date: "09/03/24",
-      symptoms: "Fever",
-      action: "Scheduled follow-up visit",
-    },
-    {
-      id: 4,
-      date: null,
-      symptoms: null,
-      action: null,
-    },
-  ];
 
   const [vaccineData, setVaccineData] = useState([
     {
@@ -1135,17 +1114,12 @@ function HealthRecord() {
                           <td>{item.complaints}</td>
                           <td>{item.actions}</td>
                           <td>
-                            {isDetailsBlank(item) ? (
-                              <PostAddRoundedIcon
-                                style={{ color: "blue", cursor: "pointer" }}
-                                onClick={() => openEditModal(item)}
-                              />
-                            ) : (
+                            {
                               <DriveFileRenameOutlineRoundedIcon
                                 style={{ color: "green", cursor: "pointer" }}
                                 onClick={() => openEditAssessmentModal(item)}
                               />
-                            )}
+                            }
                           </td>
                         </tr>
                       ))
@@ -1171,42 +1145,33 @@ function HealthRecord() {
                   <tbody>
                     {selectedStudent.assessment && selectedStudent.assessment.length > 0 ? (
                       selectedStudent.assessment.map((item) =>
-                        item.followUps && item.followUps.length > 0 ? (
-                          item.followUps.map((followUp, index) => (
-                            <tr key={`${item._id}-${index}`}>
-                              <td>{new Date(followUp.date).toLocaleDateString()}</td>
-                              <td>{followUp.followUpComplaints}</td>
-                              <td>{followUp.followUpActions}</td>
-                              <td>
-                                {isDetailsBlank(item, followUp) ? (
-                                  <PostAddRoundedIcon
-                                    style={{ color: "blue", cursor: "pointer" }}
-                                    onClick={() => openEditModal(item)}
-                                  />
-                                ) : (
-                                  <DriveFileRenameOutlineRoundedIcon
-                                    style={{ color: "green", cursor: "pointer" }}
-                                    onClick={() => openEditAssessmentModal(item)}
-                                  />
-                                )}
-                              </td>
-                            </tr>
-                          ))
+                        item.followUps ? (
+                          <tr key={`follow-up-${item._id}`}>
+                            <td>{new Date(item.followUps.date).toLocaleDateString()}</td>
+                            <td>{item.followUps.followUpComplaints}</td>
+                            <td>{item.followUps.followUpActions}</td>
+                            <td>
+                              <DriveFileRenameOutlineRoundedIcon
+                                style={{ color: "green", cursor: "pointer" }}
+                                onClick={() => openEditFollowUpModal(item)}
+                              />
+                            </td>
+                          </tr>
                         ) : (
                           <tr key={`no-follow-up-${item._id}`}>
                             <td colSpan="3">No follow-ups available</td>
                             <td>
-                                  <PostAddRoundedIcon
-                                    style={{ color: "blue", cursor: "pointer" }}
-                                    onClick={() => openEditModal(item)}
-                                  />
+                              <PostAddRoundedIcon
+                                style={{ color: "blue", cursor: "pointer" }}
+                                onClick={() => openAddFollowUpModal(item)}
+                              />
                             </td>
                           </tr>
                         )
                       )
                     ) : (
                       <tr>
-                        <td colSpan="3">No assessments available</td>
+                        <td colSpan="4">No assessments available</td>
                       </tr>
                     )}
                   </tbody>
@@ -1242,24 +1207,52 @@ function HealthRecord() {
                     <h3>
                       {modalType === "add"
                         ? "New Assessment"
+                        : modalType === "followUpAdd"
+                        ? "Add Follow-Up"
+                        : modalType === "followUpEdit"
+                        ? "Edit Follow-Up"
                         : "Edit Assessment"}
                     </h3>
-                    <label>Symptoms/Complaints:</label>
-                    <input
-                      type="text"
-                      name="complaints"
-                      value={formData?.complaints ? formData?.complaints : ""}
-                      onChange={handleChange}
-                      required
-                    />
-                    <label>Actions:</label>
-                    <input
-                      type="text"
-                      name="actions"
-                      value={formData?.actions ? formData?.actions : ""}
-                      onChange={handleChange}
-                      required
-                    />
+                    {(modalType === "followUpAdd" || modalType === "followUpEdit") && (
+                      <>
+                        <label>Follow-Up Complaints:</label>
+                        <input
+                          type="text"
+                          name="followUpComplaints"
+                          value={followUpFormData.followUpComplaints || ""}
+                          onChange={handleFollowUpChange}
+                          required
+                        />
+                        <label>Follow-Up Actions:</label>
+                        <input
+                          type="text"
+                          name="followUpActions"
+                          value={followUpFormData.followUpActions || ""}
+                          onChange={handleFollowUpChange}
+                          required
+                        />
+                      </>
+                    )}
+                    {modalType === "add" || modalType === "edit" ? (
+                      <>
+                        <label>Symptoms/Complaints:</label>
+                        <input
+                          type="text"
+                          name="complaints"
+                          value={formData.complaints || ""}
+                          onChange={handleChange}
+                          required
+                        />
+                        <label>Actions:</label>
+                        <input
+                          type="text"
+                          name="actions"
+                          value={formData.actions || ""}
+                          onChange={handleChange}
+                          required
+                        />
+                      </>
+                    ) : null}
                   </div>
                   <div className="stock-btn">
                     <button className="close-btn" onClick={closeModal}>
@@ -1267,18 +1260,22 @@ function HealthRecord() {
                     </button>
                     <button
                       className={
-                        modalType === "add"
+                        modalType === "add" || modalType === "followUpAdd" || modalType === "followUpEdit"
                           ? "save-assessment-btn"
                           : "edit-assessment-btn"
                       }
                       onClick={handleSave}
                     >
-                      {modalType === "add" ? "Add" : "Save"}
+                      {modalType === "add" || modalType === "followUpAdd" || modalType === "followUpEdit" ? "Add" : "Save"}
                     </button>
                   </div>
                 </div>
               </Modal>
+
+
+
             </div>
+
             <div className="column-five">
               <div className="student-data-ix">
                 <button

@@ -4,7 +4,6 @@ const followUpSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now,
-        required: true
     },
     followUpComplaints: {
         type: String,
@@ -33,9 +32,8 @@ const assessmentSchema = new mongoose.Schema({
     timestamp: {
         type: Date,
         default: Date.now,
-        required: true,
     },
-    followUps: [followUpSchema] // Array of follow-up sub-documents
+    followUps: followUpSchema // Array of follow-up sub-documents
 });
 
 module.exports = mongoose.model('Assessment', assessmentSchema);
