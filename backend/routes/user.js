@@ -9,6 +9,7 @@ const User = require('../models/user');
 const PersonalInfo = require('../models/personalInfo');
 const MedicalInfo = require('../models/medicalInfo');
 const EducationInfo = require('../models/educationInfo');
+const Assessment = require('../models/assessment');
 const auth = require('../middlewares/jwtAuth');
 
 //default rotue = '/'
@@ -111,12 +112,14 @@ router.get('/profile/:id', auth, async (req, res) => {
         const personal = await PersonalInfo.findOne({userId});
         const medical = await MedicalInfo.findOne({userId});
         const education = await EducationInfo.findOne({userId});
+        const assessment = await Assessment.find({userId});
         const user = await User.findById(userId, 'pfp');
         if (personal) {
             return res.status(200).json({
                 personal,
                 medical,
                 education,
+                assessment,
                 pfp: user.pfp,
             });
         } else {

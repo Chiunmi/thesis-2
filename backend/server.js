@@ -13,7 +13,7 @@ const auth = require('./middlewares/jwtAuth');
 const app = express();
 
 const startServer = async () => {
-    mongoose.connect(atlasUrl)
+    mongoose.connect(mongodUrl)
         .then(() => {
             app.listen(3000, () => {
                 console.log(`Connected to DB, listening on port: ${port}`);

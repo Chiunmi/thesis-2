@@ -12,7 +12,7 @@ const followUpSchema = new mongoose.Schema({
     },
     followUpActions: {
         type: String,
-        default: 'N/A',
+        required: true,
     }
 });
 
@@ -22,7 +22,7 @@ const assessmentSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    complain: {
+    complaints: {
         type: String,
         required: true,
     },
@@ -30,7 +30,7 @@ const assessmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    timestmap: {
+    timestamp: {
         type: Date,
         default: Date.now,
         required: true,

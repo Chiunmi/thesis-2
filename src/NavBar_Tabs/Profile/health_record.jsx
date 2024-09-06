@@ -119,19 +119,24 @@ function HealthRecord() {
   const [isScanBMIModalOpen, setScanBMIModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(""); // 'add' or 'edit'
-  const [formData, setFormData] = useState({
-    date: "",
-    symptoms: "",
-    action: "",
-  });
+  const [formData, setFormData] = useState({});
 
   const openAddModal = () => {
+    setFormData({ complaints: "", actions: "" });
     setModalType("add");
     setIsModalOpen(true);
-  };
+    console.log('selectedStudent.assessment:', selectedStudent.assessment);
+    console.log('yes', selectedStudent.assessment[0].followUps)
+  };  
+  
+  const openEditAssessmentModal = (item) => {
+    setFormData({ _id: item._id, complaints: `${item.complaints}`, actions: `${item.actions}` });
+    setModalType("edit");
+    setIsModalOpen(true);
+  }
 
-  const openEditModal = (data) => {
-    setFormData(data);
+  const openEditModal = () => {
+    setFormData({ followUpComplaints: "", followUpActions: "" });
     setModalType("edit");
     setIsModalOpen(true);
   };
@@ -153,17 +158,54 @@ function HealthRecord() {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (modalType === "add") {
-      // Handle add logic
+      try {
+        const response = await axios.post(`/medical/assessment`, {
+          userId: selectedStudent.medical.userId, // Replace with the actual user ID
+          complaints: formData.complaints,
+          actions: formData.actions,
+        });
+        toast.success('Student assessment added successfully');
+        // Fetch the updated list of assessments
+        const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+        const updatedStudent = updatedStudentResponse.data;
+  
+        // Update the selectedStudent state with the new assessments
+        setSelectedStudent((prev) => ({
+          ...prev,
+          assessment: updatedStudent.assessment,
+        }));
+  
+      } catch (error) {
+        console.error("Error saving assessment:", error);
+      }
     } else if (modalType === "edit") {
-      // Update the selected student's data or handle update logic
+        try {
+          const response = await axios.patch(`/medical/assessment/${formData._id}`, formData);
+
+          toast.success('Student edited successfully');
+
+          const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+          const updatedStudent = updatedStudentResponse.data;
+    
+          // Update the selectedStudent state with the new assessments
+          setSelectedStudent((prev) => ({
+            ...prev,
+            assessment: updatedStudent.assessment,
+          }));
+
+    
+        } catch (error) {
+          console.error("Error saving assessment:", error);
+        }
     }
     closeModal();
   };
+  
 
   const isDetailsBlank = (item) => {
-    return !item.date && !item.symptoms && !item.action;
+    return !item.date && !item.complaints && !item.actions;
   };
 
   const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false);
@@ -189,7 +231,7 @@ function HealthRecord() {
   const handleStudentSave = async () => {
     try{
       const response = await axios.patch(`/medical/${studentFormData._id}`, studentFormData);
-
+      
       setSelectedStudent((prev) => ({
         ...prev,
         medical: {
@@ -1078,63 +1120,83 @@ function HealthRecord() {
                     </tr>
                   </thead>
                   <tbody>
-                    {assessmentData.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.date}</td>
-                        <td>{item.symptoms}</td>
-                        <td>{item.action}</td>
-                        <td>
-                          {isDetailsBlank(item) ? (
-                            <PostAddRoundedIcon
-                              style={{ color: "blue", cursor: "pointer" }}
-                              onClick={() => openEditModal(item)}
-                            />
-                          ) : (
-                            <DriveFileRenameOutlineRoundedIcon
-                              style={{ color: "green", cursor: "pointer" }}
-                              onClick={() => openEditModal(item)}
-                            />
-                          )}
-                        </td>
+                    {selectedStudent.assessment && selectedStudent.assessment.length > 0 ? (
+                      selectedStudent.assessment.map((item) => (
+                        <tr key={item._id}>
+                          <td>{new Date(item.timestamp).toLocaleDateString()}</td>
+                          <td>{item.complaints}</td>
+                          <td>{item.actions}</td>
+                          <td>
+                            {isDetailsBlank(item) ? (
+                              <PostAddRoundedIcon
+                                style={{ color: "blue", cursor: "pointer" }}
+                                onClick={() => openEditModal(item)}
+                              />
+                            ) : (
+                              <DriveFileRenameOutlineRoundedIcon
+                                style={{ color: "green", cursor: "pointer" }}
+                                onClick={() => openEditAssessmentModal(item)}
+                              />
+                            )}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="4">No assessments available</td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>
 
               <div className="student-data-viii">
-                <br /> <h3>Follow Up</h3>
+                <h3>Follow-Up</h3>
                 <table className="table-style">
                   <thead>
                     <tr>
                       <th>Date</th>
-                      <th>Symptoms/Complaints</th>
-                      <th>Action</th>
-                      <th>Edit</th>
+                      <th>Follow-Up Complaints</th>
+                      <th>Follow-Up Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {followUpData.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.date}</td>
-                        <td>{item.symptoms}</td>
-                        <td>{item.action}</td>
-                        <td>
-                          {isDetailsBlank(item) ? (
-                            <PostAddRoundedIcon
-                              style={{ color: "blue", cursor: "pointer" }}
-                              onClick={() => openEditModal(item)}
-                            />
-                          ) : (
-                            <DriveFileRenameOutlineRoundedIcon
-                              style={{ color: "green", cursor: "pointer" }}
-                              onClick={() => openEditModal(item)}
-                            />
-                          )}
-                        </td>
+                    {selectedStudent.assessment && selectedStudent.assessment.length > 0 ? (
+                      selectedStudent.assessment.map((item) =>
+                        item.followUps && item.followUps.length > 0 ? (
+                          item.followUps.map((followUp, index) => (
+                            <tr key={`${item._id}-${index}`}>
+                              <td>{new Date(followUp.date).toLocaleDateString()}</td>
+                              <td>{followUp.followUpComplaints}</td>
+                              <td>{followUp.followUpActions}</td>
+                              <td>
+                                {isDetailsBlank(index) ? (
+                                  <PostAddRoundedIcon
+                                    style={{ color: "blue", cursor: "pointer" }}
+                                    onClick={() => openEditModal(item)}
+                                  />
+                                ) : (
+                                  <DriveFileRenameOutlineRoundedIcon
+                                    style={{ color: "green", cursor: "pointer" }}
+                                    onClick={() => openEditAssessmentModal(item)}
+                                  />
+                                )}
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr key={`no-follow-up-${item._id}`}>
+                            <td colSpan="3">No follow-ups available</td>
+                          </tr>
+                        )
+                      )
+                    ) : (
+                      <tr>
+                        <td colSpan="3">No assessments available</td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
+
                 </table>
               </div>
 
@@ -1168,26 +1230,21 @@ function HealthRecord() {
                         ? "New Assessment"
                         : "Edit Assessment"}
                     </h3>
-                    <label>Date:</label>
-                    <input
-                      type="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                    />
                     <label>Symptoms/Complaints:</label>
                     <input
                       type="text"
-                      name="symptoms"
-                      value={formData.symptoms}
+                      name="complaints"
+                      value={formData?.complaints ? formData?.complaints : ""}
                       onChange={handleChange}
+                      required
                     />
                     <label>Actions:</label>
                     <input
                       type="text"
-                      name="action"
-                      value={formData.action}
+                      name="actions"
+                      value={formData?.actions ? formData?.actions : ""}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                   <div className="stock-btn">

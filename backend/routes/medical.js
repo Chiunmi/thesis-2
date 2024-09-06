@@ -83,7 +83,6 @@ router.patch('/:id', async (req, res) => {
             return res.status(404).json({ error: 'Not authorize'})
         }
 
-        console.log('id:', Id);
         const medical = await MedicalInfo.findByIdAndUpdate(Id, updatedFields); 
         res.status(200).json(medical);
         console.log('medical:', medical);
@@ -99,10 +98,10 @@ router.post('/assessment', async (req, res) => {
           if (currentUser.role !== 'admin'){
             return res.status(404).json({ error: 'Not authorize'})
         }
-        const { userId, complain, actions } = req.body;
+        const { userId, complaints, actions } = req.body;
         const assessment = await Assessment.create({
             userId,
-            complain,
+            complaints,
             actions
         });
         res.status(200).json(assessment);
@@ -111,6 +110,28 @@ router.post('/assessment', async (req, res) => {
         res.status(500).json({ error: 'Error adding assessment on student' });
     }
 });
+
+const mongoose = require('mongoose');
+
+router.patch('/assessment/:id', async (req, res) => {
+    try {
+        const Id = req.params.id;
+        const currentUser = req.user;
+        const updatedFields = req.body;
+
+        // Check if the user is authorized
+        if (currentUser.role !== 'admin') {
+            return res.status(403).json({ error: 'Not authorized' });
+        }
+        // Find the existing assessment by ID
+        const existingAssessment = await Assessment.findByIdAndUpdate(Id, updatedFields);
+        res.status(200).json(existingAssessment);
+    } catch (err) {
+        console.error('Error updating assessment:', err);
+        res.status(500).json({ error: 'Error updating assessment of student' });
+    }
+});
+
 
 router.post('/assessment/:id/followup', async (req, res) => {
     try {
