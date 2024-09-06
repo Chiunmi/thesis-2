@@ -1,0 +1,51 @@
+.home-page {
+  position: fixed;
+  background-color: pink;
+  width: calc(80% - 260px);
+  height: auto;
+  margin: 4vh 0vw;
+  margin-left: calc(0% + 13vw);
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.home-page::-webkit-scrollbar {
+  display: none;
+}
+
+.hello {
+  font-size: 36px;
+  font-weight: 500;
+  color: #252525;
+  /* margin-left: -15px; */
+}
+.welcome {
+  background-color: bisque;
+}
+.welcome-content {
+  width: 100%;
+  height: auto;
+  background: linear-gradient(to right, #003163, #13072e);
+  border-radius: 20px;
+  color: white;
+  margin-top: 1vh;
+  padding: 20px;
+}
+
+.welcome-content h1 {
+  padding: 20px 30px 40px 10px;
+  width: 55vw;
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.welcome-content p {
+  padding: 0px 50px 40px 30px;
+  width: 60vw;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.announcement-button {
+  display: flex;
+}

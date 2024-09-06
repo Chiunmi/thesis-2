@@ -1,7 +1,6 @@
 // import "./archive.css";
 import jen from "./../assets/jen.png";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
