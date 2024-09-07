@@ -5,6 +5,7 @@ const PersonalInfo = require('../models/personalInfo');
 const User = require('../models/user');
 const Assessment = require('../models/assessment');
 const Immunization = require('../models/Immunizations');
+const Archive = require('../models/archive');
 
 //default = '/medical'
 
@@ -75,23 +76,71 @@ router.get('/search', async (req, res) => {
 });
 
 router.patch('/:id', async (req, res) => {
-    try{
-        const Id = req.params.id;
-        const currentUser = req.user;
-        const updatedFields = req.body;
+    try {
+      const Id = req.params.id;
+      const currentUser = req.user;
+      const updatedFields = req.body;
 
-        if (currentUser.role !== 'admin'){
-            return res.status(404).json({ error: 'Not authorize'})
+      console.log('current user', currentUser._id);
+  
+      if (currentUser.role !== 'admin') {
+        return res.status(404).json({ error: 'Not authorized' });
+      }
+  
+      // Fetch the original document
+      const originalDocument = await MedicalInfo.findById(Id).lean();
+  
+      if (!originalDocument) {
+        return res.status(404).json({ error: 'Document not found' });
+      }
+  
+      // Update the document
+      const medical = await MedicalInfo.findByIdAndUpdate(Id, updatedFields);
+  
+      // Identify the changed fields
+      const changedFields = {};
+      for (const key in updatedFields) {
+        if (key === '_id' || key === 'userId' || key === 'timestamp') {
+            continue;
+          }
+        if (originalDocument[key] !== updatedFields[key]) {
+          changedFields[key] = updatedFields[key];
         }
-
-        const medical = await MedicalInfo.findByIdAndUpdate(Id, updatedFields); 
-        res.status(200).json(medical);
-        console.log('medical:', medical);
-        } catch(err) {
-        console.error('Error searching students:', err);
-        res.status(500).json({ error: 'Error updating student' });
+      }
+  
+      // Find existing archive document for this record
+      let archive = await Archive.findOne({ documentId: Id});
+  
+      if (archive) {
+        // Push the new change to the existing archive document
+        archive.changes.push({
+          userId: currentUser._id,
+          changedFields,
+        });
+        await archive.save();
+      } else {
+        // Create a new archive document if none exists
+        await Archive.create({
+          documentId: Id,
+          collectionName: 'Medical Records',
+          originalDocument,
+          changes: [
+            {
+              userId: currentUser._id,
+              changedFields,
+              timestamp: Date.now(),
+            },
+          ],
+        });
+      }
+  
+      res.status(200).json(medical);
+    } catch (err) {
+      console.error('Error updating document:', err);
+      res.status(500).json({ error: 'Error updating document' });
     }
-});
+  });
+  
 
 router.post('/immunization', async (req, res) => {
     try{
