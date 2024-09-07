@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 
 const archiveSchema = new mongoose.Schema({
-    documentId: { // The ID of the document being tracked
+    documentId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
-    collectionName: { // Name of the collection the document belongs to
+    collectionName: { 
         type: String,
         required: true,
     },
-    originalDocument: { // The original state of the document
+    originalDocument: { 
         type: Object,
         required: true
     },
-    changes: [ // Array of changes made to the document over time
+    changes: [
         {
             userId: { // Who made the change
                 type: mongoose.Schema.Types.ObjectId,

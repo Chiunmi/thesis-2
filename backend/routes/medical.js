@@ -33,7 +33,6 @@ router.get('/', async (req, res) => {
                 personal
             };
         }));
-        console.log('combinedData', combinedData);
         res.json(combinedData);
     } catch (err) {
         console.error('Error fetching data:', err);
@@ -80,8 +79,6 @@ router.patch('/:id', async (req, res) => {
       const Id = req.params.id;
       const currentUser = req.user;
       const updatedFields = req.body;
-
-      console.log('current user', currentUser._id);
   
       if (currentUser.role !== 'admin') {
         return res.status(404).json({ error: 'Not authorized' });
@@ -89,7 +86,6 @@ router.patch('/:id', async (req, res) => {
   
       // Fetch the original document
       const originalDocument = await MedicalInfo.findById(Id).lean();
-  
       if (!originalDocument) {
         return res.status(404).json({ error: 'Document not found' });
       }
@@ -110,7 +106,8 @@ router.patch('/:id', async (req, res) => {
   
       // Find existing archive document for this record
       let archive = await Archive.findOne({ documentId: Id});
-  
+      console.log('archive', archive);
+
       if (archive) {
         // Push the new change to the existing archive document
         archive.changes.push({
@@ -121,17 +118,16 @@ router.patch('/:id', async (req, res) => {
       } else {
         // Create a new archive document if none exists
         await Archive.create({
-          documentId: Id,
-          collectionName: 'Medical Records',
-          originalDocument,
-          changes: [
-            {
-              userId: currentUser._id,
-              changedFields,
-              timestamp: Date.now(),
-            },
-          ],
-        });
+            documentId: Id,
+            collectionName: 'Medical Records',
+            originalDocument,
+            changes: [
+                {
+                userId: currentUser._id,
+                changedFields,
+                },
+            ],
+            });
       }
   
       res.status(200).json(medical);
@@ -167,12 +163,51 @@ router.patch('/immunization/:id', async (req, res) => {
         const currentUser = req.user;
         const updatedFields = req.body;
 
-        // Check if the user is authorized
         if (currentUser.role !== 'admin') {
             return res.status(403).json({ error: 'Not authorized' });
         }
-        // Find the existing assessment by ID
+        console.log('id', Id);
+        const originalDocument = await Immunization.findOne({_id: Id}).lean();
+
+        if (!originalDocument) {
+          return res.status(404).json({ error: 'Document not found' });
+        }
+
         const existingAssessment = await Immunization.findByIdAndUpdate(Id, updatedFields);
+
+        const changedFields = {};
+        for (const key in updatedFields) {
+          if (key === '_id' || key === 'userId' || key === 'timestamp') {
+              continue;
+            }
+          if (originalDocument[key] !== updatedFields[key]) {
+            changedFields[key] = updatedFields[key];
+          }
+        }
+
+        let archive = await Archive.findOne({ documentId: Id});
+        if (archive) {
+            // Push the new change to the existing archive document
+            archive.changes.push({
+              userId: currentUser._id,
+              changedFields,
+            });
+            await archive.save();
+          } else {
+            // Create a new archive document if none exists
+            await Archive.create({
+                documentId: Id,
+                collectionName: 'Immunization Records',
+                originalDocument,
+                changes: [
+                    {
+                    userId: currentUser._id,
+                    changedFields,
+                    },
+                ],
+                });
+          }
+
         res.status(200).json(existingAssessment);
     } catch (err) {
         console.error('Error updating assessment:', err);

@@ -23,9 +23,27 @@ function Archive() {
   const [searchName, setSearchName] = useState("");
   
   const [showModal, setShowModal] = useState(false);
+  const [archiveData, setArchiveData] = useState(null);
+  
+  const handleOpenModal = (userId) => {
+    setShowModal(true);
+    fetchArchive(userId)
+    console.log('userId', userId);
+  };
 
-  const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const fetchArchive = async (userId) => {
+    try {
+        const response = await axios.get(`/archive/${userId}`);
+        const archiveFetched = response.data
+
+        setArchiveData(archiveFetched)
+        console.log('archive:', archiveFetched);
+    } catch (error) {
+        console.error('Failed to fetch archive:', error);
+    }
+};
 
 
   const resetSelections = () => {
@@ -477,17 +495,37 @@ function Archive() {
               className="archive-staff"
               style={{ fontSize: "14px", margin: "1vw" }}
             >
-            <button onClick={handleOpenModal}>View Archive</button>
-            {showModal && (
+            <button onClick={() => handleOpenModal(selectedStudent.medical.userId)}>View Archive</button>
+            {showModal && archiveData && (
               <div className="modal">
                 <div className="modal-content">
                   <h3>Document Archive</h3>
-                  <ul>
-                    {/* Placeholder content for archives */}
-                    <li>Archive 1 - Edited by Staff A on Mar 15 08:12:04</li>
-                    <li>Archive 2 - Edited by Staff B on Mar 14 08:12:04</li>
-                    {/* Add more archives as needed */}
-                  </ul>
+
+                  <div>
+                    <h4>Original Record</h4>
+                    <pre>{JSON.stringify(archiveData.originalDocument, null, 2)}</pre>
+
+                    <h4>Changes History</h4>
+                    {archiveData.changes && archiveData.changes.length > 0 ? (
+                      <ul>
+                        {archiveData.changes.map((change, index) => (
+                          <li key={index}>
+                            <p>Change #{index + 1} (By User ID: {change.userId} on {new Date(change.timestamp).toLocaleString()}):</p>
+                            <ul>
+                              {Object.keys(change.changedFields).map((field) => (
+                                <li key={field}>
+                                  {field}: {change.changedFields[field]}
+                                </li>
+                              ))}
+                            </ul>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>No changes found.</p>
+                    )}
+                  </div>
+
                   <button onClick={handleCloseModal}>Close</button>
                 </div>
               </div>
