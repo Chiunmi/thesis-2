@@ -16,9 +16,9 @@ const followUpSchema = new mongoose.Schema({
 });
 
 const assessmentSchema = new mongoose.Schema({
-    userId: { //student id
+    medicalInfoId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'MedicalInfo',
         required: true,
     },
     complaints: {

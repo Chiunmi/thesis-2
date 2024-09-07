@@ -4,6 +4,7 @@ const EducationInfo = require('../models/educationInfo');
 const PersonalInfo = require('../models/personalInfo');
 const User = require('../models/user');
 const Assessment = require('../models/assessment');
+const Immunization = require('../models/Immunizations');
 
 //default = '/medical'
 
@@ -90,7 +91,45 @@ router.patch('/:id', async (req, res) => {
         console.error('Error searching students:', err);
         res.status(500).json({ error: 'Error updating student' });
     }
-})
+});
+
+router.post('/immunization', async (req, res) => {
+    try{
+        const currentUser = req.user;
+        if (currentUser.role !== 'admin'){
+          return res.status(404).json({ error: 'Not authorize'})
+        }
+        const { medicalInfoId, vaccine, remarks } = req.body;
+        const newImmunization = await Immunization.create({
+            medicalInfoId,
+            vaccine,
+            remarks
+        });
+        res.status(200).json(newImmunization);
+    } catch (err) {
+        console.error('Error searching students:', err);
+        res.status(500).json({ error: 'Error adding immunization on student' });
+    }
+});
+
+router.patch('/immunization/:id', async (req, res) => {
+    try {
+        const Id = req.params.id;
+        const currentUser = req.user;
+        const updatedFields = req.body;
+
+        // Check if the user is authorized
+        if (currentUser.role !== 'admin') {
+            return res.status(403).json({ error: 'Not authorized' });
+        }
+        // Find the existing assessment by ID
+        const existingAssessment = await Immunization.findByIdAndUpdate(Id, updatedFields);
+        res.status(200).json(existingAssessment);
+    } catch (err) {
+        console.error('Error updating assessment:', err);
+        res.status(500).json({ error: 'Error updating assessment of student' });
+    }
+});
 
 router.post('/assessment', async (req, res) => {
     try{
@@ -98,9 +137,9 @@ router.post('/assessment', async (req, res) => {
           if (currentUser.role !== 'admin'){
             return res.status(404).json({ error: 'Not authorize'})
         }
-        const { userId, complaints, actions } = req.body;
+        const { medicalInfoId, complaints, actions } = req.body;
         const assessment = await Assessment.create({
-            userId,
+            medicalInfoId,
             complaints,
             actions
         });

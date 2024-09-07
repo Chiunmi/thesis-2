@@ -174,7 +174,7 @@ function HealthRecord() {
     if (modalType === "add") {
       try {
         const response = await axios.post(`/medical/assessment`, {
-          userId: selectedStudent.medical.userId, // Replace with the actual user ID
+          medicalInfoId: selectedStudent.medical._id, // Replace with the actual user ID
           complaints: formData.complaints,
           actions: formData.actions,
         });
@@ -288,40 +288,24 @@ function HealthRecord() {
     }
   }
 
-  const [vaccineData, setVaccineData] = useState([
-    {
-      id: 1,
-      date: "06/02/24",
-      vaccine: "Anti-rabies",
-      remarks: "Sheeshhhh",
-    },
-    {
-      id: 2,
-      date: "07/15/24",
-      vaccine: "COVID-19",
-      remarks: "Booster dose",
-    },
-  ]);
 
   const [isVaccineModalOpen, setIsVaccineModalOpen] = useState(false);
-  const [vaccineFormData, setVaccineFormData] = useState({
-    id: null,
-    date: "",
-    vaccine: "",
-    remarks: "",
-  });
-  const [vaccineModalType, setVaccineModalType] = useState("add");
+  const [vaccineFormData, setVaccineFormData] = useState({});
+  const [vaccineModalType, setVaccineModalType] = useState("");
 
-  // Modal state functions
-  const openVaccineModal = (type, vaccine) => {
-    setVaccineModalType(type);
-    setVaccineFormData(
-      vaccine
-        ? { ...vaccine }
-        : { id: null, date: "", vaccine: "", remarks: "" }
-    );
+  // Modal state functions 
+  
+  const openVaccineModal = () => {
+    setVaccineModalType("add");
+    setVaccineFormData({ vaccine: "", remarks: "" });
     setIsVaccineModalOpen(true);
   };
+
+  const openEdiVaccineModal = (item) => {
+    setVaccineFormData({ _id: item._id, vaccine: `${item.vaccine}`, remarks: `${item.remarks}` });
+    setVaccineModalType("edit");
+    setIsVaccineModalOpen(true);
+  }
 
   const closeVaccineModal = () => {
     setIsVaccineModalOpen(false);
@@ -337,20 +321,47 @@ function HealthRecord() {
   };
 
   // Save function for adding or editing a vaccine
-  const handleVaccineSave = () => {
+  const handleVaccineSave = async () => {
     if (vaccineModalType === "add") {
-      // Add new vaccine
-      setVaccineData([
-        ...vaccineData,
-        { ...vaccineFormData, id: vaccineData.length + 1 },
-      ]);
+      try {
+        const response = await axios.post(`/medical/immunization`, {
+          medicalInfoId: selectedStudent.medical._id, // Replace with the actual user ID
+          vaccine: vaccineFormData.vaccine,
+          remarks: vaccineFormData.remarks,
+        });
+        toast.success('Student immunization added successfully');
+        // Fetch the updated list of assessments
+        const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+        const updatedStudent = updatedStudentResponse.data;
+  
+        // Update the selectedStudent state with the new assessments
+        setSelectedStudent((prev) => ({
+          ...prev,
+          immunization: updatedStudent.immunization,
+        }));
+  
+      } catch (error) {
+        console.error("Error saving assessment:", error);
+      }
     } else {
-      // Edit existing vaccine
-      setVaccineData(
-        vaccineData.map((vaccine) =>
-          vaccine.id === vaccineFormData.id ? vaccineFormData : vaccine
-        )
-      );
+      try {
+        const response = await axios.patch(`/medical/immunization/${vaccineFormData._id}`, vaccineFormData);
+
+        toast.success('Student edited immunization successfully');
+
+        const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+        const updatedStudent = updatedStudentResponse.data;
+  
+        // Update the selectedStudent state with the new assessments
+        setSelectedStudent((prev) => ({
+          ...prev,
+          immunization: updatedStudent.immunization,
+        }));
+
+  
+      } catch (error) {
+        console.error("Error saving assessment:", error);
+      }
     }
     closeVaccineModal();
   };
@@ -1295,23 +1306,26 @@ function HealthRecord() {
                     </tr>
                   </thead>
                   <tbody>
-                    {vaccineData.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.date}</td>
+                  {selectedStudent.immunization && selectedStudent.immunization.length > 0 ? (
+                      selectedStudent.immunization.map((item) => (
+                      <tr key={item._id}>
+                        <td>{new Date(item.timestamp).toLocaleDateString()}</td>
                         <td>{item.vaccine}</td>
                         <td>{item.remarks}</td>
                         <td>
-                          <button
-                            className="edit-vaccine-btn"
-                            onClick={() => openVaccineModal("edit", item)}
-                          >
-                            <DriveFileRenameOutlineRoundedIcon
+                            { <DriveFileRenameOutlineRoundedIcon
                               style={{ color: "green", cursor: "pointer" }}
+                              onClick={() => openEdiVaccineModal(item)}
                             />
-                          </button>
+                            }
                         </td>
                       </tr>
-                    ))}
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="4">No assessments available</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
                 <Modal
@@ -1344,13 +1358,6 @@ function HealthRecord() {
                           ? "Add Vaccine"
                           : "Edit Vaccine"}
                       </h3>
-                      <label>Date:</label>
-                      <input
-                        type="date"
-                        name="date"
-                        value={vaccineFormData.date}
-                        onChange={handleVaccineChange}
-                      />
                       <label>Vaccine:</label>
                       <input
                         type="text"
