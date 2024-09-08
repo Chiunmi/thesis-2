@@ -1,4 +1,4 @@
-.nav {
+z.nav {
   z-index: 10;
 }
 
@@ -96,4 +96,51 @@
 .user-icon {
   margin: 12px;
   color: white;
+}
+
+/* this is added */
+.notification-dropdown {
+  position: absolute;
+  top: 100%; /* Position below the NotificationsIcon */
+  right: 0;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-height: 300px; /* Optional: limit height and add scroll */
+  overflow-y: auto;
+  width: 300px;
+  z-index: 100; /* Ensure it appears above other elements */
+  display: none; /* Hide by default */
+}
+
+.notification-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block; /* Ensure the list is displayed as a block element */
+}
+
+.notification-dropdown li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: block; /* Ensure each list item is displayed as a block element */
+}
+
+.notification-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.notification-dropdown a {
+  color: black;
+  text-decoration: none;
+}
+
+.notification-dropdown a:hover {
+  text-decoration: underline;
+}
+
+/* Show the dropdown when active */
+.navbar-right .notification-dropdown {
+  display: block; /* Ensure it displays when active */
 }

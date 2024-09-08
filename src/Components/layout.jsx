@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 import { useUser } from '../context/UserContext';
 
 import Left from "./left";
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import Right from "./right";
 
   function Layout() {

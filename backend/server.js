@@ -7,6 +7,8 @@ const { mongodUrl, atlasUrl, port } = require('./utils/config');
 const userRoute = require('./routes/user');
 const medicalRoute = require('./routes/medical');
 const archiveRoute = require('./routes/archive');
+const postRoute = require('./routes/post');
+const notifRoute = require('./routes/notification');
 
 const passport = require('./utils/passport');
 const auth = require('./middlewares/jwtAuth');
@@ -36,7 +38,8 @@ const startServer = async () => {
     app.use('/', userRoute);
     app.use('/medical', auth, medicalRoute);
     app.use('/archive', auth, archiveRoute);
-
+    app.use('/post', auth, postRoute);
+    app.use('/notification', auth, notifRoute);
 }
 
 startServer();
