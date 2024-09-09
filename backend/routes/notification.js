@@ -28,7 +28,6 @@ router.get('/', async (req, res) => {
           $sort: { timestamp: -1 } // Sort by timestamp, most recent first
         }
       ]);
-      console.log('eys', notifications);
       res.json(notifications);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching notifications', error });

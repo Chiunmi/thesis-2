@@ -9,6 +9,7 @@ const medicalRoute = require('./routes/medical');
 const archiveRoute = require('./routes/archive');
 const postRoute = require('./routes/post');
 const notifRoute = require('./routes/notification');
+const eventRoute = require('./routes/event');
 
 const passport = require('./utils/passport');
 const auth = require('./middlewares/jwtAuth');
@@ -40,6 +41,7 @@ const startServer = async () => {
     app.use('/archive', auth, archiveRoute);
     app.use('/post', auth, postRoute);
     app.use('/notification', auth, notifRoute);
+    app.use('/events', auth, eventRoute);
 }
 
 startServer();
