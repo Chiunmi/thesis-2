@@ -34,17 +34,19 @@ function App() {
           <Route path="/request-forms" element={<RequestForms />} />
           <Route path="/events" element={<Events />} />
           <Route path="/health-tips" element={<HealthTips />} />
-          <Route path="/archive" element={<Archive />} />
+
           <Route path="/location" element={<Location />} />
           <Route path="/about-us" element={<AboutUs />} />
+        </Route>
+
+        {/* Routes that use the Profile Layout */}
+        <Route element={<ProfileLayout />}>
+          <Route path="/archive" element={<Archive />} />
           <Route path="/user" element={<StudentProfile />} />
           <Route path="/admin" element={<AdminProfile />} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/health-record" element={<HealthRecord />} />
         </Route>
-
-        {/* Routes that use the Profile Layout */}
-        <Route element={<ProfileLayout />}></Route>
 
         {/* Routes that do not use any layout */}
         <Route path="/login" element={<Login />} />

@@ -1,10 +1,18 @@
 .health-tips {
   position: fixed;
-  margin: 2vh 2vw 2vw 26vh;
-  width: 86vw;
-  height: 90vh;
-
   /* background-color: pink; */
+  width: calc(100vw - 32.5vw);
+  height: auto;
+  height: 92vh;
+  margin: 6vh 0vw;
+  margin: 2vh;
+  margin-left: calc(0% + 12vw);
+  margin-right: calc(0% + 18vw);
+  overflow-y: auto;
+}
+
+.health-tips::-webkit-scrollbar {
+  display: none;
 }
 .tips {
   display: grid; /* Enables CSS Grid on the parent container */
@@ -20,7 +28,7 @@
 
 .tip {
   background-color: rgba(138, 138, 138, 0.2);
-  min-width: 520px; /* Ensures the child elements are wide enough to fit in the grid columns */
+  min-width: 20vw; /* Ensures the child elements are wide enough to fit in the grid columns */
   max-height: fit-content;
   padding: 20px;
   border-radius: 24px;
@@ -33,7 +41,7 @@
 
 .quote {
   background: linear-gradient(to right, #003163, #13072e);
-  min-width: 520px; /* Ensures the child elements are wide enough to fit in the grid columns */
+  min-width: 20vw; /* Ensures the child elements are wide enough to fit in the grid columns */
   max-height: fit-content;
   padding: 20px;
   border-radius: 24px;

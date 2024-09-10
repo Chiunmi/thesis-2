@@ -1,9 +1,9 @@
 .studentProfile {
   position: fixed;
-  margin: 2vh 2vw 2vw 26vh;
+  margin: 6vh 2vw 2vw 26vh;
   /* background-color: pink; */
   width: 86vw;
-  height: 90vh;
+  height: 92vh;
   overflow-y: auto;
   max-height: fit-content;
   color: black;

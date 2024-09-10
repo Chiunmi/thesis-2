@@ -1,8 +1,13 @@
 .schedule-page {
   position: fixed;
-  margin: 2vh 2vw 2vw 26vh;
-  width: 86vw;
-  height: 90vh;
+  /* background-color: pink; */
+  width: calc(100vw - 32.5vw);
+  height: auto;
+  height: 92vh;
+  margin: 6vh 0vw;
+  margin-left: calc(0% + 12vw);
+  margin-right: calc(0% + 18vw);
+  overflow-y: auto;
 }
 
 .schedule-page h1,

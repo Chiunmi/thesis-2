@@ -1,0 +1,122 @@
+.right-container {
+  /* background-color: pink; */
+  width: 18.5vw;
+  height: 85vh;
+  margin-top: 12vh;
+  margin-right: 1vw;
+  left: 90vw;
+}
+.monthly-announcement-label {
+  color: #8a8a8a;
+  margin-top: 20px;
+}
+
+.monthly-buttonS {
+  display: flex;
+}
+
+.delete-modal-content .delete-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px #ddd solid;
+  color: white;
+  background-color: red;
+}
+.monthly-add,
+.monthly-delete {
+  color: white;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border: 1px white solid;
+}
+
+.monthly-add:hover,
+.monthly-delete:hover {
+  background-color: #8a8a8a;
+  color: white;
+  border: 1px white solid;
+}
+
+.monthly-add {
+  background-color: #2a9df4;
+}
+.monthly-delete {
+  background-color: red;
+}
+.right-content {
+  background-color: rgba(138, 138, 138, 0.2);
+  border-radius: 10px;
+  width: 100%;
+  height: 96%;
+  margin-top: 0.5vh;
+}
+.priority-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 20px;
+}
+.priority-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.priority-text p {
+  font-size: 12px;
+  text-align: center;
+}
+
+.line {
+  height: 4px;
+  width: 80%;
+  margin-left: 2vw;
+  border-radius: 30px;
+  background-color: #003163;
+}
+.poster-container {
+  background-color: antiquewhite;
+  margin: 1vh;
+  margin-top: 2vh;
+  height: 50vh;
+  width: 95%;
+  max-height: 50vh;
+  position: relative;
+  overflow: hidden; /* Ensure no overflow */
+}
+
+.bakuna-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-poster-input {
+  display: none; /* Hide the actual input */
+}
+
+.poster-description {
+  /* background-color: pink; */
+  text-align: justify;
+  text-indent: 20px;
+  overflow-y: scroll;
+  font-size: 12px;
+  padding: 15px;
+  width: 18vw;
+  height: 16vh;
+}
+
+.poster-description::-webkit-scrollbar {
+  display: none;
+}
