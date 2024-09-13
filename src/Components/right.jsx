@@ -175,7 +175,10 @@ function Right() {
           />
           <div className="priority-text">
             <h3>Vaccination</h3>
-            <p>College Freshmen and Transferees</p>
+            <p>
+              College Freshmen and TransfereesCollege Freshmen and
+              TransfereesCollege Freshmen and Transferees
+            </p>
           </div>
           <DoubleArrowOutlinedIcon
             style={{

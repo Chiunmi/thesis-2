@@ -38,6 +38,8 @@ const studentData = {
           muscular: "N/A",
           reproductive: "N/A",
           lymphatic: "N/A",
+          psychological: "N/A",
+          specifyPsychological: "N/A",
 
           smoke: "No",
           drink: "No",
@@ -940,6 +942,22 @@ function HealthRecord() {
                           onChange={handleChange}
                         />
                         <br />
+                        <label>Psychological: </label>
+                        <input
+                          type="text"
+                          name="psychological"
+                          value={selectedStudent.psychological}
+                          onChange={handleChange}
+                        />
+                        <br />
+                        <label>If so, specify: </label>
+                        <input
+                          type="text"
+                          name="specifyPsychological"
+                          value={selectedStudent.specifPsychological}
+                          onChange={handleChange}
+                        />
+                        <br />
                         <h4>III. Habits and Allergies</h4>
                         <label>Do you smoke?: </label>
                         <input
@@ -1221,6 +1239,56 @@ function HealthRecord() {
                           onChange={handleChange}
                         />
                         <br />
+                        <h4>VIII. Laboratory Examination</h4>
+                        <label>Blood Chemistry: </label>
+                        <input
+                          type="text"
+                          name="bloodChemistry"
+                          value={selectedStudent.bloodChemistry}
+                          onChange={handleChange}
+                        />
+                        <br />
+                        <label>CBC: </label>
+                        <input
+                          type="text"
+                          name="cbc"
+                          value={selectedStudent.cbc}
+                          onChange={handleChange}
+                        />
+                        <br />
+                        <label>Urinalysis: </label>
+                        <input
+                          type="text"
+                          name="urinalysis"
+                          value={selectedStudent.urinalysis}
+                          onChange={handleChange}
+                        />
+                        <br />
+                        <label>Fecalysis: </label>
+                        <input
+                          type="text"
+                          name="fecalysis"
+                          value={selectedStudent.fecalysis}
+                          onChange={handleChange}
+                        />
+                        <br />
+                        <h4> IX. Diagnostic Procedures</h4>
+                        <label>Chest X-Ray Findings: </label>
+                        <input
+                          type="text"
+                          name="chestXray"
+                          value={selectedStudent.chestXray}
+                          onChange={handleChange}
+                        />
+                        <br />
+                        <h4>X. Others</h4>
+                        <input
+                          type="text"
+                          name="others"
+                          value={selectedStudent.others}
+                          onChange={handleChange}
+                        />
+                        <br />
                       </form>
                       <div className="edit-account-btn">
                         <button
@@ -1324,6 +1392,8 @@ function HealthRecord() {
                 <p>Muscular : {selectedStudent.muscular}</p>
                 <p>Reproductive : {selectedStudent.reproductive}</p>
                 <p>Lymphatic : {selectedStudent.lymphatic}</p>
+                <p>Psychological : {selectedStudent.psychological}</p>
+                <p>If so, specify? : {selectedStudent.specifyPsychological}</p>
                 <br />
                 <h4> III. </h4>
                 <p>Do you smoke? : {selectedStudent.smoke}</p>
@@ -1376,28 +1446,25 @@ function HealthRecord() {
                 <p>Lower : {selectedStudent.lowerExtremities}</p>
               </div>
             </div>
-            <h3>Laboratory Examination</h3>
+
             <div className="column-three">
-              <div className="student-data-v">
-                <h4> VI. </h4>
-                <div className="x-ray">
-                  <h4> CHEST X-RAY </h4>
-                  <button className="xray-upload-btn">
-                    {" "}
-                    Upload Chest X-RAY
-                  </button>
-                </div>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <p> Others: (If indicated)</p>
+              <div className="student-data-v1">
+                <h3>Laboratory Examination</h3>
+                <h4> VIII. </h4>
+                <p> Blood Chemistry: {selectedStudent.bloodChemistry}</p>
+                <p> CBC:{selectedStudent.cbc} </p>
+                <p> Urinalysis: {selectedStudent.urinalysis}</p>
+                <p> Fecalysis: {selectedStudent.fecalysis}</p>
+              </div>
+              <div className="student-data-v2">
+                <h3>Diagnostic Procedures</h3>
+                <h4> IX. </h4>
+                <p> Chest X-ray Findings: {selectedStudent.chestXray}</p>
+              </div>
+              <div className="student-data-v3">
+                <h3>Others(ECG, Ultrasound, etc.)</h3>
+                <h4> X. </h4>
+                <p> {selectedStudent.others}</p>
               </div>
             </div>
 

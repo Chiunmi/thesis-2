@@ -52,6 +52,7 @@
   width: 100%;
   height: 96%;
   margin-top: 0.5vh;
+  padding-bottom: 2vh;
 }
 .priority-content {
   display: flex;
@@ -63,6 +64,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 6.5vh;
+  overflow: auto;
+}
+
+.priority-text::-webkit-scrollbar {
+  display: none;
 }
 
 .priority-text p {

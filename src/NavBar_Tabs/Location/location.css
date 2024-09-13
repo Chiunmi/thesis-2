@@ -1,0 +1,37 @@
+.location-page {
+  position: fixed;
+  /* background-color: pink; */
+  width: calc(100vw - 33vw);
+  height: auto;
+  height: 92vh;
+  margin: 6vh 0vw;
+  margin-left: calc(0% + 12.5vw);
+  margin-right: calc(0% + 18vw);
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 87vh;
+
+  overflow: hidden;
+}
+
+.map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.location-content {
+  width: 100%;
+  height: auto;
+  background: linear-gradient(to right, #003163, #13072e);
+  border-radius: 20px;
+  color: white;
+  margin-top: 10px;
+  padding: 20px;
+}

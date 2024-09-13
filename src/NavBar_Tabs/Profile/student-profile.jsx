@@ -130,11 +130,11 @@ function StudentProfile() {
                     justifyContent: "center",
                     alignItems: "center",
                     width: "50vw",
-                    height: "10vh",
+                    height: "4vh",
                     maxHeight: "fit-content",
                     margin: "auto",
                     marginTop: "5vh",
-                    paddingTop: "265vh",
+                    paddingTop: "120vh",
                     backgroundColor: "rgba(0, 0, 0, 0)",
                     border: "none",
                     overflowY: "auto",
@@ -322,6 +322,21 @@ function StudentProfile() {
                       onChange={handleChange}
                     />
                     <br />
+                    <label>Psychological: </label>
+                    <input
+                      type="text"
+                      name="psychological"
+                      value={selectedStudent.psychological}
+                      onChange={handleChange}
+                    />
+                    <br />
+                    <label>If so, specify: </label>
+                    <input
+                      type="text"
+                      name="specifyPsychological"
+                      value={selectedStudent.specifPsychological}
+                      onChange={handleChange}
+                    />
                     <h4>III. Habits and Allergies</h4>
                     <label>Do you smoke?: </label>
                     <input
@@ -372,234 +387,6 @@ function StudentProfile() {
                       type="text"
                       name="specifyAllergy"
                       value={selectedStudent.specifyAllergy}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>IV. Physical Examinations</h4>
-                    <label>Eyes: </label>
-                    <input
-                      type="text"
-                      name="eyes"
-                      value={selectedStudent.eyes}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Ear: </label>
-                    <input
-                      type="text"
-                      name="ear"
-                      value={selectedStudent.ear}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Nose: </label>
-                    <input
-                      type="text"
-                      name="nose"
-                      value={selectedStudent.nose}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Throat: </label>
-                    <input
-                      type="text"
-                      name="throat"
-                      value={selectedStudent.throat}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Tonsils: </label>
-                    <input
-                      type="text"
-                      name="tonsils"
-                      value={selectedStudent.tonsils}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Teeth: </label>
-                    <input
-                      type="text"
-                      name="teeth"
-                      value={selectedStudent.teeth}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Tongue: </label>
-                    <input
-                      type="text"
-                      name="tongue"
-                      value={selectedStudent.tongue}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Neck: </label>
-                    <input
-                      type="text"
-                      name="neck"
-                      value={selectedStudent.neck}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Thyroids: </label>
-                    <input
-                      type="text"
-                      name="thyroids"
-                      value={selectedStudent.thyroids}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Cervical Glands: </label>
-                    <input
-                      type="text"
-                      name="cervicalGlands"
-                      value={selectedStudent.cervicalGlands}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>V. Chest and Cardiovascular System</h4>
-                    <label>Chest: </label>
-                    <input
-                      type="text"
-                      name="chest"
-                      value={selectedStudent.chest}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Contour: </label>
-                    <input
-                      type="text"
-                      name="contour"
-                      value={selectedStudent.contour}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Heart: </label>
-                    <input
-                      type="text"
-                      name="heart"
-                      value={selectedStudent.heart}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Rate: </label>
-                    <input
-                      type="text"
-                      name="rate"
-                      value={selectedStudent.rate}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Rhythm: </label>
-                    <input
-                      type="text"
-                      name="rhythm"
-                      value={selectedStudent.rhythm}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>BP: </label>
-                    <input
-                      type="text"
-                      name="bp"
-                      value={selectedStudent.bp}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Height: </label>
-                    <input
-                      type="text"
-                      name="height"
-                      value={selectedStudent.height}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Weight: </label>
-                    <input
-                      type="text"
-                      name="weight"
-                      value={selectedStudent.weight}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>BMI: </label>
-                    <input
-                      type="text"
-                      name="bmi"
-                      value={selectedStudent.bmi}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Lungs: </label>
-                    <input
-                      type="text"
-                      name="lungs"
-                      value={selectedStudent.lungs}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>VI. Abdomen</h4>
-                    <label>Abdomen: </label>
-                    <input
-                      type="text"
-                      name="abdomen"
-                      value={selectedStudent.abdomen}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Contour: </label>
-                    <input
-                      type="text"
-                      name="contour"
-                      value={selectedStudent.contour}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Liver: </label>
-                    <input
-                      type="text"
-                      name="liver"
-                      value={selectedStudent.liver}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Spleen: </label>
-                    <input
-                      type="text"
-                      name="spleen"
-                      value={selectedStudent.spleen}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Kidneys: </label>
-                    <input
-                      type="text"
-                      name="kidneys"
-                      value={selectedStudent.kidneys}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>VII. Extremities</h4>
-                    <label>Extremities: </label>
-                    <input
-                      type="text"
-                      name="extremities"
-                      value={selectedStudent.extremities}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Upper Extremities: </label>
-                    <input
-                      type="text"
-                      name="upperExtremities"
-                      value={selectedStudent.upperExtremities}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Lower Extremities: </label>
-                    <input
-                      type="text"
-                      name="lowerExtremities"
-                      value={selectedStudent.lowerExtremities}
                       onChange={handleChange}
                     />
                     <br />
@@ -710,23 +497,31 @@ function StudentProfile() {
           </div>
         </div>
 
-        <h3>Laboratory Examination</h3>
         <div className="student-column-four">
-          <div className="student-profile-data-viii">
-            <h4>VIII.</h4>
-            <div className="x-ray">
-              <h4>CHEST X-RAY</h4>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-            </div>
-            <p>Others: (If indicated)</p>
+          <div className="student-data-v1">
+            <h3>Laboratory Examination</h3>
+            <h4> VIII. </h4>
+            <p> Blood Chemistry: {selectedStudent.bloodChemistry}</p>
+            <p> CBC:{selectedStudent.cbc} </p>
+            <p> Urinalysis: {selectedStudent.urinalysis}</p>
+            <p> Fecalysis: {selectedStudent.fecalysis}</p>
           </div>
+          <div className="student-data-v2">
+            <h3>Diagnostic Procedures</h3>
+            <h4> IX. </h4>
+            <p> Chest X-Ray Findings: {selectedStudent.chestXray}</p>
+          </div>
+          <div className="student-data-v3">
+            <h3>Others(ECG, Ultrasound, etc.)</h3>
+            <h4> X. </h4>
+            <p> {selectedStudent.others}</p>
+          </div>
+        </div>
+        <div
+          className="archive-staff"
+          style={{ fontSize: "14px", margin: "1vw" }}
+        >
+          Last edited: Mar 16 08:12:04
         </div>
       </div>
     </div>

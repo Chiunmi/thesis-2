@@ -139,7 +139,6 @@ function AdminProfile() {
               <input type="text" placeholder="Guardian" />
               <input type="text" placeholder="Guardian's Address" />
               <input type="text" placeholder="Guardian's Tel No" />
-              <input type="text" placeholder="Department" />
             </div>
             <div className="create-account-btn">
               <button
