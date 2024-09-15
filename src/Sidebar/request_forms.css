@@ -41,18 +41,16 @@
 }
 .request-form-btn {
   background-color: #003163;
-  border: none;
+  border: 1px solid white;
   color: white;
-  padding: 10px 32px;
+  padding: 10px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  margin: 0px 10px 4px 0px;
   cursor: pointer;
   border-radius: 12px;
-  min-width: 200px;
-  max-height: 40px;
+  width: 10vw;
 }
 .request-form-btn:hover {
   background-color: white;

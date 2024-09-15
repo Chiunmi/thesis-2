@@ -46,7 +46,7 @@ function RequestForms() {
       </div>
       <div className="form-container">
         <div className="request-form">
-          <p className="form-title"> Medical Leave Form:</p>
+          <p className="form-title"> Medical Leave Form</p>
           <h3>
             If you require medical leave due to illness or medical reasons,
             complete the "Medical Leave Form." Provide your personal

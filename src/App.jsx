@@ -3,7 +3,7 @@ import "./App.css";
 
 // Import your components
 import Archive from "./Sidebar/archive";
-import Events from "./Sidebar/events";
+import Events from "./Sidebar/Event/events";
 import HealthTips from "./Sidebar/health_tips";
 import RequestForms from "./Sidebar/request_forms";
 import Schedules from "./Sidebar/schedules";

@@ -1,0 +1,116 @@
+.event-page {
+  position: fixed;
+  /* background-color: pink; */
+  width: calc(100vw - 32.5vw);
+  height: auto;
+  height: 92vh;
+  margin: 6vh 0vw;
+  margin-left: calc(0% + 12vw);
+  margin-right: calc(0% + 18vw);
+  overflow-y: auto;
+}
+
+.event-container {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(138, 138, 138, 0.2);
+  padding: 30px;
+  border-radius: 20px;
+  margin: 1vh 1vw;
+}
+
+.event-function-title {
+  display: flex;
+}
+
+.event-title {
+  color: #003163;
+  font-size: 20px;
+  font-weight: 600;
+}
+.event-details {
+  background: linear-gradient(to left, #003163, #13072e);
+  color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 2vh;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.event-details p {
+  display: flex;
+  font-size: 16px;
+  margin-bottom: 1vh;
+}
+
+.event-details strong {
+  font-weight: bold;
+  font-size: 16px;
+  width: 80px;
+}
+
+.event-details span {
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.event-container h3 {
+  margin-top: 1vh;
+}
+.event-about {
+  margin: 0.5vw;
+}
+
+.event-button {
+  display: flex;
+  justify-content: end;
+}
+.event-ineterested-btn {
+  background-color: #429d1c;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 8vw;
+}
+
+.event-ineterested-btn:hover {
+  background-color: white;
+  color: #003163;
+  border: 1px solid #003163;
+}
+
+.add-event-btn,
+.event-edit,
+.event-delete {
+  color: white;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border: 1px white solid;
+}
+
+.add-event-btn {
+  background-color: #2a9df4;
+}
+
+.event-edit {
+  background-color: green;
+}
+.event-delete {
+  background-color: red;
+}
+.add-event-btn:hover,
+.event-edit:hover,
+.event-delete:hover {
+  background-color: #8a8a8a;
+  color: white;
+  border: 1px white solid;
+}
