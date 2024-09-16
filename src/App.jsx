@@ -5,7 +5,7 @@ import "./App.css";
 import Archive from "./Sidebar/archive";
 import Events from "./Sidebar/Event/events";
 import HealthTips from "./Sidebar/health_tips";
-import RequestForms from "./Sidebar/request_forms";
+import RequestForms from "./Sidebar/RequestForms/request_forms";
 import Schedules from "./Sidebar/schedules";
 import Services from "./Sidebar/services";
 import Telemed from "./Sidebar/telemed";
@@ -20,6 +20,9 @@ import ProfileLayout from "./Components/layout_profile";
 import AdminProfile from "./NavBar_Tabs/Profile/admin_profile";
 import Manage from "./NavBar_Tabs/Profile/manage";
 import HealthRecord from "./NavBar_Tabs/Profile/health_record";
+import StudentAbsenceForm from "./Sidebar/RequestForms/student-absence-form";
+import MedicalLeaveForm from "./Sidebar/RequestForms/medical-leave-form";
+import SpecialLeaveForm from "./Sidebar/RequestForms/special-leave-form";
 
 function App() {
   return (
@@ -32,9 +35,15 @@ function App() {
           <Route path="/schedules" element={<Schedules />} />
           <Route path="/telemed" element={<Telemed />} />
           <Route path="/request-forms" element={<RequestForms />} />
+          <Route
+            path="/student-absence-form"
+            element={<StudentAbsenceForm />}
+          />
+          <Route path="/medical-leave-form" element={<MedicalLeaveForm />} />
+          <Route path="/special-leave-form" element={<SpecialLeaveForm />} />
+
           <Route path="/events" element={<Events />} />
           <Route path="/health-tips" element={<HealthTips />} />
-
           <Route path="/location" element={<Location />} />
           <Route path="/about-us" element={<AboutUs />} />
         </Route>

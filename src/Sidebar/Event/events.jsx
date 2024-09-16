@@ -4,21 +4,6 @@ import EventModal from "./event-modal";
 import EventFunctionsModal from "./event-functions-modal";
 
 function Events() {
-  const [eventDetails] = useState({
-    title: "Vaccination Event for College Students",
-    who: "All college students, faculty, and staff",
-    when: "September 20, 2024",
-    time: "9:00 AM - 5:00 PM",
-    where: "University Health Center",
-    about: `
-      Purpose: To provide vaccination services to college students for influenza and COVID-19 vaccines.
-      Important Notes:
-      - Students must bring their college ID or any required documentation for registration and verification purposes.
-      - Follow all event guidelines, including mask-wearing, social distancing, and any specific instructions provided by event organizers.
-      - Students should disclose any relevant medical history or allergies during registration and consult healthcare providers for personalized guidance.
-    `,
-  });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);

@@ -1,5 +1,3 @@
-import Layout from "../Components/Layout";
-
 function Services() {
   return (
     <div>

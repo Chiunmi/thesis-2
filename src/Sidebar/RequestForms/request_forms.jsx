@@ -1,4 +1,5 @@
 import "./request_forms.css";
+import { Link } from "react-router-dom";
 function RequestForms() {
   return (
     <div className="request-form-page">
@@ -19,14 +20,9 @@ function RequestForms() {
           </h3>
         </div>
         <div className="form-button">
-          <button
-            className="request-form-btn"
-            onClick={() => {
-              window.open("https://forms.gle/xjxbJs7QtZBhxErg6", "_blank");
-            }}
-          >
-            Submit a Form
-          </button>
+          <Link to="/student-absence-form">
+            <button className="request-form-btn">Submit a Form</button>
+          </Link>
         </div>
       </div>
       <div className="form-container">
@@ -40,7 +36,9 @@ function RequestForms() {
           </h3>
 
           <div className="form-button">
-            <button className="request-form-btn">Submit a Form</button>
+            <Link to="/special-leave-form">
+              <button className="request-form-btn">Submit a Form</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -55,7 +53,9 @@ function RequestForms() {
           </h3>
 
           <div className="form-button">
-            <button className="request-form-btn">Submit a Form</button>
+            <Link to="/medical-leave-form">
+              <button className="request-form-btn">Submit a Form</button>
+            </Link>
           </div>
         </div>
       </div>
