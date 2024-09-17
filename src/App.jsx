@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import axios from 'axios';
-import { Toaster } from 'react-hot-toast';
+import axios from "axios";
+import { Toaster } from "react-hot-toast";
 
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.withCredentials = true;
 
 import "./App.css";
@@ -27,6 +27,9 @@ import ProfileLayout from "./Components/layout_profile";
 import AdminProfile from "./NavBar_Tabs/Profile/admin_profile";
 import Manage from "./NavBar_Tabs/Profile/manage";
 import HealthRecord from "./NavBar_Tabs/Profile/health_record";
+import StudentAbsenceForm from "./Sidebar/RequestForms/student-absence-form";
+import MedicalLeaveForm from "./Sidebar/RequestForms/medical-leave-form";
+import SpecialLeaveForm from "./Sidebar/RequestForms/special-leave-form";
 
 function App() {
   return (
@@ -40,19 +43,27 @@ function App() {
           <Route path="/schedules" element={<Schedules />} />
           <Route path="/telemed" element={<Telemed />} />
           <Route path="/request-forms" element={<RequestForms />} />
+          <Route
+            path="/student-absence-form"
+            element={<StudentAbsenceForm />}
+          />
+          <Route path="/medical-leave-form" element={<MedicalLeaveForm />} />
+          <Route path="/special-leave-form" element={<SpecialLeaveForm />} />
+
           <Route path="/events" element={<Events />} />
           <Route path="/health-tips" element={<HealthTips />} />
-          <Route path="/archive" element={<Archive />} />
           <Route path="/location" element={<Location />} />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/user/:id" element={<StudentProfile />} />
+        </Route>
+
+        {/* Routes that use the Profile Layout */}
+        <Route element={<ProfileLayout />}>
+          <Route path="/archive" element={<Archive />} />
+          <Route path="/user" element={<StudentProfile />} />
           <Route path="/admin" element={<AdminProfile />} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/health-record" element={<HealthRecord />} />
         </Route>
-
-        {/* Routes that use the Profile Layout */}
-        <Route element={<ProfileLayout />}></Route>
 
         {/* Routes that do not use any layout */}
         <Route path="/login" element={<Login />} />

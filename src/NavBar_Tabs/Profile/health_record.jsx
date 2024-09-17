@@ -7,114 +7,113 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import Modal from "react-modal";
 
 function HealthRecord() {
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedGrade, setSelectedGrade] = useState("");
-    const [selectedDepartment, setSelectedDepartment] = useState("");
-    const [selectedStrand, setSelectedStrand] = useState("");
-    const [selectedCourse, setSelectedCourse] = useState("");
-    const [selectedSection, setSelectedSection] = useState("");
-    const [students, setStudents] = useState([]);
-    const [selectedStudent, setSelectedStudent] = useState(null);
-    const [searchName, setSearchName] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedGrade, setSelectedGrade] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedStrand, setSelectedStrand] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [selectedSection, setSelectedSection] = useState("");
+  const [students, setStudents] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [searchName, setSearchName] = useState("");
 
-    const resetSelections = () => {
-        setSelectedGrade("");
-        setSelectedStrand("");
-        setSelectedCourse("");
-        setSelectedSection("");
-        setSelectedDepartment("");
-        setStudents([]);
-        setSelectedStudent(null);
-        setSearchName('');
-    };
+  const resetSelections = () => {
+    setSelectedGrade("");
+    setSelectedStrand("");
+    setSelectedCourse("");
+    setSelectedSection("");
+    setSelectedDepartment("");
+    setStudents([]);
+    setSelectedStudent(null);
+    setSearchName("");
+  };
 
-    const handleCategoryChange = (category) => {
-        setSelectedCategory(category);
-        resetSelections();
-    };
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    resetSelections();
+  };
 
-    const handleGradeChange = (grade) => {
-        setSelectedGrade(grade);
-        setSelectedSection("");
-        setStudents([]);
-        setSelectedStudent(null);
-    };
+  const handleGradeChange = (grade) => {
+    setSelectedGrade(grade);
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
+  };
 
-    const handleStrandChange = (strand) => {
-        setSelectedStrand(strand);
-        setSelectedSection("");
-        setStudents([]);
-        setSelectedStudent(null);
-    };
+  const handleStrandChange = (strand) => {
+    setSelectedStrand(strand);
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
+  };
 
-    const handleCourseChange = (course) => {
-        setSelectedCourse(course);
-        setSelectedSection("");
-        setStudents([]);
-        setSelectedStudent(null);
-    };
+  const handleCourseChange = (course) => {
+    setSelectedCourse(course);
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
+  };
 
-    const handleDepartmentChange = (course) => {
-        setSelectedDepartment(course);
-        setSelectedCourse("");
-        setSelectedSection("");
-        setStudents([]);
-        setSelectedStudent(null);
-    };
+  const handleDepartmentChange = (course) => {
+    setSelectedDepartment(course);
+    setSelectedCourse("");
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
+  };
 
-    const handleSectionChange = async (section) => {
-        setSelectedSection(section);
-        setSelectedStudent(null);
+  const handleSectionChange = async (section) => {
+    setSelectedSection(section);
+    setSelectedStudent(null);
 
-        // Make API call to fetch filtered students
-        try {
-            const response = await axios.get('/medical', {
-                params: {
-                    educationLevel: selectedCategory,
-                    yearlvl: selectedGrade,
-                    strand: selectedStrand,
-                    course: selectedCourse,
-                    section: section
-                }
-            });
-            setStudents(response.data);
-        } catch (error) {
-            console.error('Error fetching students:', error);
-        }
-    };
+    // Make API call to fetch filtered students
+    try {
+      const response = await axios.get("/medical", {
+        params: {
+          educationLevel: selectedCategory,
+          yearlvl: selectedGrade,
+          strand: selectedStrand,
+          course: selectedCourse,
+          section: section,
+        },
+      });
+      setStudents(response.data);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
+  };
 
-    const fetchProfile = async (studentId) => {
-        try {
-            const response = await axios.get(`/profile/${studentId}`);
-            setSelectedStudent(response.data);
-            console.log('Profile', selectedStudent);
-        } catch (error) {
-            console.error("Error fetching student profile:", error);
-        }
-    };
+  const fetchProfile = async (studentId) => {
+    try {
+      const response = await axios.get(`/profile/${studentId}`);
+      setSelectedStudent(response.data);
+      console.log("Profile", selectedStudent);
+    } catch (error) {
+      console.error("Error fetching student profile:", error);
+    }
+  };
 
-    const searchStudents = async () => {
-        try {
-            const response = await axios.get('/medical/search', {
-                params: {
-                    name: searchName
-                }
-            });
-            setStudents(response.data);
-            setSelectedCategory("");
-            setSelectedGrade('');
-            setSelectedCourse('');
-            setSelectedSection('');
-        } catch (error) {
-            console.error('Error searching students:', error);
-        }
-    };
-
+  const searchStudents = async () => {
+    try {
+      const response = await axios.get("/medical/search", {
+        params: {
+          name: searchName,
+        },
+      });
+      setStudents(response.data);
+      setSelectedCategory("");
+      setSelectedGrade("");
+      setSelectedCourse("");
+      setSelectedSection("");
+    } catch (error) {
+      console.error("Error searching students:", error);
+    }
+  };
 
   const [isScanBMIModalOpen, setScanBMIModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -126,29 +125,33 @@ function HealthRecord() {
     setFormData({ complaints: "", actions: "" });
     setModalType("add");
     setIsModalOpen(true);
-  };  
-  
+  };
+
   const openEditAssessmentModal = (item) => {
-    setFormData({ _id: item._id, complaints: `${item.complaints}`, actions: `${item.actions}` });
+    setFormData({
+      _id: item._id,
+      complaints: `${item.complaints}`,
+      actions: `${item.actions}`,
+    });
     setModalType("edit");
     setIsModalOpen(true);
-  }
+  };
 
   const openAddFollowUpModal = (item) => {
     setFollowUpFormData({ _id: item._id, complaints: "", actions: "" });
     setModalType("followUpAdd");
     setIsModalOpen(true);
-  }
+  };
 
   const openEditFollowUpModal = (item) => {
-    setFollowUpFormData({ 
+    setFollowUpFormData({
       _id: item._id,
-      followUpComplaints: item.followUps.followUpComplaints, 
-      followUpActions: item.followUps.followUpActions 
+      followUpComplaints: item.followUps.followUpComplaints,
+      followUpActions: item.followUps.followUpActions,
     });
     setModalType("followUpEdit");
     setIsModalOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -159,8 +162,8 @@ function HealthRecord() {
     setFollowUpFormData({
       ...followUpFormData,
       [name]: value,
-    }); 
-  }
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -178,73 +181,85 @@ function HealthRecord() {
           complaints: formData.complaints,
           actions: formData.actions,
         });
-        toast.success('Student assessment added successfully');
+        toast.success("Student assessment added successfully");
         // Fetch the updated list of assessments
-        const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+        const updatedStudentResponse = await axios.get(
+          `/profile/${selectedStudent.medical.userId}`
+        );
         const updatedStudent = updatedStudentResponse.data;
-  
+
         // Update the selectedStudent state with the new assessments
         setSelectedStudent((prev) => ({
           ...prev,
           assessment: updatedStudent.assessment,
         }));
-  
       } catch (error) {
         console.error("Error saving assessment:", error);
       }
     } else if (modalType === "edit") {
-        try {
-          const response = await axios.patch(`/medical/assessment/${formData._id}`, formData);
+      try {
+        const response = await axios.patch(
+          `/medical/assessment/${formData._id}`,
+          formData
+        );
 
-          toast.success('Student edited successfully');
+        toast.success("Student edited successfully");
 
-          const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
-          const updatedStudent = updatedStudentResponse.data;
-    
-          // Update the selectedStudent state with the new assessments
-          setSelectedStudent((prev) => ({
-            ...prev,
-            assessment: updatedStudent.assessment,
-          }));
+        const updatedStudentResponse = await axios.get(
+          `/profile/${selectedStudent.medical.userId}`
+        );
+        const updatedStudent = updatedStudentResponse.data;
 
-    
-        } catch (error) {
-          console.error("Error saving assessment:", error);
-        }
+        // Update the selectedStudent state with the new assessments
+        setSelectedStudent((prev) => ({
+          ...prev,
+          assessment: updatedStudent.assessment,
+        }));
+      } catch (error) {
+        console.error("Error saving assessment:", error);
+      }
     } else if (modalType === "followUpAdd") {
-        try {
-          const response = await axios.patch(`/medical/assessment/${followUpFormData._id}/followup`, {
+      try {
+        const response = await axios.patch(
+          `/medical/assessment/${followUpFormData._id}/followup`,
+          {
             followUpActions: followUpFormData.followUpActions,
-            followUpComplaints: followUpFormData.followUpComplaints
-          });
-          const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
-          const updatedStudent = updatedStudentResponse.data;
-          setSelectedStudent((prev) => ({
-            ...prev,
-            assessment: updatedStudent.assessment,
-          }));
-
-        } catch (error) {
-          console.error("Error saving assessment:", error);
-        }
+            followUpComplaints: followUpFormData.followUpComplaints,
+          }
+        );
+        const updatedStudentResponse = await axios.get(
+          `/profile/${selectedStudent.medical.userId}`
+        );
+        const updatedStudent = updatedStudentResponse.data;
+        setSelectedStudent((prev) => ({
+          ...prev,
+          assessment: updatedStudent.assessment,
+        }));
+      } catch (error) {
+        console.error("Error saving assessment:", error);
+      }
     } else if (modalType === "followUpEdit") {
-        try {
-          console.log('followUpFormData', followUpFormData);
-          const response = await axios.patch(`/medical/assessment/${followUpFormData._id}/followup/update`, {
+      try {
+        console.log("followUpFormData", followUpFormData);
+        const response = await axios.patch(
+          `/medical/assessment/${followUpFormData._id}/followup/update`,
+          {
             followUpActions: followUpFormData.followUpActions,
-            followUpComplaints: followUpFormData.followUpComplaints
-          });
+            followUpComplaints: followUpFormData.followUpComplaints,
+          }
+        );
 
-          const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
-          const updatedStudent = updatedStudentResponse.data;
-          setSelectedStudent((prev) => ({
-            ...prev,
-            assessment: updatedStudent.assessment,
-          }));
-
-        } catch (error) {
-          console.error("Error saving assessment:", error);
-        }
+        const updatedStudentResponse = await axios.get(
+          `/profile/${selectedStudent.medical.userId}`
+        );
+        const updatedStudent = updatedStudentResponse.data;
+        setSelectedStudent((prev) => ({
+          ...prev,
+          assessment: updatedStudent.assessment,
+        }));
+      } catch (error) {
+        console.error("Error saving assessment:", error);
+      }
     }
     closeModal();
   };
@@ -254,7 +269,7 @@ function HealthRecord() {
 
   const openEditProfileModal = () => {
     setEditProfileModalOpen(true);
-    setStudentFormData(selectedStudent.medical)
+    setStudentFormData(selectedStudent.medical);
   };
 
   const closeEditProfileModal = () => {
@@ -262,17 +277,21 @@ function HealthRecord() {
   };
 
   const handleStudentFormDataChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type } = event.target;
+
     setStudentFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: type === "radio" ? value === "true" : value, // Convert radio "true"/"false" to Boolean, leave other inputs as they are
     }));
   };
 
   const handleStudentSave = async () => {
-    try{
-      const response = await axios.patch(`/medical/${studentFormData._id}`, studentFormData);
-      
+    try {
+      const response = await axios.patch(
+        `/medical/${studentFormData._id}`,
+        studentFormData
+      );
+
       setSelectedStudent((prev) => ({
         ...prev,
         medical: {
@@ -282,19 +301,18 @@ function HealthRecord() {
       }));
 
       setEditProfileModalOpen(false);
-      toast.success('Student information updated successfully');
-    }catch (err) {
-      toast.error(err.response.data.error)
+      toast.success("Student information updated successfully");
+    } catch (err) {
+      toast.error(err.response.data.error);
     }
-  }
-
+  };
 
   const [isVaccineModalOpen, setIsVaccineModalOpen] = useState(false);
   const [vaccineFormData, setVaccineFormData] = useState({});
   const [vaccineModalType, setVaccineModalType] = useState("");
 
-  // Modal state functions 
-  
+  // Modal state functions
+
   const openVaccineModal = () => {
     setVaccineModalType("add");
     setVaccineFormData({ vaccine: "", remarks: "" });
@@ -302,10 +320,14 @@ function HealthRecord() {
   };
 
   const openEdiVaccineModal = (item) => {
-    setVaccineFormData({ _id: item._id, vaccine: `${item.vaccine}`, remarks: `${item.remarks}` });
+    setVaccineFormData({
+      _id: item._id,
+      vaccine: `${item.vaccine}`,
+      remarks: `${item.remarks}`,
+    });
     setVaccineModalType("edit");
     setIsVaccineModalOpen(true);
-  }
+  };
 
   const closeVaccineModal = () => {
     setIsVaccineModalOpen(false);
@@ -329,36 +351,40 @@ function HealthRecord() {
           vaccine: vaccineFormData.vaccine,
           remarks: vaccineFormData.remarks,
         });
-        toast.success('Student immunization added successfully');
+        toast.success("Student immunization added successfully");
         // Fetch the updated list of assessments
-        const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+        const updatedStudentResponse = await axios.get(
+          `/profile/${selectedStudent.medical.userId}`
+        );
         const updatedStudent = updatedStudentResponse.data;
-  
+
         // Update the selectedStudent state with the new assessments
         setSelectedStudent((prev) => ({
           ...prev,
           immunization: updatedStudent.immunization,
         }));
-  
       } catch (error) {
         console.error("Error saving assessment:", error);
       }
     } else {
       try {
-        const response = await axios.patch(`/medical/immunization/${vaccineFormData._id}`, vaccineFormData);
+        const response = await axios.patch(
+          `/medical/immunization/${vaccineFormData._id}`,
+          vaccineFormData
+        );
 
-        toast.success('Student edited immunization successfully');
+        toast.success("Student edited immunization successfully");
 
-        const updatedStudentResponse = await axios.get(`/profile/${selectedStudent.medical.userId}`);
+        const updatedStudentResponse = await axios.get(
+          `/profile/${selectedStudent.medical.userId}`
+        );
         const updatedStudent = updatedStudentResponse.data;
-  
+
         // Update the selectedStudent state with the new assessments
         setSelectedStudent((prev) => ({
           ...prev,
           immunization: updatedStudent.immunization,
         }));
-
-  
       } catch (error) {
         console.error("Error saving assessment:", error);
       }
@@ -402,101 +428,141 @@ function HealthRecord() {
           </button>
         </div>
         <div className="admin-search">
-        <input 
-          type="text" 
-          className="admin-search-input"
-          placeholder="Search by name" 
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-        />
-         
-          <button 
-                onClick={() => searchStudents()}
-                disabled={!searchName.trim()}
-                > <SearchRoundedIcon />
+          <input
+            type="text"
+            className="admin-search-input"
+            placeholder="Search by name"
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+          />
+
+          <button
+            onClick={() => searchStudents()}
+            disabled={!searchName.trim()}
+          >
+            {" "}
+            <SearchRoundedIcon />
           </button>
-          </div>
+        </div>
       </div>
 
       <div className="container">
         {/* Category Dropdown */}
-        <select onChange={(e) => handleCategoryChange(e.target.value)} value={selectedCategory}>
-            <option value="">Select Category</option>
-            <option value="JHS">Junior High School</option>
-            <option value="SHS">Senior High School</option>
-            <option value="College">College</option>
+        <select
+          onChange={(e) => handleCategoryChange(e.target.value)}
+          value={selectedCategory}
+        >
+          <option value="">Select Category</option>
+          <option value="JHS">Junior High School</option>
+          <option value="SHS">Senior High School</option>
+          <option value="College">College</option>
         </select>
 
         {selectedCategory && (
-          <select onChange={(e) => handleGradeChange(e.target.value)} value={selectedGrade}>
-              <option value="">Select Grade Level</option>
-              {selectedCategory === 'JHS' && ['7', '8', '9', '10'].map(grade => (
-                  <option key={grade} value={grade}>{grade}</option>
+          <select
+            onChange={(e) => handleGradeChange(e.target.value)}
+            value={selectedGrade}
+          >
+            <option value="">Select Grade Level</option>
+            {selectedCategory === "JHS" &&
+              ["7", "8", "9", "10"].map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
               ))}
-              {selectedCategory === 'SHS' && ['11', '12'].map(grade => (
-                  <option key={grade} value={grade}>{grade}</option>
+            {selectedCategory === "SHS" &&
+              ["11", "12"].map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
               ))}
-              {selectedCategory === 'College' && ['1', '2', '3', '4'].map(grade => (
-                  <option key={grade} value={grade}>{grade}</option>
-              ))}
-            </select>
-        )}
-
-        {selectedCategory === 'SHS' && selectedGrade && (
-          <select onChange={(e) => handleStrandChange(e.target.value)} value={selectedStrand}>
-              <option value="">Select Strand</option>
-              {['STEM', 'HUMMS', 'ABM', 'IT'].map(strand => (
-                  <option key={strand} value={strand}>{strand}</option>
-              ))}
-          </select>
-        )}
-
-        {selectedCategory === 'College' && selectedGrade && (
-          <select onChange={(e) => handleDepartmentChange(e.target.value)} value={selectedDepartment}>
-              <option value="">Select Department</option>
-              {['COI', 'YES'].map(course => (
-                  <option key={course} value={course}>{course}</option>
+            {selectedCategory === "College" &&
+              ["1", "2", "3", "4"].map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
               ))}
           </select>
         )}
 
-        {selectedCategory === 'College' && selectedGrade && selectedDepartment && (
-            <select onChange={(e) => handleCourseChange(e.target.value)} value={selectedCourse}>
-                <option value="">Select Course</option>
-                {['BSCS', 'BSA', 'BSIT', 'BSE'].map(course => (
-                    <option key={course} value={course}>{course}</option>
-                ))}
-            </select>
+        {selectedCategory === "SHS" && selectedGrade && (
+          <select
+            onChange={(e) => handleStrandChange(e.target.value)}
+            value={selectedStrand}
+          >
+            <option value="">Select Strand</option>
+            {["STEM", "HUMMS", "ABM", "IT"].map((strand) => (
+              <option key={strand} value={strand}>
+                {strand}
+              </option>
+            ))}
+          </select>
         )}
 
-        {((selectedCategory === 'JHS' && selectedGrade) || 
-        (selectedCategory === 'SHS' && selectedStrand) || 
-        (selectedCategory === 'College' && selectedCourse)) && (
-            <select onChange={(e) => handleSectionChange(e.target.value)} value={selectedSection}>
-                <option value="">Select Section</option>
-                {['A', 'B', 'C', 'D'].map((section) => (
-                    <option key={section} value={section}>{section}</option>
-                ))}
+        {selectedCategory === "College" && selectedGrade && (
+          <select
+            onChange={(e) => handleDepartmentChange(e.target.value)}
+            value={selectedDepartment}
+          >
+            <option value="">Select Department</option>
+            {["COI", "YES"].map((course) => (
+              <option key={course} value={course}>
+                {course}
+              </option>
+            ))}
+          </select>
+        )}
+
+        {selectedCategory === "College" &&
+          selectedGrade &&
+          selectedDepartment && (
+            <select
+              onChange={(e) => handleCourseChange(e.target.value)}
+              value={selectedCourse}
+            >
+              <option value="">Select Course</option>
+              {["BSCS", "BSA", "BSIT", "BSE"].map((course) => (
+                <option key={course} value={course}>
+                  {course}
+                </option>
+              ))}
             </select>
+          )}
+
+        {((selectedCategory === "JHS" && selectedGrade) ||
+          (selectedCategory === "SHS" && selectedStrand) ||
+          (selectedCategory === "College" && selectedCourse)) && (
+          <select
+            onChange={(e) => handleSectionChange(e.target.value)}
+            value={selectedSection}
+          >
+            <option value="">Select Section</option>
+            {["A", "B", "C", "D"].map((section) => (
+              <option key={section} value={section}>
+                {section}
+              </option>
+            ))}
+          </select>
         )}
 
         {selectedSection && students.length === 0 ? (
-            <p>No students</p>
-          ) : students.length > 0 && !selectedStudent ? (
-              <div>
-                  <h3>Filtered Students:</h3>
-                  <ul>
-                      {students.map((student, index) => (
-                          <li 
-                              key={index}
-                              onClick={() => fetchProfile(student.personal.userId)}
-                          >
-                              {student.personal.firstName} {student.personal.lastname} (ID: {student.personal.userId})
-                          </li>
-                      ))}
-                  </ul>
-              </div>
-          ) : null}
+          <p>No students</p>
+        ) : students.length > 0 && !selectedStudent ? (
+          <div>
+            <h3>Filtered Students:</h3>
+            <ul>
+              {students.map((student, index) => (
+                <li
+                  key={index}
+                  onClick={() => fetchProfile(student.personal.userId)}
+                >
+                  {student.personal.firstName} {student.personal.lastname} (ID:{" "}
+                  {student.personal.userId})
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         {/* Display Selected Student Information */}
         {selectedStudent && (
@@ -508,7 +574,8 @@ function HealthRecord() {
                   className="selected-section-header"
                   onClick={() => setSelectedStudent(null)}
                 >
-                  { selectedStudent.education.yearlvl + selectedStudent.education.section}
+                  {selectedStudent.education.yearlvl +
+                    selectedStudent.education.section}
                 </h3>
               </div>
             </div>
@@ -517,7 +584,11 @@ function HealthRecord() {
               <div className="student-data-i">
                 <h3>{selectedStudent.name}</h3>
                 <div className="archive-student-pic">
-                  <img src={selectedStudent.pfp ? selectedStudent.pfp : jen} alt="this is a pfp" className="jen"/>
+                  <img
+                    src={selectedStudent.pfp ? selectedStudent.pfp : jen}
+                    alt="this is a pfp"
+                    className="jen"
+                  />
                 </div>
 
                 <div className="profile-btn">
@@ -920,6 +991,56 @@ function HealthRecord() {
                           onChange={handleStudentFormDataChange}
                         />
                         <br />
+                        <h4>VIII. Laboratory Examination</h4>
+                        <label>Blood Chemistry: </label>
+                        <input
+                          type="text"
+                          name="bloodChemistry"
+                          value={studentFormData.bloodChemistry}
+                          onChange={handleStudentFormDataChange}
+                        />
+                        <br />
+                        <label>CBC: </label>
+                        <input
+                          type="text"
+                          name="cbc"
+                          value={studentFormData.cbc}
+                          onChange={handleStudentFormDataChange}
+                        />
+                        <br />
+                        <label>Urinalysis: </label>
+                        <input
+                          type="text"
+                          name="urinalysis"
+                          value={studentFormData.urinalysis}
+                          onChange={handleStudentFormDataChange}
+                        />
+                        <br />
+                        <label>Fecalysis: </label>
+                        <input
+                          type="text"
+                          name="fecalysis"
+                          value={studentFormData.fecalysis}
+                          onChange={handleStudentFormDataChange}
+                        />
+                        <br />
+                        <h4> IX. Diagnostic Procedures</h4>
+                        <label>Chest X-Ray Findings: </label>
+                        <input
+                          type="text"
+                          name="chestXray"
+                          value={studentFormData.chestXray}
+                          onChange={handleStudentFormDataChange}
+                        />
+                        <br />
+                        <h4>X. Others</h4>
+                        <input
+                          type="text"
+                          name="others"
+                          value={studentFormData.others}
+                          onChange={handleStudentFormDataChange}
+                        />
+                        <br />
                       </form>
                       <div className="edit-account-btn">
                         <button
@@ -928,7 +1049,10 @@ function HealthRecord() {
                         >
                           Close
                         </button>
-                        <button className="save-btn" onClick={handleStudentSave}>
+                        <button
+                          className="save-btn"
+                          onClick={handleStudentSave}
+                        >
                           Save
                         </button>
                       </div>
@@ -992,23 +1116,39 @@ function HealthRecord() {
                   </div>
                 </Modal>
                 <h4> I. </h4>
-                <p> Full Name: {selectedStudent.personal.firstName + " " + selectedStudent.personal.lastName}</p>
-                <p>Gr./Section: {selectedStudent.education.yearlvl + " " + selectedStudent.education.section}</p>
+                <p>
+                  {" "}
+                  Full Name:{" "}
+                  {selectedStudent.personal.firstName +
+                    " " +
+                    selectedStudent.personal.lastName}
+                </p>
+                <p>
+                  Gr./Section:{" "}
+                  {selectedStudent.education.yearlvl +
+                    " " +
+                    selectedStudent.education.section}
+                </p>
                 <p>Civil Status: {selectedStudent.personal.civilStatus}</p>
                 <p>Birthdate: {selectedStudent.personal.dateOfBirth}</p>
                 <p>Address: {selectedStudent.personal.address}</p>
                 <p>Tel. No.: {selectedStudent.personal.telNo}</p>
                 <p>Religion: {selectedStudent.personal.religion}</p>
                 <p>Guardian: {selectedStudent.personal.guardian}</p>
-                <p>Guradian's Address: {selectedStudent.personal.guardianAddress}</p>
-                <p> Guardian's Number: {selectedStudent.personal.guardianTelNo}</p>
+                <p>
+                  Guradian's Address: {selectedStudent.personal.guardianAddress}
+                </p>
+                <p>
+                  {" "}
+                  Guardian's Number: {selectedStudent.personal.guardianTelNo}
+                </p>
                 <p> Department: {selectedStudent.personal.department}</p>
               </div>
               <div className="student-data-ii">
                 <h4> II. </h4>
                 <h4>
-                Have you ever suffered illnesses involving any of the
-                following systems? Specify.
+                  Have you ever suffered illnesses involving any of the
+                  following systems? Specify.
                 </h4>
                 <p>Respiratory : {selectedStudent.medical.respiratory}</p>
                 <p>Digestive : {selectedStudent.medical.digestive}</p>
@@ -1022,12 +1162,16 @@ function HealthRecord() {
                 <p>Lymphatic : {selectedStudent.medical.lymphatic}</p>
                 <br />
                 <h4> III. </h4>
-                <p>Do you smoke? : {selectedStudent.medical.smoke ? "Yes": "No"}</p>
-                <p>Do you drink? : {selectedStudent.medical.drink ? "Yes": "No"}</p>
                 <p>
-                  Allergy? : 
-                  {selectedStudent.medical.allergy === "N/A" 
-                    ? selectedStudent.medical.specificAllergy 
+                  Do you smoke? : {selectedStudent.medical.smoke ? "Yes" : "No"}
+                </p>
+                <p>
+                  Do you drink? : {selectedStudent.medical.drink ? "Yes" : "No"}
+                </p>
+                <p>
+                  Allergy? :
+                  {selectedStudent.medical.allergy === "N/A"
+                    ? selectedStudent.medical.specificAllergy
                     : selectedStudent.medical.allergy}
                 </p>
               </div>
@@ -1045,7 +1189,9 @@ function HealthRecord() {
                 <p>Tongue : {selectedStudent.medical.tongue}</p>
                 <p>Neck : {selectedStudent.medical.neck}</p>
                 <p>Thyroids : {selectedStudent.medical.thyroids}</p>
-                <p>Cervical Glands : {selectedStudent.medical.cervicalGlands}</p>
+                <p>
+                  Cervical Glands : {selectedStudent.medical.cervicalGlands}
+                </p>
                 <br />
                 <h4> V. </h4>
 
@@ -1078,26 +1224,23 @@ function HealthRecord() {
             </div>
             <h3>Laboratory Examination</h3>
             <div className="column-three">
-              <div className="student-data-v">
-                <h4> VI. </h4>
-                <div className="x-ray">
-                  <h4> CHEST X-RAY </h4>
-                  <button className="xray-upload-btn">
-                    {" "}
-                    Upload Chest X-RAY
-                  </button>
-                </div>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <p> Others: (If indicated)</p>
+              <div className="student-data-v1">
+                <h3>Laboratory Examination</h3>
+                <h4> VIII. </h4>
+                <p>Blood Chemistry: {selectedStudent.medical.bloodChemistry}</p>
+                <p> CBC: {selectedStudent.medical.cbc} </p>
+                <p> Urinalysis: {selectedStudent.medical.urinalysis}</p>
+                <p> Fecalysis: {selectedStudent.medical.fecalysis}</p>
+              </div>
+              <div className="student-data-v2">
+                <h3>Diagnostic Procedures</h3>
+                <h4> IX. </h4>
+                <p>Chest X-ray Findings: {selectedStudent.medical.chestXray}</p>
+              </div>
+              <div className="student-data-v3">
+                <h3>Others(ECG, Ultrasound, etc.)</h3>
+                <h4> X. </h4>
+                <p> {selectedStudent.medical.others}</p>
               </div>
             </div>
 
@@ -1118,10 +1261,13 @@ function HealthRecord() {
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedStudent.assessment && selectedStudent.assessment.length > 0 ? (
+                    {selectedStudent.assessment &&
+                    selectedStudent.assessment.length > 0 ? (
                       selectedStudent.assessment.map((item) => (
                         <tr key={item._id}>
-                          <td>{new Date(item.timestamp).toLocaleDateString()}</td>
+                          <td>
+                            {new Date(item.timestamp).toLocaleDateString()}
+                          </td>
                           <td>{item.complaints}</td>
                           <td>{item.actions}</td>
                           <td>
@@ -1154,11 +1300,16 @@ function HealthRecord() {
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedStudent.assessment && selectedStudent.assessment.length > 0 ? (
+                    {selectedStudent.assessment &&
+                    selectedStudent.assessment.length > 0 ? (
                       selectedStudent.assessment.map((item) =>
                         item.followUps ? (
                           <tr key={`follow-up-${item._id}`}>
-                            <td>{new Date(item.followUps.date).toLocaleDateString()}</td>
+                            <td>
+                              {new Date(
+                                item.followUps.date
+                              ).toLocaleDateString()}
+                            </td>
                             <td>{item.followUps.followUpComplaints}</td>
                             <td>{item.followUps.followUpActions}</td>
                             <td>
@@ -1186,7 +1337,6 @@ function HealthRecord() {
                       </tr>
                     )}
                   </tbody>
-
                 </table>
               </div>
 
@@ -1224,7 +1374,8 @@ function HealthRecord() {
                         ? "Edit Follow-Up"
                         : "Edit Assessment"}
                     </h3>
-                    {(modalType === "followUpAdd" || modalType === "followUpEdit") && (
+                    {(modalType === "followUpAdd" ||
+                      modalType === "followUpEdit") && (
                       <>
                         <label>Follow-Up Complaints:</label>
                         <input
@@ -1271,20 +1422,23 @@ function HealthRecord() {
                     </button>
                     <button
                       className={
-                        modalType === "add" || modalType === "followUpAdd" || modalType === "followUpEdit"
+                        modalType === "add" ||
+                        modalType === "followUpAdd" ||
+                        modalType === "followUpEdit"
                           ? "save-assessment-btn"
                           : "edit-assessment-btn"
                       }
                       onClick={handleSave}
                     >
-                      {modalType === "add" || modalType === "followUpAdd" || modalType === "followUpEdit" ? "Add" : "Save"}
+                      {modalType === "add" ||
+                      modalType === "followUpAdd" ||
+                      modalType === "followUpEdit"
+                        ? "Add"
+                        : "Save"}
                     </button>
                   </div>
                 </div>
               </Modal>
-
-
-
             </div>
 
             <div className="column-five">
@@ -1306,20 +1460,24 @@ function HealthRecord() {
                     </tr>
                   </thead>
                   <tbody>
-                  {selectedStudent.immunization && selectedStudent.immunization.length > 0 ? (
+                    {selectedStudent.immunization &&
+                    selectedStudent.immunization.length > 0 ? (
                       selectedStudent.immunization.map((item) => (
-                      <tr key={item._id}>
-                        <td>{new Date(item.timestamp).toLocaleDateString()}</td>
-                        <td>{item.vaccine}</td>
-                        <td>{item.remarks}</td>
-                        <td>
-                            { <DriveFileRenameOutlineRoundedIcon
-                              style={{ color: "green", cursor: "pointer" }}
-                              onClick={() => openEdiVaccineModal(item)}
-                            />
+                        <tr key={item._id}>
+                          <td>
+                            {new Date(item.timestamp).toLocaleDateString()}
+                          </td>
+                          <td>{item.vaccine}</td>
+                          <td>{item.remarks}</td>
+                          <td>
+                            {
+                              <DriveFileRenameOutlineRoundedIcon
+                                style={{ color: "green", cursor: "pointer" }}
+                                onClick={() => openEdiVaccineModal(item)}
+                              />
                             }
-                        </td>
-                      </tr>
+                          </td>
+                        </tr>
                       ))
                     ) : (
                       <tr>

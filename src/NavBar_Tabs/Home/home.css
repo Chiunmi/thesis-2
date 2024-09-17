@@ -1,0 +1,193 @@
+.home-page {
+  position: fixed;
+  /* background-color: pink; */
+  width: calc(100vw - 33vw);
+  height: auto;
+  height: 92vh;
+  margin: 6vh 0vw;
+  margin-left: calc(0% + 12.5vw);
+  margin-right: calc(0% + 18vw);
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.home-page::-webkit-scrollbar {
+  display: none;
+}
+
+.hello {
+  font-size: 36px;
+  font-weight: 500;
+  color: #252525;
+  /* margin-left: -15px; */
+}
+/* .welcome {
+  background-color: bisque;
+} */
+.welcome-content {
+  width: 100%;
+  height: auto;
+  background: linear-gradient(to left, #003163, #13072e);
+  border-radius: 20px;
+  color: white;
+  margin-top: 1vh;
+  padding: 20px;
+}
+
+.welcome-content h1 {
+  padding: 20px 30px 40px 10px;
+  width: 55vw;
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.welcome-content p {
+  padding: 0px 50px 40px 30px;
+  width: 60vw;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.announcement-add-button {
+  margin-top: 2vh;
+  color: #8a8a8a;
+}
+.announcement-container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+  margin-top: 1.5vh;
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 40vh;
+}
+
+.announcement-container::-webkit-scrollbar {
+  display: none;
+}
+.add-announcement,
+.edit-announcement,
+.delete-announcement {
+  color: white;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border: 1px white solid;
+}
+
+.add-announcement:hover,
+.edit-announcement:hover,
+.delete-announcement:hover {
+  background-color: #8a8a8a;
+  color: white;
+  border: 1px white solid;
+}
+.add-announcement {
+  background-color: #2a9df4;
+}
+
+.edit-announcement {
+  background-color: green;
+}
+.delete-announcement {
+  background-color: red;
+}
+
+.announcement-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+.announcement-content p {
+  font-size: 14px;
+  font-weight: 300;
+  margin-top: 1vh;
+}
+
+.see-details {
+  margin-left: 58vw;
+}
+.see-details:hover {
+  color: #8a8a8a;
+  cursor: pointer;
+}
+
+.announcement-modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  gap: 20px;
+  padding: 20px;
+}
+
+.announcement-modal-content p {
+  font-size: 18px;
+  font-weight: 700;
+}
+.input-title,
+.input-content {
+  width: 35vw;
+  max-width: 35vw;
+  min-width: 35vw;
+}
+.input-content {
+  height: 20vh;
+  max-height: 20vh;
+}
+.modal-buttons {
+  display: flex;
+  position: relative;
+  left: 12vw;
+  gap: 20px;
+}
+
+.modal-buttons .save-btn,
+.modal-buttons .close-btn,
+.delete-modal-buttons .delete-btn,
+.delete-modal-buttons .close-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px #ddd solid;
+  color: white;
+}
+.modal-buttons .save-btn {
+  background-color: #00ab66;
+}
+.modal-buttons .close-btn {
+  background-color: #808080;
+}
+
+.delete-modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  gap: 20px;
+  padding: 20px;
+}
+
+.delete-modal-content p {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+.delete-modal-buttons .delete-btn {
+  background-color: red;
+}
+.delete-modal-buttons .close-btn {
+  background-color: #808080;
+}
+.delete-modal-buttons {
+  display: flex;
+  position: relative;
+  gap: 20px;
+  top: 2vh;
+  left: 8vw;
+}

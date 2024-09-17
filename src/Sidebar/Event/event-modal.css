@@ -1,0 +1,87 @@
+.event-modal {
+  text-align: center;
+  color: #333;
+}
+
+.close-modal-btn,
+.interedted-confirm-btn {
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 6vw;
+  margin: 1vw;
+}
+.close-modal-btn,
+.close-event-modal-btn {
+  background-color: #808080;
+}
+
+.close-modal-btn:hover,
+.close-event-modal-btn:hover {
+  background-color: #c0c2c2;
+  border: 1px solid #003163;
+  color: #003163;
+}
+.interedted-confirm-btn:hover,
+.save-event-modal-btn:hover,
+.event-modal-delete-btn:hover {
+  background-color: white;
+  /* background-color: #a9abab; */
+  color: #003163;
+  border: 1px solid #003163;
+}
+
+.interedted-confirm-btn {
+  background-color: #429d1c;
+}
+
+.add-event-modal,
+.edit-event-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-event-modal input[type="text"],
+.edit-event-modal input[type="text"] {
+  width: calc(100% - 20px); /* Full width minus padding */
+  padding: 7px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.event-modal-buttons {
+  display: flex;
+  justify-content: end;
+}
+.save-event-modal-btn,
+.close-event-modal-btn,
+.event-modal-delete-btn {
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 6vw;
+  margin: 0.5vw;
+}
+
+.save-event-modal-btn {
+  background-color: #003163;
+  width: 8vw;
+}
+.event-modal-delete-btn {
+  background-color: red;
+}

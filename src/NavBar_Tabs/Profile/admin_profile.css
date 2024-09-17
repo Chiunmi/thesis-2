@@ -1,9 +1,9 @@
 .adminProfile {
   position: fixed;
-  margin: 2vh 2vw 2vw 26vh;
+  margin: 6vh 2vw 2vw 26vh;
   /* background-color: pink; */
   width: 86vw;
-  height: 90vh;
+  height: 92vh;
   overflow-y: auto;
   max-height: fit-content;
   color: black;
@@ -299,7 +299,9 @@
 .student-data-ii,
 .student-data-iii,
 .student-data-iv,
-.student-data-v,
+.student-data-v1,
+.student-data-v2,
+.student-data-v3,
 .student-data-vii,
 .student-data-viii,
 .student-data-ix {

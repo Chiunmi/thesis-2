@@ -6,10 +6,9 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import Modal from "react-modal";
-
 
 function Archive() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -21,122 +20,121 @@ function Archive() {
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [searchName, setSearchName] = useState("");
-  
+
   const [showModal, setShowModal] = useState(false);
   const [archiveData, setArchiveData] = useState(null);
-  
+
   const handleOpenModal = (userId) => {
     setShowModal(true);
-    fetchArchive(userId)
-    console.log('userId', userId);
+    fetchArchive(userId);
+    console.log("userId", userId);
   };
 
   const handleCloseModal = () => setShowModal(false);
 
   const fetchArchive = async (userId) => {
     try {
-        const response = await axios.get(`/archive/${userId}`);
-        const archiveFetched = response.data
+      const response = await axios.get(`/archive/${userId}`);
+      const archiveFetched = response.data;
 
-        setArchiveData(archiveFetched)
-        console.log('archive:', archiveFetched);
+      setArchiveData(archiveFetched);
+      console.log("archive:", archiveFetched);
     } catch (error) {
-        console.error('Failed to fetch archive:', error);
+      console.error("Failed to fetch archive:", error);
     }
-};
-
+  };
 
   const resetSelections = () => {
-      setSelectedGrade("");
-      setSelectedStrand("");
-      setSelectedCourse("");
-      setSelectedSection("");
-      setSelectedDepartment("");
-      setStudents([]);
-      setSelectedStudent(null);
-      setSearchName('');
+    setSelectedGrade("");
+    setSelectedStrand("");
+    setSelectedCourse("");
+    setSelectedSection("");
+    setSelectedDepartment("");
+    setStudents([]);
+    setSelectedStudent(null);
+    setSearchName("");
   };
 
   const handleCategoryChange = (category) => {
-      setSelectedCategory(category);
-      resetSelections();
+    setSelectedCategory(category);
+    resetSelections();
   };
 
   const handleGradeChange = (grade) => {
-      setSelectedGrade(grade);
-      setSelectedSection("");
-      setStudents([]);
-      setSelectedStudent(null);
+    setSelectedGrade(grade);
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
   };
 
   const handleStrandChange = (strand) => {
-      setSelectedStrand(strand);
-      setSelectedSection("");
-      setStudents([]);
-      setSelectedStudent(null);
+    setSelectedStrand(strand);
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
   };
 
   const handleCourseChange = (course) => {
-      setSelectedCourse(course);
-      setSelectedSection("");
-      setStudents([]);
-      setSelectedStudent(null);
+    setSelectedCourse(course);
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
   };
 
   const handleDepartmentChange = (course) => {
-      setSelectedDepartment(course);
-      setSelectedCourse("");
-      setSelectedSection("");
-      setStudents([]);
-      setSelectedStudent(null);
+    setSelectedDepartment(course);
+    setSelectedCourse("");
+    setSelectedSection("");
+    setStudents([]);
+    setSelectedStudent(null);
   };
 
   const handleSectionChange = async (section) => {
-      setSelectedSection(section);
-      setSelectedStudent(null);
+    setSelectedSection(section);
+    setSelectedStudent(null);
 
-      // Make API call to fetch filtered students
-      try {
-          const response = await axios.get('/medical', {
-              params: {
-                  educationLevel: selectedCategory,
-                  yearlvl: selectedGrade,
-                  strand: selectedStrand,
-                  course: selectedCourse,
-                  section: section
-              }
-          });
-          setStudents(response.data);
-      } catch (error) {
-          console.error('Error fetching students:', error);
-      }
+    // Make API call to fetch filtered students
+    try {
+      const response = await axios.get("/medical", {
+        params: {
+          educationLevel: selectedCategory,
+          yearlvl: selectedGrade,
+          strand: selectedStrand,
+          course: selectedCourse,
+          section: section,
+        },
+      });
+      setStudents(response.data);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
   };
 
   const fetchProfile = async (studentId) => {
-      try {
-          const response = await axios.get(`/profile/${studentId}`);
-          setSelectedStudent(response.data);
-          console.log('Profile', selectedStudent);
-      } catch (error) {
-          console.error("Error fetching student profile:", error);
-      }
+    try {
+      const response = await axios.get(`/profile/${studentId}`);
+      setSelectedStudent(response.data);
+      console.log("Profile", selectedStudent);
+    } catch (error) {
+      console.error("Error fetching student profile:", error);
+    }
   };
 
   const searchStudents = async () => {
-      try {
-          const response = await axios.get('/medical/search', {
-              params: {
-                  name: searchName
-              }
-          });
-          setStudents(response.data);
-          setSelectedCategory("");
-          setSelectedGrade('');
-          setSelectedCourse('');
-          setSelectedSection('');
-      } catch (error) {
-          console.error('Error searching students:', error);
-      }
+    try {
+      const response = await axios.get("/medical/search", {
+        params: {
+          name: searchName,
+        },
+      });
+      setStudents(response.data);
+      setSelectedCategory("");
+      setSelectedGrade("");
+      setSelectedCourse("");
+      setSelectedSection("");
+    } catch (error) {
+      console.error("Error searching students:", error);
+    }
   };
 
   return (
@@ -170,101 +168,141 @@ function Archive() {
           </button>
         </div>
         <div className="admin-search">
-        <input 
-          type="text" 
-          className="admin-search-input"
-          placeholder="Search by name" 
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-        />
-         
-          <button 
-                onClick={() => searchStudents()}
-                disabled={!searchName.trim()}
-                > <SearchRoundedIcon />
+          <input
+            type="text"
+            className="admin-search-input"
+            placeholder="Search by name"
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+          />
+
+          <button
+            onClick={() => searchStudents()}
+            disabled={!searchName.trim()}
+          >
+            {" "}
+            <SearchRoundedIcon />
           </button>
         </div>
       </div>
 
       <div className="container">
         {/* Category Dropdown */}
-        <select onChange={(e) => handleCategoryChange(e.target.value)} value={selectedCategory}>
-            <option value="">Select Category</option>
-            <option value="JHS">Junior High School</option>
-            <option value="SHS">Senior High School</option>
-            <option value="College">College</option>
+        <select
+          onChange={(e) => handleCategoryChange(e.target.value)}
+          value={selectedCategory}
+        >
+          <option value="">Select Category</option>
+          <option value="JHS">Junior High School</option>
+          <option value="SHS">Senior High School</option>
+          <option value="College">College</option>
         </select>
 
         {selectedCategory && (
-          <select onChange={(e) => handleGradeChange(e.target.value)} value={selectedGrade}>
-              <option value="">Select Grade Level</option>
-              {selectedCategory === 'JHS' && ['7', '8', '9', '10'].map(grade => (
-                  <option key={grade} value={grade}>{grade}</option>
+          <select
+            onChange={(e) => handleGradeChange(e.target.value)}
+            value={selectedGrade}
+          >
+            <option value="">Select Grade Level</option>
+            {selectedCategory === "JHS" &&
+              ["7", "8", "9", "10"].map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
               ))}
-              {selectedCategory === 'SHS' && ['11', '12'].map(grade => (
-                  <option key={grade} value={grade}>{grade}</option>
+            {selectedCategory === "SHS" &&
+              ["11", "12"].map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
               ))}
-              {selectedCategory === 'College' && ['1', '2', '3', '4'].map(grade => (
-                  <option key={grade} value={grade}>{grade}</option>
-              ))}
-            </select>
-        )}
-
-        {selectedCategory === 'SHS' && selectedGrade && (
-          <select onChange={(e) => handleStrandChange(e.target.value)} value={selectedStrand}>
-              <option value="">Select Strand</option>
-              {['STEM', 'HUMMS', 'ABM', 'IT'].map(strand => (
-                  <option key={strand} value={strand}>{strand}</option>
-              ))}
-          </select>
-        )}
-
-        {selectedCategory === 'College' && selectedGrade && (
-          <select onChange={(e) => handleDepartmentChange(e.target.value)} value={selectedDepartment}>
-              <option value="">Select Department</option>
-              {['COI', 'YES'].map(course => (
-                  <option key={course} value={course}>{course}</option>
+            {selectedCategory === "College" &&
+              ["1", "2", "3", "4"].map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
               ))}
           </select>
         )}
 
-        {selectedCategory === 'College' && selectedGrade && selectedDepartment && (
-            <select onChange={(e) => handleCourseChange(e.target.value)} value={selectedCourse}>
-                <option value="">Select Course</option>
-                {['BSCS', 'BSA', 'BSIT', 'BSE'].map(course => (
-                    <option key={course} value={course}>{course}</option>
-                ))}
-            </select>
+        {selectedCategory === "SHS" && selectedGrade && (
+          <select
+            onChange={(e) => handleStrandChange(e.target.value)}
+            value={selectedStrand}
+          >
+            <option value="">Select Strand</option>
+            {["STEM", "HUMMS", "ABM", "IT"].map((strand) => (
+              <option key={strand} value={strand}>
+                {strand}
+              </option>
+            ))}
+          </select>
         )}
 
-        {((selectedCategory === 'JHS' && selectedGrade) || 
-        (selectedCategory === 'SHS' && selectedStrand) || 
-        (selectedCategory === 'College' && selectedCourse)) && (
-            <select onChange={(e) => handleSectionChange(e.target.value)} value={selectedSection}>
-                <option value="">Select Section</option>
-                {['A', 'B', 'C', 'D'].map((section) => (
-                    <option key={section} value={section}>{section}</option>
-                ))}
+        {selectedCategory === "College" && selectedGrade && (
+          <select
+            onChange={(e) => handleDepartmentChange(e.target.value)}
+            value={selectedDepartment}
+          >
+            <option value="">Select Department</option>
+            {["COI", "YES"].map((course) => (
+              <option key={course} value={course}>
+                {course}
+              </option>
+            ))}
+          </select>
+        )}
+
+        {selectedCategory === "College" &&
+          selectedGrade &&
+          selectedDepartment && (
+            <select
+              onChange={(e) => handleCourseChange(e.target.value)}
+              value={selectedCourse}
+            >
+              <option value="">Select Course</option>
+              {["BSCS", "BSA", "BSIT", "BSE"].map((course) => (
+                <option key={course} value={course}>
+                  {course}
+                </option>
+              ))}
             </select>
+          )}
+
+        {((selectedCategory === "JHS" && selectedGrade) ||
+          (selectedCategory === "SHS" && selectedStrand) ||
+          (selectedCategory === "College" && selectedCourse)) && (
+          <select
+            onChange={(e) => handleSectionChange(e.target.value)}
+            value={selectedSection}
+          >
+            <option value="">Select Section</option>
+            {["A", "B", "C", "D"].map((section) => (
+              <option key={section} value={section}>
+                {section}
+              </option>
+            ))}
+          </select>
         )}
 
         {selectedSection && students.length === 0 ? (
-            <p>No students</p>
-          ) : students.length > 0 && !selectedStudent ? (
-              <div>
-                  <h3>Filtered Students:</h3>
-                  <ul>
-                      {students.map((student, index) => (
-                          <li 
-                              key={index}
-                              onClick={() => fetchProfile(student.personal.userId)}
-                          >
-                              {student.personal.firstName} {student.personal.lastname} (ID: {student.personal.userId})
-                          </li>
-                      ))}
-                  </ul>
-              </div>
-          ) : null}
+          <p>No students</p>
+        ) : students.length > 0 && !selectedStudent ? (
+          <div>
+            <h3>Filtered Students:</h3>
+            <ul>
+              {students.map((student, index) => (
+                <li
+                  key={index}
+                  onClick={() => fetchProfile(student.personal.userId)}
+                >
+                  {student.personal.firstName} {student.personal.lastname} (ID:{" "}
+                  {student.personal.userId})
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         {/* Display Selected Student Information */}
         {selectedStudent && (
@@ -276,7 +314,8 @@ function Archive() {
                   className="selected-section-header"
                   onClick={() => setSelectedStudent(null)}
                 >
-                  { selectedStudent.education.yearlvl + selectedStudent.education.section}
+                  {selectedStudent.education.yearlvl +
+                    selectedStudent.education.section}
                 </h3>
               </div>
             </div>
@@ -285,26 +324,46 @@ function Archive() {
               <div className="student-data-i">
                 <h3>{selectedStudent.name}</h3>
                 <div className="archive-student-pic">
-                  <img src={selectedStudent.pfp ? selectedStudent.pfp : jen} alt="this is a pfp" className="jen"/>
+                  <img
+                    src={selectedStudent.pfp ? selectedStudent.pfp : jen}
+                    alt="this is a pfp"
+                    className="jen"
+                  />
                 </div>
                 <h4> I. </h4>
-                <p> Full Name: {selectedStudent.personal.firstName + " " + selectedStudent.personal.lastName}</p>
-                <p>Gr./Section: {selectedStudent.education.yearlvl + " " + selectedStudent.education.section}</p>
+                <p>
+                  {" "}
+                  Full Name:{" "}
+                  {selectedStudent.personal.firstName +
+                    " " +
+                    selectedStudent.personal.lastName}
+                </p>
+                <p>
+                  Gr./Section:{" "}
+                  {selectedStudent.education.yearlvl +
+                    " " +
+                    selectedStudent.education.section}
+                </p>
                 <p>Civil Status: {selectedStudent.personal.civilStatus}</p>
                 <p>Birthdate: {selectedStudent.personal.dateOfBirth}</p>
                 <p>Address: {selectedStudent.personal.address}</p>
                 <p>Tel. No.: {selectedStudent.personal.telNo}</p>
                 <p>Religion: {selectedStudent.personal.religion}</p>
                 <p>Guardian: {selectedStudent.personal.guardian}</p>
-                <p>Guradian's Address: {selectedStudent.personal.guardianAddress}</p>
-                <p> Guardian's Number: {selectedStudent.personal.guardianTelNo}</p>
+                <p>
+                  Guradian's Address: {selectedStudent.personal.guardianAddress}
+                </p>
+                <p>
+                  {" "}
+                  Guardian's Number: {selectedStudent.personal.guardianTelNo}
+                </p>
                 <p> Department: {selectedStudent.personal.department}</p>
               </div>
               <div className="student-data-ii">
                 <h4> II. </h4>
                 <h4>
-                Have you ever suffered illnesses involving any of the
-                following systems? Specify.
+                  Have you ever suffered illnesses involving any of the
+                  following systems? Specify.
                 </h4>
                 <p>Respiratory : {selectedStudent.medical.respiratory}</p>
                 <p>Digestive : {selectedStudent.medical.digestive}</p>
@@ -318,12 +377,16 @@ function Archive() {
                 <p>Lymphatic : {selectedStudent.medical.lymphatic}</p>
                 <br />
                 <h4> III. </h4>
-                <p>Do you smoke? : {selectedStudent.medical.smoke ? "Yes": "No"}</p>
-                <p>Do you drink? : {selectedStudent.medical.drink ? "Yes": "No"}</p>
                 <p>
-                  Allergy? : 
-                  {selectedStudent.medical.allergy === "N/A" 
-                    ? selectedStudent.medical.specificAllergy 
+                  Do you smoke? : {selectedStudent.medical.smoke ? "Yes" : "No"}
+                </p>
+                <p>
+                  Do you drink? : {selectedStudent.medical.drink ? "Yes" : "No"}
+                </p>
+                <p>
+                  Allergy? :
+                  {selectedStudent.medical.allergy === "N/A"
+                    ? selectedStudent.medical.specificAllergy
                     : selectedStudent.medical.allergy}
                 </p>
               </div>
@@ -341,7 +404,9 @@ function Archive() {
                 <p>Tongue : {selectedStudent.medical.tongue}</p>
                 <p>Neck : {selectedStudent.medical.neck}</p>
                 <p>Thyroids : {selectedStudent.medical.thyroids}</p>
-                <p>Cervical Glands : {selectedStudent.medical.cervicalGlands}</p>
+                <p>
+                  Cervical Glands : {selectedStudent.medical.cervicalGlands}
+                </p>
                 <br />
                 <h4> V. </h4>
 
@@ -374,22 +439,23 @@ function Archive() {
             </div>
             <h3>Laboratory Examination</h3>
             <div className="column-three">
-              <div className="student-data-v">
-                <h4> VI. </h4>
-                <div className="x-ray">
-                  <h4> CHEST X-RAY </h4>
-                </div>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <p> Others: (If indicated)</p>
+              <div className="student-data-v1">
+                <h3>Laboratory Examination</h3>
+                <h4> VIII. </h4>
+                <p>Blood Chemistry: {selectedStudent.medical.bloodChemistry}</p>
+                <p> CBC: {selectedStudent.medical.cbc} </p>
+                <p> Urinalysis: {selectedStudent.medical.urinalysis}</p>
+                <p> Fecalysis: {selectedStudent.medical.fecalysis}</p>
+              </div>
+              <div className="student-data-v2">
+                <h3>Diagnostic Procedures</h3>
+                <h4> IX. </h4>
+                <p>Chest X-ray Findings: {selectedStudent.medical.chestXray}</p>
+              </div>
+              <div className="student-data-v3">
+                <h3>Others(ECG, Ultrasound, etc.)</h3>
+                <h4> X. </h4>
+                <p> {selectedStudent.medical.others}</p>
               </div>
             </div>
 
@@ -405,14 +471,16 @@ function Archive() {
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedStudent.assessment && selectedStudent.assessment.length > 0 ? (
+                    {selectedStudent.assessment &&
+                    selectedStudent.assessment.length > 0 ? (
                       selectedStudent.assessment.map((item) => (
                         <tr key={item._id}>
-                          <td>{new Date(item.timestamp).toLocaleDateString()}</td>
+                          <td>
+                            {new Date(item.timestamp).toLocaleDateString()}
+                          </td>
                           <td>{item.complaints}</td>
                           <td>{item.actions}</td>
-                          <td>
-                          </td>
+                          <td></td>
                         </tr>
                       ))
                     ) : (
@@ -435,17 +503,22 @@ function Archive() {
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedStudent.assessment && selectedStudent.assessment.length > 0 ? (
+                    {selectedStudent.assessment &&
+                    selectedStudent.assessment.length > 0 ? (
                       selectedStudent.assessment.map((item) =>
                         item.followUps ? (
                           <tr key={`follow-up-${item._id}`}>
-                            <td>{new Date(item.followUps.date).toLocaleDateString()}</td>
+                            <td>
+                              {new Date(
+                                item.followUps.date
+                              ).toLocaleDateString()}
+                            </td>
                             <td>{item.followUps.followUpComplaints}</td>
                             <td>{item.followUps.followUpActions}</td>
                           </tr>
                         ) : (
                           <tr key={`no-follow-up-${item._id}`}>
-                            <td colSpan="3">No follow-ups available</td>                            
+                            <td colSpan="3">No follow-ups available</td>
                           </tr>
                         )
                       )
@@ -455,7 +528,6 @@ function Archive() {
                       </tr>
                     )}
                   </tbody>
-
                 </table>
               </div>
             </div>
@@ -473,13 +545,16 @@ function Archive() {
                     </tr>
                   </thead>
                   <tbody>
-                  {selectedStudent.immunization && selectedStudent.immunization.length > 0 ? (
+                    {selectedStudent.immunization &&
+                    selectedStudent.immunization.length > 0 ? (
                       selectedStudent.immunization.map((item) => (
-                      <tr key={item._id}>
-                        <td>{new Date(item.timestamp).toLocaleDateString()}</td>
-                        <td>{item.vaccine}</td>
-                        <td>{item.remarks}</td>
-                      </tr>
+                        <tr key={item._id}>
+                          <td>
+                            {new Date(item.timestamp).toLocaleDateString()}
+                          </td>
+                          <td>{item.vaccine}</td>
+                          <td>{item.remarks}</td>
+                        </tr>
                       ))
                     ) : (
                       <tr>
@@ -495,41 +570,181 @@ function Archive() {
               className="archive-staff"
               style={{ fontSize: "14px", margin: "1vw" }}
             >
-            <button onClick={() => handleOpenModal(selectedStudent.medical.userId)}>View Archive</button>
-            {showModal && archiveData && (
-              <div className="modal">
-                <div className="modal-content">
-                  <h3>Document Archive</h3>
+              <button
+                onClick={() => handleOpenModal(selectedStudent.medical.userId)}
+              >
+                View Archive
+              </button>
+              {showModal && archiveData && (
+                <div className="modal">
+                  <div className="modal-content">
+                    <h3>Document Archive</h3>
 
-                  <div>
-                    <h4>Original Record</h4>
-                    <pre>{JSON.stringify(archiveData.originalDocument, null, 2)}</pre>
+                    <div>
+                      <h4>Changes History</h4>
+                      {showModal && archiveData && (
+                        <div className="modal">
+                          <div className="modal-content">
+                            <h3>Document Archive</h3>
 
-                    <h4>Changes History</h4>
-                    {archiveData.changes && archiveData.changes.length > 0 ? (
-                      <ul>
-                        {archiveData.changes.map((change, index) => (
-                          <li key={index}>
-                            <p>Change #{index + 1} (By User ID: {change.userId} on {new Date(change.timestamp).toLocaleString()}):</p>
-                            <ul>
-                              {Object.keys(change.changedFields).map((field) => (
-                                <li key={field}>
-                                  {field}: {change.changedFields[field]}
-                                </li>
-                              ))}
-                            </ul>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>No changes found.</p>
-                    )}
+                            {/* Medical Archive Changes */}
+                            <div>
+                              <h4>Medical Record Changes</h4>
+                              {archiveData.medicalArchive.changes.length > 0 ? (
+                                <ul>
+                                  {archiveData.medicalArchive.changes.map(
+                                    (change, index) => (
+                                      <li key={index}>
+                                        <p>
+                                          Change #{index + 1} (By User ID:{" "}
+                                          {change.userId} on{" "}
+                                          {new Date(
+                                            change.timestamp
+                                          ).toLocaleString()}
+                                          ):
+                                        </p>
+                                        <ul>
+                                          {Object.keys(
+                                            change.changedFields
+                                          ).map((field) => (
+                                            <li key={field}>
+                                              {field}:{" "}
+                                              {change.changedFields[field]}
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              ) : (
+                                <p>No changes found for the medical record.</p>
+                              )}
+                            </div>
+
+                            {/* Immunization Archive Changes */}
+                            <div>
+                              <h4>Immunization Record Changes</h4>
+                              {archiveData.immunizationArchives.length > 0 ? (
+                                archiveData.immunizationArchives.map(
+                                  (immunizationArchive, idx) => (
+                                    <div key={idx}>
+                                      <h5>
+                                        Immunization ID:{" "}
+                                        {immunizationArchive.immunizationId}
+                                      </h5>
+                                      {immunizationArchive.changes.length >
+                                      0 ? (
+                                        <ul>
+                                          {immunizationArchive.changes.map(
+                                            (change, index) => (
+                                              <li key={index}>
+                                                <p>
+                                                  Change #{index + 1} (By User
+                                                  ID: {change.userId} on{" "}
+                                                  {new Date(
+                                                    change.timestamp
+                                                  ).toLocaleString()}
+                                                  ):
+                                                </p>
+                                                <ul>
+                                                  {Object.keys(
+                                                    change.changedFields
+                                                  ).map((field) => (
+                                                    <li key={field}>
+                                                      {field}:{" "}
+                                                      {
+                                                        change.changedFields[
+                                                          field
+                                                        ]
+                                                      }
+                                                    </li>
+                                                  ))}
+                                                </ul>
+                                              </li>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : (
+                                        <p>
+                                          No changes found for this immunization
+                                          record.
+                                        </p>
+                                      )}
+                                    </div>
+                                  )
+                                )
+                              ) : (
+                                <p>No immunization records found.</p>
+                              )}
+                            </div>
+
+                            {/* Assessment Archive Changes */}
+                            <div>
+                              <h4>Assessment Record Changes</h4>
+                              {archiveData.assessmentArchives.length > 0 ? (
+                                archiveData.assessmentArchives.map(
+                                  (assessmentArchive, idx) => (
+                                    <div key={idx}>
+                                      <h5>
+                                        Assessment ID:{" "}
+                                        {assessmentArchive.assessmentId}
+                                      </h5>
+                                      {assessmentArchive.changes.length > 0 ? (
+                                        <ul>
+                                          {assessmentArchive.changes.map(
+                                            (change, index) => (
+                                              <li key={index}>
+                                                <p>
+                                                  Change #{index + 1} (By User
+                                                  ID: {change.userId} on{" "}
+                                                  {new Date(
+                                                    change.timestamp
+                                                  ).toLocaleString()}
+                                                  ):
+                                                </p>
+                                                <ul>
+                                                  {Object.keys(
+                                                    change.changedFields
+                                                  ).map((field) => (
+                                                    <li key={field}>
+                                                      {field}:{" "}
+                                                      {
+                                                        change.changedFields[
+                                                          field
+                                                        ]
+                                                      }
+                                                    </li>
+                                                  ))}
+                                                </ul>
+                                              </li>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : (
+                                        <p>
+                                          No changes found for this assessment
+                                          record.
+                                        </p>
+                                      )}
+                                    </div>
+                                  )
+                                )
+                              ) : (
+                                <p>No assessment records found.</p>
+                              )}
+                            </div>
+
+                            <button onClick={handleCloseModal}>Close</button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <button onClick={handleCloseModal}>Close</button>
                   </div>
-
-                  <button onClick={handleCloseModal}>Close</button>
                 </div>
-              </div>
-            )}
+              )}
             </div>
           </div>
         )}

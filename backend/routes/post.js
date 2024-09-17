@@ -1,57 +1,90 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const Post = require('../models/post');
-const PersonalInfo = require('../models/personalInfo');
-const Notification = require('../models/notification/notification');
+const Post = require("../models/post");
+const PersonalInfo = require("../models/personalInfo");
+const Notification = require("../models/notification/notification");
 
-const { cloudinary } = require('../utils/config');
-const upload = require('../middlewares/multer');
+//default route = /post
 
-router.get('/', async (req, res) => {
-    try{
-        const posts = await Post.find().sort({ timestamp: -1 });
-        res.status(200).json(posts);
-    } catch (err) {
-        return res.status(400).json({ error: 'No Post found'});
-    }
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ timestamp: -1 });
+    res.status(200).json(posts);
+  } catch (err) {
+    return res.status(400).json({ error: "No Post found" });
+  }
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post("/", async (req, res) => {
+  const currentUser = req.user;
+  const { title, body } = req.body;
+
+  try {
+    const newPost = await Post.create({
+      title,
+      body,
+      userId: currentUser.id,
+    });
+
+    const userDetails = await PersonalInfo.findOne({
+      userId: currentUser.id,
+    }).select("firstName lastName");
+
+    await Notification.create({
+      userId: currentUser._id,
+      title: `${
+        userDetails.firstName + " " + userDetails.lastName
+      } made a post!`,
+      documentId: newPost._id,
+      documentType: "post",
+      recipientIds: [],
+    });
+
+    return res.status(200).json(newPost);
+  } catch (err) {
+    console.log("error: ", err);
+  }
+});
+
+router.patch("/:id", async (req, res) => {
+  try {
+    const Id = req.params.id;
     const currentUser = req.user;
-    const { title, body } = req.body;
+    const updatedFields = req.body;
 
-    try{
-        let imgUrl = '';
-        if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'posts'
-            });
-            imgUrl = result.secure_url;
-        }
-
-        const newPost = await Post.create({
-            title,
-            body,
-            url: imgUrl,
-            userId: currentUser.id
-        });
-
-        const userDetails = await PersonalInfo.findOne({
-            userId: currentUser.id
-        }).select('firstName lastName');
-
-        await Notification.create({
-            userId: currentUser._id,
-            title: `${userDetails.firstName + " " + userDetails.lastName} made a post!`,
-            documentId: newPost._id,
-            documentType: 'post',
-            recipientIds: [], 
-        });
-
-        return res.status(200).json(newPost);
-    }catch(err){
-       console.log('error: ', err);
+    if (currentUser.role !== "admin") {
+      return res.status(404).json({ error: "Not authorize" });
     }
+
+    const updatePost = await Post.findByIdAndUpdate(Id, updatedFields);
+
+    return res.status(200).json(updatePost);
+  } catch (err) {
+    console.log("error:", err);
+    res.status(404).json({ error: "error updating post" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const currentUser = req.user;
+
+    if (currentUser.role !== "admin") {
+      return res.status(404).json({ error: "Not authorize" });
+    }
+
+    const postToDelete = await Post.findById(postId);
+    if (!postToDelete) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    await Post.findByIdAndDelete(postId);
+    res.json({ message: "Post deleted successfully" });
+  } catch (err) {
+    console.log("error:", err);
+    res.status(404).json({ error: "error deleting post" });
+  }
 });
 
 module.exports = router;
