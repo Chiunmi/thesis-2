@@ -1,103 +1,312 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import Modal from "react-modal";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import "./manage.css";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const Manage = () => {
-  const [editModalVisible, setEditModalVisible] = useState(false); // For edit modal
-  const [removeModalVisible, setRemoveModalVisible] = useState(false); // For remove modal
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [quantityInput, setQuantityInput] = useState({}); // Use an object to track quantities by product ID
-
   const inventoryData = [
     {
-      id: 1,
-      productNo: "P001",
-      productName: "Paracetamol",
-      initialQty: 50,
-      currentQty: 40,
-      status: "In Stock",
+      productName: "Alaxan FR 200/325mg cap",
+      initialQty: "500 pcs",
+      currentQty: "341 pcs", // Total (new + old)
+      oldStockQty: "133 pcs",
+      oldStockExp: "Mar-25",
+      newStockQty: "208 pcs",
+      newStockExp: "Feb-27",
     },
     {
-      id: 2,
-      productNo: "P002",
-      productName: "Medicol",
-      initialQty: 30,
-      currentQty: 0,
-      status: "Out of Stock",
+      productName: "Ambroxol HCl RM 30mg tab",
+      initialQty: "239 pcs",
+      currentQty: "239 pcs",
+      oldStockQty: "239 pcs",
+      oldStockExp: "Aug-24",
+      newStockQty: "0",
+      newStockExp: "-",
     },
     {
-      id: 3,
-      productNo: "P003",
-      productName: "Diatabs",
-      initialQty: 60,
-      currentQty: 60,
-      status: "In Stock",
+      productName: "Amoxicillin Trihydrate RM 500mg cap",
+      initialQty: "0",
+      currentQty: "0",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "0",
+      newStockExp: "-",
     },
     {
-      id: 4,
-      productNo: "P004",
-      productName: "Neozep",
-      initialQty: 100,
-      currentQty: 80,
-      status: "In Stock",
+      productName: "Antamin 4mg tab",
+      initialQty: "5 bottles",
+      currentQty: "5 bottles",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "5 bottles",
+      newStockExp: "Aug-26",
+    },
+    {
+      productName: "Asmalin 1mg/ml Soln for inhalation",
+      initialQty: "5 bottles",
+      currentQty: "5 bottles",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "5 bottles",
+      newStockExp: "-",
+    },
+    {
+      productName: "Biogesic 120mg/5ml susp",
+      initialQty: "3,000 pcs",
+      currentQty: "3,000 pcs",
+      oldStockQty: "2 bottles",
+      oldStockExp: "Jul-24",
+      newStockQty: "3,000 pcs",
+      newStockExp: "Jan-25",
+    },
+    {
+      productName: "Biogesic 250mg/5ml susp",
+      initialQty: "500 pcs",
+      currentQty: "460 pcs",
+      oldStockQty: "700 pcs",
+      oldStockExp: "Oct-26",
+      newStockQty: "460 pcs",
+      newStockExp: "Sep-24",
+    },
+    {
+      productName: "Biogesic 500mg tab",
+      initialQty: "500 pcs",
+      currentQty: "462 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "462 pcs",
+      newStockExp: "Apr-27",
+    },
+    {
+      productName: "Buscopan 10mg tab",
+      initialQty: "0",
+      currentQty: "0",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "0",
+      newStockExp: "-",
+    },
+    {
+      productName: "Buscopan Venus 10/500mg tab",
+      initialQty: "500 pcs",
+      currentQty: "500 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "500 pcs",
+      newStockExp: "Dec-25",
+    },
+    {
+      productName: "Calcisaph 500mg tab",
+      initialQty: "500 pcs",
+      currentQty: "479 pcs",
+      oldStockQty: "77 pcs",
+      oldStockExp: "Oct-24",
+      newStockQty: "479 pcs",
+      newStockExp: "Jan-26",
+    },
+    {
+      productName: "Cinnarizine RM 25mg tab",
+      initialQty: "0",
+      currentQty: "0",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "0",
+      newStockExp: "-",
+    },
+    {
+      productName: "Cloxacillin Na RM 500mg cap",
+      initialQty: "1,000 pcs",
+      currentQty: "820 pcs",
+      oldStockQty: "1 pc",
+      oldStockExp: "Sep-25",
+      newStockQty: "820 pcs",
+      newStockExp: "Mar-26",
+    },
+    {
+      productName: "Daktarin Oral Gel 20mg",
+      initialQty: "500 pcs",
+      currentQty: "478 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "478 pcs",
+      newStockExp: "Mar-25",
+    },
+    {
+      productName: "Decolgen ND 25/500mg cap",
+      initialQty: "500 pcs",
+      currentQty: "484 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "484 pcs",
+      newStockExp: "Apr-28",
+    },
+    {
+      productName: "Diatabs 2mg cap",
+      initialQty: "0",
+      currentQty: "0",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "0",
+      newStockExp: "-",
+    },
+    {
+      productName: "Dolfenal 500mg tab",
+      initialQty: "100 pcs",
+      currentQty: "99 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "99 pcs",
+      newStockExp: "Dec-27",
+    },
+    {
+      productName: "Domperidone RM 10mg tab",
+      initialQty: "30 pcs",
+      currentQty: "30 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "30 pcs",
+      newStockExp: "Jan-26",
+    },
+    {
+      productName: "Gastrifar 10mg tab",
+      initialQty: "20 pcs",
+      currentQty: "15 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "15 pcs",
+      newStockExp: "Feb-26",
+    },
+    {
+      productName: "Hivent 1mg/ml neb",
+      initialQty: "0",
+      currentQty: "0",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "0",
+      newStockExp: "-",
+    },
+    {
+      productName: "Kathrex 960mg tab",
+      initialQty: "500 pcs",
+      currentQty: "500 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "500 pcs",
+      newStockExp: "Oct-25",
+    },
+    {
+      productName: "Kremil-S 178/233/30mg tab",
+      initialQty: "100 pcs",
+      currentQty: "96 pcs",
+      oldStockQty: "300 pcs",
+      oldStockExp: "Dec-25",
+      newStockQty: "96 pcs",
+      newStockExp: "Mar-26",
+    },
+    {
+      productName: "Kremil-S Advance 10/800/165mg tab",
+      initialQty: "500 pcs",
+      currentQty: "350 pcs",
+      oldStockQty: "46 pcs",
+      oldStockExp: "Jun-25",
+      newStockQty: "350 pcs",
+      newStockExp: "Jun-25",
+    },
+    {
+      productName: "Medicol Advance 200mg cap",
+      initialQty: "500 pcs",
+      currentQty: "160 pcs",
+      oldStockQty: "256 pcs",
+      oldStockExp: "Aug-24",
+      newStockQty: "160 pcs",
+      newStockExp: "Jan-25",
+    },
+    {
+      productName: "Mefenamic Acid RM 500mg tab",
+      initialQty: "150 pcs",
+      currentQty: "150 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "150 pcs",
+      newStockExp: "Oct-24",
+    },
+    {
+      productName: "Omepron 20mg cap",
+      initialQty: "0",
+      currentQty: "0",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "0",
+      newStockExp: "-",
+    },
+    {
+      productName: "Salinase Nasal Drops",
+      initialQty: "1,000 pcs",
+      currentQty: "940 pcs",
+      oldStockQty: "3 bottles",
+      oldStockExp: "Feb-28",
+      newStockQty: "940 pcs",
+      newStockExp: "May-28",
+    },
+    {
+      productName: "Solmux 500mg cap",
+      initialQty: "5 bottles",
+      currentQty: "5 bottles",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "5 bottles",
+      newStockExp: "Jun-25",
+    },
+    {
+      productName: "Tempra 120mg/5ml syrup",
+      initialQty: "100 pcs",
+      currentQty: "100 pcs",
+      oldStockQty: "1 bottle",
+      oldStockExp: "Feb-25",
+      newStockQty: "100 pcs",
+      newStockExp: "Jun-25",
+    },
+    {
+      productName: "Tempra 325mg tab",
+      initialQty: "5 bottles",
+      currentQty: "5 bottles",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "5 bottles",
+      newStockExp: "Oct-26",
+    },
+    {
+      productName: "Tempra Forte 250mg/5ml syrup",
+      initialQty: "500 pcs",
+      currentQty: "259 pcs",
+      oldStockQty: "2 bottles",
+      oldStockExp: "Feb-25",
+      newStockQty: "259 pcs",
+      newStockExp: "Jun-25",
+    },
+    {
+      productName: "Tuseran Forte 15/25/325mg cap",
+      initialQty: "500 pcs",
+      currentQty: "400 pcs",
+      oldStockQty: "0",
+      oldStockExp: "-",
+      newStockQty: "400 pcs",
+      newStockExp: "Jan-25",
+    },
+    {
+      productName: "Ventomax 2mg tab",
+      initialQty: "500 pcs",
+      currentQty: "400 pcs",
+      oldStockQty: "2 bottles",
+      oldStockExp: "Feb-25",
+      newStockQty: "400 pcs",
+      newStockExp: "Feb-26",
     },
   ];
-
-  const chartData = inventoryData.map((item) => ({
-    name: item.productName,
-    currentQty: item.currentQty,
-  }));
-
-  const openEditModal = () => {
-    // Initialize the quantityInput state with current quantities
-    const initialQuantities = {};
-    inventoryData.forEach((product) => {
-      initialQuantities[product.id] = product.currentQty;
-    });
-    setQuantityInput(initialQuantities);
-    setEditModalVisible(true);
-  };
-
-  const handleSaveChanges = () => {
-    // Update all products with the edited quantities
-    const updatedData = inventoryData.map((item) => {
-      if (quantityInput[item.id] !== undefined) {
-        return {
-          ...item,
-          initialQty: Number(quantityInput[item.id]), // Set the input number to initialQty
-          currentQty: 0, // Reset currentQty
-        };
-      }
-      return item;
-    });
-
-    console.log(updatedData); // You can set this updated data to state or handle it according to your data flow
-
-    // Close the modal
-    setEditModalVisible(false);
-  };
-
-  const handleRemoveStock = () => {
-    // Implement the logic to remove stock
-    console.log("Removing stock for:", selectedProduct.productName);
-
-    setRemoveModalVisible(false); // Close the remove modal
-    setSelectedProduct(null);
-  };
 
   return (
     <div className="admin-inventory">
@@ -108,110 +317,14 @@ const Manage = () => {
           </button>
         </Link>
       </div>
-      <div className="inventory-status">
-        <div className="chart">
-          <h2>Stock Chart</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={chartData}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="currentQty" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
+      <h2>Stock Management</h2>
       <div className="inventory-table">
         {/* Inventory Management Section */}
         <div className="inventory-management">
-          <h2>Stock Management</h2>
           {/* Stock Search Input */}
           <div className="stock-search">
-            <button className="edit-stock-btn" onClick={openEditModal}>
-              Edit Stocks
-            </button>
-            <Modal
-              isOpen={editModalVisible} // Use new state variable
-              onRequestClose={() => setEditModalVisible(false)}
-              style={{
-                overlay: {
-                  backgroundColor: "rgba(0, 0, 0, 0.3)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  zIndex: 1,
-                  boxShadow: "none",
-                },
-                content: {
-                  width: "600px",
-                  height: "400px",
-                  margin: "auto",
-                  borderRadius: "24px",
-                  border: "none",
-                  backgroundColor: "#f8f8ff",
-                  color: "black",
-                },
-              }}
-            >
-              <div className="edit-stock-modal">
-                <h3>Edit Product Quantities</h3>
-                <table className="stock-table">
-                  <thead>
-                    <tr>
-                      <th>Product ID</th>
-                      <th>Product Name</th>
-                      <th>Current Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {inventoryData.map((product) => (
-                      <tr key={product.id}>
-                        <td>{product.productNo}</td>
-                        <td>{product.productName}</td>
-                        <td>
-                          <input
-                            type="number"
-                            value={quantityInput[product.id]}
-                            onChange={(e) =>
-                              setQuantityInput({
-                                ...quantityInput,
-                                [product.id]: e.target.value,
-                              })
-                            }
-                            className="quantity-input"
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="stock-btn">
-                  <button
-                    className="close-btn"
-                    onClick={() => setEditModalVisible(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="save-stock-btn"
-                    onClick={handleSaveChanges}
-                  >
-                    Save Changes
-                  </button>
-                </div>
-              </div>
-            </Modal>
+            <button className="edit-stock-btn">Edit Stocks</button>
+
             <input
               type="text"
               className="stock-search-input"
@@ -222,7 +335,6 @@ const Manage = () => {
           <table>
             <thead>
               <tr>
-                <th>Product No.</th>
                 <th>Product Name</th>
                 <th>Initial Qty.</th>
                 <th>Current Qty. in Stock</th>
@@ -231,92 +343,35 @@ const Manage = () => {
               </tr>
             </thead>
             <tbody>
-              {inventoryData.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.productNo}</td>
+              {inventoryData.map((item, index) => (
+                <tr key={index}>
                   <td>{item.productName}</td>
                   <td>{item.initialQty}</td>
-                  <td>{item.currentQty}</td>
+                  <td>
+                    <span
+                      data-tooltip-id="my-tooltip" // Tooltip identifier
+                      data-tooltip-html={`<b>Old Stock:</b> ${item.oldStockQty} (Exp: ${item.oldStockExp})<br/><b>New Stock:</b> ${item.newStockQty} (Exp: ${item.newStockExp})`}
+                      className="tooltip-trigger"
+                    >
+                      {item.currentQty}
+                    </span>
+                    <ReactTooltip id="my-tooltip" /> {/* Updated tooltip */}
+                  </td>
                   <td
                     style={{
-                      color: item.currentQty === 0 ? "red" : "green", // Conditional color based on stock status
+                      color: item.currentQty === "0" ? "red" : "green",
                     }}
                   >
-                    {item.currentQty === 0 ? "Out of Stock" : "In Stock"}
+                    {item.currentQty === "0" ? "Out of Stock" : "In Stock"}
                   </td>
                   <td>
-                    {/* Remove Stock Icon */}
                     <RemoveCircleRoundedIcon
-                      onClick={() => {
-                        setSelectedProduct(item);
-                        setRemoveModalVisible(true);
-                      }}
                       style={{
                         cursor: "pointer",
                         color: "red",
                         marginLeft: "1vw",
                       }}
                     />
-                    {/* Remove Modal Component */}
-                    <Modal
-                      isOpen={removeModalVisible} // State to control the modal's visibility
-                      onRequestClose={() => setRemoveModalVisible(false)}
-                      style={{
-                        overlay: {
-                          backgroundColor: "rgba(0, 0, 0, 0.3)",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          zIndex: 1,
-                          boxShadow: "none",
-                        },
-                        content: {
-                          width: "500px",
-                          height: "200px",
-                          margin: "auto",
-                          marginLeft: "43vw",
-                          borderRadius: "24px",
-                          border: "none",
-                          backgroundColor: "#f8f8ff",
-                          color: "black",
-                        },
-                      }}
-                    >
-                      <div className="add-stock-modal">
-                        <div className="stock-modal">
-                          <p>Are you sure you want to remove stock?</p>
-                          <h3>Product Name: {selectedProduct?.productName}</h3>
-                          <label>
-                            Quantity to Remove:
-                            <input
-                              type="number"
-                              placeholder="Input number"
-                              value={quantityInput[selectedProduct?.id] || ""} // Use the selected product's ID to manage its quantity input
-                              onChange={(e) =>
-                                setQuantityInput({
-                                  ...quantityInput,
-                                  [selectedProduct.id]: e.target.value,
-                                })
-                              }
-                            />
-                          </label>
-                        </div>
-                        <div className="stock-btn">
-                          <button
-                            className="close-btn"
-                            onClick={() => setRemoveModalVisible(false)}
-                          >
-                            Close
-                          </button>
-                          <button
-                            className="remove-stock-btn"
-                            onClick={handleRemoveStock} // Keep the logic for removing stock
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                    </Modal>
                   </td>
                 </tr>
               ))}

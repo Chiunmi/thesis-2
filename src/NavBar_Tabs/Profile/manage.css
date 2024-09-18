@@ -22,7 +22,7 @@
 }
 
 .inventory-management {
-  margin: 5% 0%;
+  margin-top: 2vh;
   background-color: #c0c2c2;
   border-radius: 20px;
   padding: 10px;
@@ -187,4 +187,10 @@ tr:last-child td {
 .stock-modal p {
   text-align: center;
   margin: 4px;
+}
+
+.tooltip-trigger {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }

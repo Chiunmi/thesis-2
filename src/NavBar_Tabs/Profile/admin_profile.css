@@ -565,3 +565,15 @@ body.no-scroll {
 .vaccine-modal h3 {
   text-align: center;
 }
+
+.title-charts {
+  display: flex;
+  justify-content: space-between;
+  margin: 4vh 12vw 1vh 8vw;
+}
+.title-charts h3 {
+  text-align: center;
+}
+.health-stat-title {
+  margin-right: 4vw;
+}

@@ -25,3 +25,8 @@
 .insight h1 {
   text-align: center;
 }
+
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+}

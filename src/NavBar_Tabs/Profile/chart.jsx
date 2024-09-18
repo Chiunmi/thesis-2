@@ -21,6 +21,14 @@ const data = [
   { name: "Cancer", value: 200 },
 ];
 
+const barChartData = [
+  { name: "Heart Disease", value: 500 },
+  { name: "Asthma", value: 450 },
+  { name: "Allergy", value: 300 },
+  { name: "PTB", value: 200 },
+  { name: "Mental Illness", value: 150 },
+];
+
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const {
@@ -112,11 +120,11 @@ export default class Chart extends PureComponent {
           <div className="bar-chart">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={data}
+                data={barChartData}
                 margin={{
                   top: 5,
-                  right: 30,
-                  left: 20,
+                  right: 10,
+                  left: 10,
                   bottom: 5,
                 }}
                 barSize={20}
@@ -132,7 +140,7 @@ export default class Chart extends PureComponent {
                 <CartesianGrid strokeDasharray="3 3" />
                 <Bar
                   dataKey="value"
-                  fill="#8884d8"
+                  fill="#003163"
                   background={{ fill: "#eee" }}
                 />
               </BarChart>
@@ -158,7 +166,7 @@ export default class Chart extends PureComponent {
             </ResponsiveContainer>
           </div>
           <div className="insight">
-            <h1> Insights</h1>
+            <p> Insights</p>
           </div>
         </div>
       </div>
