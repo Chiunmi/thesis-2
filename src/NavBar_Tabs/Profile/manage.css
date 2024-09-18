@@ -1,4 +1,5 @@
-.admin-inventory {
+.admin-inventory,
+.edit-stock {
   position: fixed;
   margin: 8vh 2vw 2vw 26vh;
   /* background-color: pink; */
@@ -8,7 +9,8 @@
   max-height: fit-content;
 }
 
-.admin-inventory::-webkit-scrollbar {
+.admin-inventory::-webkit-scrollbar,
+.edit-stock::-webkit-scrollbar {
   display: none;
 }
 
@@ -21,7 +23,8 @@
   text-align: center;
 }
 
-.inventory-management {
+.inventory-management,
+.edit-stock-table {
   margin-top: 2vh;
   background-color: #c0c2c2;
   border-radius: 20px;
@@ -76,42 +79,23 @@ h2 {
   outline: none;
 }
 
+/* Basic table styling */
 table {
   width: 100%;
-  border-collapse: collapse; /* Combine border into a single line */
+  border-collapse: collapse;
+  background-color: #c0c2c2; /* Set table background color */
 }
 
-/* Style table header */
-th {
-  border-bottom: 1px solid #ddd; /* Add border bottom for each header cell */
+th,
+td {
   padding: 8px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Style table rows */
-td {
-  border-bottom: 1px solid #ddd; /* Add border bottom for each data cell */
-  padding: 8px;
-}
-
-/* Style the last row of the table without bottom border */
-tr:last-child td {
-  border-bottom: none; /* Remove bottom border for the last row */
-}
-
-.modal-content {
-  background-color: #f8f8ff;
-  color: black;
-  padding: 20px;
-  border: none;
-  border-radius: 24px;
-  height: fit-content;
-  width: 500px;
-  position: relative;
-  margin: auto;
-  top: 50%;
-  transform: translateY(-50%);
-  box-shadow: none;
+/* Column hover styles */
+.row-hover {
+  background-color: #d0d2d2; /* Lightened color on hover */
 }
 
 .edit-stock-btn {
@@ -131,16 +115,6 @@ tr:last-child td {
   color: #003163;
 }
 
-.edit-stock-modal {
-  display: flex;
-  flex-direction: column;
-}
-
-.edit-stock-modal h3 {
-  text-align: center;
-  margin-bottom: 2vh;
-}
-
 .stock-btn {
   display: flex; /* Align buttons horizontally */
   justify-content: flex-end;
@@ -151,14 +125,6 @@ tr:last-child td {
 .stock-modal input {
   margin-left: 10px;
 }
-.stock-btn .save-stock-btn {
-  padding: 10px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: #00ab66;
-  border: 1px white solid;
-  color: white;
-}
 
 .stock-btn .remove-stock-btn {
   padding: 10px 20px;
@@ -168,8 +134,9 @@ tr:last-child td {
   border: 1px white solid;
   color: white;
 }
-.stock-btn .save-stock-btn:hover,
-.stock-btn .close-btn:hover {
+
+.stock-btn .close-btn:hover,
+.stock-btn .remove-stock-btn:hover {
   background-color: #c0c2c2;
   border: 1px white solid;
   color: #003163;
@@ -193,4 +160,23 @@ tr:last-child td {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.save-edit-stock-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #00ab66;
+  border: 1px white solid;
+  color: white;
+}
+.save-edit-stock-btn:hover {
+  background-color: white;
+  border: 1px #003163 solid;
+  color: #003163;
+}
+.save-stock {
+  display: flex;
+  justify-content: end;
+  margin: 2vh 3vw;
 }

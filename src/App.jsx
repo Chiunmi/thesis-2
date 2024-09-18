@@ -23,6 +23,7 @@ import HealthRecord from "./NavBar_Tabs/Profile/health_record";
 import StudentAbsenceForm from "./Sidebar/RequestForms/student-absence-form";
 import MedicalLeaveForm from "./Sidebar/RequestForms/medical-leave-form";
 import SpecialLeaveForm from "./Sidebar/RequestForms/special-leave-form";
+import EditStockPage from "./NavBar_Tabs/Profile/edit-stock";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           <Route path="/user" element={<StudentProfile />} />
           <Route path="/admin" element={<AdminProfile />} />
           <Route path="/manage" element={<Manage />} />
+          <Route path="/edit-stock" element={<EditStockPage />} />
           <Route path="/health-record" element={<HealthRecord />} />
         </Route>
 

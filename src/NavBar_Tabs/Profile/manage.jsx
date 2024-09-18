@@ -8,6 +8,10 @@ import "./manage.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const Manage = () => {
+  const [removeModalVisible, setRemoveModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [quantityInput, setQuantityInput] = useState({});
+
   const inventoryData = [
     {
       productName: "Alaxan FR 200/325mg cap",
@@ -308,13 +312,37 @@ const Manage = () => {
     },
   ];
 
+  const handleRemoveClick = (item) => {
+    setSelectedProduct(item);
+    setRemoveModalVisible(true);
+  };
+
+  const handleRemoveStock = () => {
+    // Implement the logic to remove stock
+    console.log(
+      `Removed ${quantityInput[selectedProduct.id] || 0} of ${
+        selectedProduct.productName
+      }`
+    );
+    setRemoveModalVisible(false);
+  };
+
+  const [hoveredRowIndex, setHoveredRowIndex] = useState(null);
+
+  const handleMouseEnter = (index) => {
+    setHoveredRowIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredRowIndex(null);
+  };
+
   return (
     <div className="admin-inventory">
-      <div className="back">
-        <Link to="/admin">
-          <button className="back-button">
-            <ArrowBackRoundedIcon />
-          </button>
+      <div className="back-to-admin">
+        <ArrowBackRoundedIcon style={{ color: "white", marginTop: "0.3vh" }} />
+        <Link to="/admin" className="back-to-admin-btn-link">
+          <h3 className="back-to-admin-btn">Back to Admin</h3>
         </Link>
       </div>
       <h2>Stock Management</h2>
@@ -323,7 +351,12 @@ const Manage = () => {
         <div className="inventory-management">
           {/* Stock Search Input */}
           <div className="stock-search">
-            <button className="edit-stock-btn">Edit Stocks</button>
+            <Link
+              to="/edit-stock"
+              state={{ inventoryData }} // Pass the inventory data as state
+            >
+              <button className="edit-stock-btn">Edit Stocks</button>
+            </Link>
 
             <input
               type="text"
@@ -344,18 +377,23 @@ const Manage = () => {
             </thead>
             <tbody>
               {inventoryData.map((item, index) => (
-                <tr key={index}>
+                <tr
+                  key={index}
+                  className={hoveredRowIndex === index ? "row-hover" : ""}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                >
                   <td>{item.productName}</td>
                   <td>{item.initialQty}</td>
                   <td>
                     <span
-                      data-tooltip-id="my-tooltip" // Tooltip identifier
+                      data-tooltip-id="my-tooltip"
                       data-tooltip-html={`<b>Old Stock:</b> ${item.oldStockQty} (Exp: ${item.oldStockExp})<br/><b>New Stock:</b> ${item.newStockQty} (Exp: ${item.newStockExp})`}
                       className="tooltip-trigger"
                     >
                       {item.currentQty}
                     </span>
-                    <ReactTooltip id="my-tooltip" /> {/* Updated tooltip */}
+                    <ReactTooltip id="my-tooltip" />
                   </td>
                   <td
                     style={{
@@ -366,6 +404,7 @@ const Manage = () => {
                   </td>
                   <td>
                     <RemoveCircleRoundedIcon
+                      onClick={() => handleRemoveClick(item)}
                       style={{
                         cursor: "pointer",
                         color: "red",
@@ -379,6 +418,63 @@ const Manage = () => {
           </table>
         </div>
       </div>
+
+      {/* Remove Modal Component */}
+      <Modal
+        isOpen={removeModalVisible}
+        onRequestClose={() => setRemoveModalVisible(false)}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1,
+            boxShadow: "none",
+          },
+          content: {
+            width: "35vw",
+            height: "22vh",
+            margin: "auto",
+            borderRadius: "24px",
+            border: "none",
+            backgroundColor: "#f8f8ff",
+            color: "black",
+          },
+        }}
+      >
+        <div className="add-stock-modal">
+          <div className="stock-modal">
+            <p>Are you sure you want to remove stock?</p>
+            <h3>Product Name: {selectedProduct?.productName}</h3>
+            <label>
+              Quantity to Remove:
+              <input
+                type="number"
+                placeholder="Input number"
+                value={quantityInput[selectedProduct?.id] || ""}
+                onChange={(e) =>
+                  setQuantityInput({
+                    ...quantityInput,
+                    [selectedProduct.id]: e.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className="stock-btn">
+            <button
+              className="close-btn"
+              onClick={() => setRemoveModalVisible(false)}
+            >
+              Close
+            </button>
+            <button className="remove-stock-btn" onClick={handleRemoveStock}>
+              Remove
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
