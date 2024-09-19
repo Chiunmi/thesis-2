@@ -82,7 +82,7 @@ router.patch("/:id", async (req, res) => {
     const currentUser = req.user;
     const updatedFields = req.body;
 
-    if (currentUser.role !== "admin") {
+    if (currentUser.role !== "admin" && currentUser.role !== "staff") {
       return res.status(404).json({ error: "Not authorized" });
     }
 

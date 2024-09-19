@@ -1,83 +1,94 @@
 import React, { useState } from "react";
-import Layout from "../../Components/Layout";
-import meme from "../../assets/meme.jpg";
+import { useParams } from "react-router-dom"; // Import useParams
 import Modal from "react-modal";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+
+import Layout from "../../Components/Layout";
+import { useUser } from "../../context/UserContext";
+import meme from "./../../assets/meme.jpg";
+
 import "./student-profile.css";
+
 function StudentProfile() {
+  const { id } = useParams(); // Get studentId from URL
+  const { user } = useUser();
+  const queryClient = useQueryClient();
+  const [formData, setFormData] = useState({});
   const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false);
 
   const openEditProfileModal = () => {
     setEditProfileModalOpen(true);
+    setFormData({ personal: profile.personal, education: profile.education });
+    console.log("f", formData);
   };
 
   const closeEditProfileModal = () => {
     setEditProfileModalOpen(false);
   };
 
-  const handleChange = (event) => {
-    // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Determine if the field belongs to 'personal' or 'education'
+    const [section, field] = name.split(".");
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [section]: {
+        ...prevData[section],
+        [field]: value,
+      },
+    }));
   };
+
+  const fetchProfile = async () => {
+    const response = await axios.get(`/profile/${id}`);
+    return response.data;
+  };
+
+  const editProfile = async () => {
+    try {
+      const response = await axios.patch(`/profile/${id}`, formData);
+      console.log("response.data:asd", response.data);
+      return response.data;
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  // Fetching student profile data using studentId
+  const {
+    data: profile = {},
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["profile", id],
+    queryFn: fetchProfile,
+    enabled: !!id, // Enable query only if studentId is present
+  });
+
+  const editMutation = useMutation({
+    mutationFn: editProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["profile", id]);
+      toast.success("Updated successfully");
+      setEditProfileModalOpen(false); // Close the modal on success
+    },
+    onError: (error) => {
+      toast.error(error.response?.data || "Error updating profile");
+    },
+  });
 
   const handleSave = () => {
-    // Handle save logic
+    editMutation.mutate();
   };
 
-  const selectedStudent = {
-    name: "Jenine Carpio",
-    section: "BSCS4",
-    age: 21,
-    civilstatus: "Single",
-    birthdate: "2002-09-01",
-    address: "123 Main St",
-    telNum: "555-5555",
-    religion: "None",
-    guardian: "Jane Doe",
-    guardianAddress: "456 Elm St",
-    guardianNum: "555-5556",
-    department: "COI",
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading profile</p>;
+  if (!profile || !profile.personal) return <p>No profile data available</p>;
 
-    respiratory: "None",
-    digestive: "None",
-    nervous: "None",
-    excretory: "None",
-    endocrine: "None",
-    circulatory: "None",
-    skeletal: "None",
-    muscular: "None",
-    reproductive: "None",
-    lymphatic: "None",
-    smoke: "No",
-    drink: "No",
-    allergy: "None",
-    specifyAllergy: "",
-    eyes: "Normal",
-    ear: "Normal",
-    nose: "Normal",
-    throat: "Normal",
-    tonsils: "Normal",
-    teeth: "Normal",
-    tongue: "Normal",
-    neck: "Normal",
-    thyroids: "Normal",
-    cervicalGlands: "Normal",
-    chest: "Normal",
-    contour: "Normal",
-    heart: "Normal",
-    rate: "Normal",
-    rhythm: "Normal",
-    bp: "120/80",
-    height: "180 cm",
-    weight: "75 kg",
-    bmi: "23.1",
-    lungs: "Normal",
-    abdomen: "Normal",
-    liver: "Normal",
-    spleen: "Normal",
-    kidneys: "Normal",
-    extremities: "Normal",
-    upperExtremities: "Normal",
-    lowerExtremities: "Normal",
-  };
+  console.log("profile,", profile);
 
   return (
     <div className="studentProfile">
@@ -87,7 +98,11 @@ function StudentProfile() {
           <div className="student-name-photo">
             <div className="profile-student-pic">
               <label htmlFor="upload-photo" className="upload-label">
-                <img src={meme} alt="Student Photo" className="student-photo" />
+                <img
+                  src={profile.pfp}
+                  alt="Student Photo"
+                  className="student-photo"
+                />
                 <input type="file" id="upload-photo" className="upload-input" />
                 <button className="upload-button">Change Photo</button>
               </label>
@@ -95,15 +110,15 @@ function StudentProfile() {
 
             <div className="student-profile-top">
               <div className="student-profile-name">
-                <h1>{selectedStudent.name}</h1>
+                <h1>{profile.name}</h1>
               </div>
               <div className="student-top-details">
                 <p> weight</p>
-                <h3> {selectedStudent.weight}</h3>
+                <h3> {profile.medical.weight}</h3>
                 <p> height</p>
-                <h3> {selectedStudent.height}</h3>
+                <h3> {profile.medical.height}</h3>
                 <p> BMI</p>
-                <h3> {selectedStudent.bmi}</h3>
+                <h3> {profile.medical.bmi}</h3>
               </div>
               <div>
                 <button
@@ -133,8 +148,8 @@ function StudentProfile() {
                     height: "10vh",
                     maxHeight: "fit-content",
                     margin: "auto",
-                    marginTop: "5vh",
-                    paddingTop: "265vh",
+                    marginTop: "1vh",
+                    paddingTop: "80vh",
                     backgroundColor: "rgba(0, 0, 0, 0)",
                     border: "none",
                     overflowY: "auto",
@@ -145,476 +160,183 @@ function StudentProfile() {
                   <h3>Edit Profile</h3>
                   <form>
                     <h4>I. Personal Information</h4>
-                    <label>Full Name: </label>
+                    <label>First Name: </label>
                     <input
                       type="text"
-                      name="name"
-                      value={selectedStudent.name}
+                      name="personal.firstName"
+                      value={formData.personal?.firstName}
                       onChange={handleChange}
                     />
                     <br />
-                    <label>Gr./Section: </label>
+                    <label>Last Name: </label>
                     <input
                       type="text"
-                      name="section"
-                      value={selectedStudent.section}
+                      name="personal.lastName"
+                      value={formData.personal?.lastName}
                       onChange={handleChange}
                     />
                     <br />
-                    <label>Age: </label>
+                    <label>Sex: </label>
                     <input
-                      type="number"
-                      name="age"
-                      value={selectedStudent.age}
+                      type="radio"
+                      name="personal.sex"
+                      value="Male"
+                      checked={formData.personal?.sex === "Male"}
                       onChange={handleChange}
-                    />
+                    />{" "}
+                    Male
+                    <input
+                      type="radio"
+                      name="personal.sex"
+                      value="Female"
+                      checked={formData.personal?.sex === "Female"}
+                      onChange={handleChange}
+                    />{" "}
+                    Female
                     <br />
                     <label>Civil Status: </label>
                     <input
                       type="text"
-                      name="civilstatus"
-                      value={selectedStudent.civilstatus}
+                      name="personal.civilStatus"
+                      value={formData.personal?.civilStatus}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Birthdate: </label>
                     <input
                       type="date"
-                      name="birthdate"
-                      value={selectedStudent.birthdate}
+                      name="personal.dateOfBirth"
+                      value={formData.personal?.dateOfBirth || ""}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Address: </label>
                     <input
                       type="text"
-                      name="address"
-                      value={selectedStudent.address}
+                      name="personal.address"
+                      value={formData.personal?.address}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Tel. No.: </label>
                     <input
                       type="tel"
-                      name="telNum"
-                      value={selectedStudent.telNum}
+                      name="personal.telNo"
+                      value={formData.personal?.telNo}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Religion: </label>
                     <input
                       type="text"
-                      name="religion"
-                      value={selectedStudent.religion}
+                      name="personal.religion"
+                      value={formData.personal?.religion}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Guardian: </label>
                     <input
                       type="text"
-                      name="guardian"
-                      value={selectedStudent.guardian}
+                      name="personal.guardian"
+                      value={formData.personal?.guardian}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Guardian's Address: </label>
                     <input
                       type="text"
-                      name="guardianAddress"
-                      value={selectedStudent.guardianAddress}
+                      name="personal.guardianAddress"
+                      value={formData.personal?.guardianAddress}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Guardian's Number: </label>
                     <input
                       type="tel"
-                      name="guardianNum"
-                      value={selectedStudent.guardianNum}
+                      name="personal.guardianTelNo"
+                      value={formData.personal?.guardianTelNo}
+                      onChange={handleChange}
+                    />
+                    <br />
+                    <br />
+                    <h4>II. Education Information</h4>
+                    <label>Education Level: </label>
+                    <select
+                      name="education.educationLevel"
+                      value={formData.education?.educationLevel || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="JHS">JHS</option>
+                      <option value="SHS">SHS</option>
+                      <option value="College">College</option>
+                    </select>
+                    <br />
+                    <label>Grade: </label>
+                    <input
+                      type="text"
+                      name="education.yearlvl"
+                      value={formData.education?.yearlvl || ""}
+                      onChange={handleChange}
+                    />
+                    <br />
+                    <label>Section: </label>
+                    <input
+                      type="text"
+                      name="education.section"
+                      value={formData.education?.section || ""}
                       onChange={handleChange}
                     />
                     <br />
                     <label>Department: </label>
                     <input
                       type="text"
-                      name="department"
-                      value={selectedStudent.department}
+                      name="education.department"
+                      value={formData.education?.department || ""}
                       onChange={handleChange}
                     />
                     <br />
-                    <h4>II. Illnesses Involving Systems</h4>
-                    <label>Respiratory: </label>
-                    <input
-                      type="text"
-                      name="respiratory"
-                      value={selectedStudent.respiratory}
+                    <label>Strand: </label>
+                    <select
+                      name="education.strand"
+                      value={formData.education?.strand || ""}
                       onChange={handleChange}
-                    />
-                    <br />
-                    <label>Digestive: </label>
-                    <input
-                      type="text"
-                      name="digestive"
-                      value={selectedStudent.digestive}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Nervous: </label>
-                    <input
-                      type="text"
-                      name="nervous"
-                      value={selectedStudent.nervous}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Excretory: </label>
-                    <input
-                      type="text"
-                      name="excretory"
-                      value={selectedStudent.excretory}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Endocrine: </label>
-                    <input
-                      type="text"
-                      name="endocrine"
-                      value={selectedStudent.endocrine}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Circulatory: </label>
-                    <input
-                      type="text"
-                      name="circulatory"
-                      value={selectedStudent.circulatory}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Skeletal: </label>
-                    <input
-                      type="text"
-                      name="skeletal"
-                      value={selectedStudent.skeletal}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Muscular: </label>
-                    <input
-                      type="text"
-                      name="muscular"
-                      value={selectedStudent.muscular}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Reproductive: </label>
-                    <input
-                      type="text"
-                      name="reproductive"
-                      value={selectedStudent.reproductive}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Lymphatic: </label>
-                    <input
-                      type="text"
-                      name="lymphatic"
-                      value={selectedStudent.lymphatic}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>III. Habits and Allergies</h4>
-                    <label>Do you smoke?: </label>
-                    <input
-                      type="radio"
-                      name="smoke"
-                      value="Yes"
-                      checked={selectedStudent.smoke === "Yes"}
-                      onChange={handleChange}
-                    />{" "}
-                    Yes
-                    <input
-                      type="radio"
-                      name="smoke"
-                      value="No"
-                      checked={selectedStudent.smoke === "No"}
-                      onChange={handleChange}
-                    />{" "}
-                    No
-                    <br />
-                    <label>Do you drink?: </label>
-                    <input
-                      type="radio"
-                      name="drink"
-                      value="Yes"
-                      checked={selectedStudent.drink === "Yes"}
-                      onChange={handleChange}
-                    />{" "}
-                    Yes
-                    <input
-                      type="radio"
-                      name="drink"
-                      value="No"
-                      checked={selectedStudent.drink === "No"}
-                      onChange={handleChange}
-                    />{" "}
-                    No
-                    <br />
-                    <label>Allergy?: </label>
-                    <input
-                      type="text"
-                      name="allergy"
-                      value={selectedStudent.allergy}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>If so, specify: </label>
-                    <input
-                      type="text"
-                      name="specifyAllergy"
-                      value={selectedStudent.specifyAllergy}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>IV. Physical Examinations</h4>
-                    <label>Eyes: </label>
-                    <input
-                      type="text"
-                      name="eyes"
-                      value={selectedStudent.eyes}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Ear: </label>
-                    <input
-                      type="text"
-                      name="ear"
-                      value={selectedStudent.ear}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Nose: </label>
-                    <input
-                      type="text"
-                      name="nose"
-                      value={selectedStudent.nose}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Throat: </label>
-                    <input
-                      type="text"
-                      name="throat"
-                      value={selectedStudent.throat}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Tonsils: </label>
-                    <input
-                      type="text"
-                      name="tonsils"
-                      value={selectedStudent.tonsils}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Teeth: </label>
-                    <input
-                      type="text"
-                      name="teeth"
-                      value={selectedStudent.teeth}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Tongue: </label>
-                    <input
-                      type="text"
-                      name="tongue"
-                      value={selectedStudent.tongue}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Neck: </label>
-                    <input
-                      type="text"
-                      name="neck"
-                      value={selectedStudent.neck}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Thyroids: </label>
-                    <input
-                      type="text"
-                      name="thyroids"
-                      value={selectedStudent.thyroids}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Cervical Glands: </label>
-                    <input
-                      type="text"
-                      name="cervicalGlands"
-                      value={selectedStudent.cervicalGlands}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>V. Chest and Cardiovascular System</h4>
-                    <label>Chest: </label>
-                    <input
-                      type="text"
-                      name="chest"
-                      value={selectedStudent.chest}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Contour: </label>
-                    <input
-                      type="text"
-                      name="contour"
-                      value={selectedStudent.contour}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Heart: </label>
-                    <input
-                      type="text"
-                      name="heart"
-                      value={selectedStudent.heart}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Rate: </label>
-                    <input
-                      type="text"
-                      name="rate"
-                      value={selectedStudent.rate}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Rhythm: </label>
-                    <input
-                      type="text"
-                      name="rhythm"
-                      value={selectedStudent.rhythm}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>BP: </label>
-                    <input
-                      type="text"
-                      name="bp"
-                      value={selectedStudent.bp}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Height: </label>
-                    <input
-                      type="text"
-                      name="height"
-                      value={selectedStudent.height}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Weight: </label>
-                    <input
-                      type="text"
-                      name="weight"
-                      value={selectedStudent.weight}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>BMI: </label>
-                    <input
-                      type="text"
-                      name="bmi"
-                      value={selectedStudent.bmi}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Lungs: </label>
-                    <input
-                      type="text"
-                      name="lungs"
-                      value={selectedStudent.lungs}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>VI. Abdomen</h4>
-                    <label>Abdomen: </label>
-                    <input
-                      type="text"
-                      name="abdomen"
-                      value={selectedStudent.abdomen}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Contour: </label>
-                    <input
-                      type="text"
-                      name="contour"
-                      value={selectedStudent.contour}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Liver: </label>
-                    <input
-                      type="text"
-                      name="liver"
-                      value={selectedStudent.liver}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Spleen: </label>
-                    <input
-                      type="text"
-                      name="spleen"
-                      value={selectedStudent.spleen}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Kidneys: </label>
-                    <input
-                      type="text"
-                      name="kidneys"
-                      value={selectedStudent.kidneys}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <h4>VII. Extremities</h4>
-                    <label>Extremities: </label>
-                    <input
-                      type="text"
-                      name="extremities"
-                      value={selectedStudent.extremities}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Upper Extremities: </label>
-                    <input
-                      type="text"
-                      name="upperExtremities"
-                      value={selectedStudent.upperExtremities}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Lower Extremities: </label>
-                    <input
-                      type="text"
-                      name="lowerExtremities"
-                      value={selectedStudent.lowerExtremities}
-                      onChange={handleChange}
-                    />
-                    <br />
-                  </form>
-                  <div className="edit-account-btn">
-                    <button
-                      className="close-btn"
-                      onClick={closeEditProfileModal}
                     >
-                      Close
-                    </button>
-                    <button className="save-btn" onClick={handleSave}>
+                      <option value="">Select Strand</option>
+                      <option value="STEM">STEM</option>
+                      <option value="HUMMS">HUMMS</option>
+                      <option value="ABM">ABM</option>
+                      <option value="IT">IT</option>
+                    </select>
+                    <br />
+                    <label>Course: </label>
+                    <select
+                      name="education.course"
+                      value={formData.education?.course || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select Course</option>
+                      <option value="BSCS">BSCS</option>
+                      <option value="BSA">BSA</option>
+                      <option value="BSIT">BSIT</option>
+                      <option value="BSE">BSE</option>
+                    </select>
+                    <br />
+                    <label>School Year: </label>
+                    <input
+                      type="text"
+                      name="education.schoolYear"
+                      value={formData.education?.schoolYear || ""}
+                      onChange={handleChange}
+                    />
+                    <br />
+                    <button
+                      type="button"
+                      className="save-button"
+                      onClick={handleSave}
+                    >
                       Save
                     </button>
-                  </div>
+                  </form>
                 </div>
               </Modal>
             </div>
@@ -623,19 +345,25 @@ function StudentProfile() {
         <div className="student-column-two">
           <div className="student-profile-data-i">
             <h4>I.</h4>
-            <p>Full Name: {selectedStudent.name}</p>
-            <p>Gr./Section: {selectedStudent.section}</p>
-            <p>Age: {selectedStudent.age}</p>
-            <p>Sex: {selectedStudent.sex}</p>
-            <p>Civil Status: {selectedStudent.civilstatus}</p>
-            <p>Birthdate: {selectedStudent.birthdate}</p>
-            <p>Address: {selectedStudent.address}</p>
-            <p>Tel. No.: {selectedStudent.telNum}</p>
-            <p>Religion: {selectedStudent.religion}</p>
-            <p>Guardian: {selectedStudent.guardian}</p>
-            <p>Guardian's Address: {selectedStudent.guradianAddress}</p>
-            <p>Guardian's Number: {selectedStudent.guardianNum}</p>
-            <p> Department: {selectedStudent.department}</p>
+            <p>
+              Full Name:{" "}
+              {profile.personal?.firstName + " " + profile.personal?.lastName}
+            </p>
+            <p>
+              Gr./Section:{" "}
+              {profile.education?.yearlvl + " " + profile.education?.section}
+            </p>
+            <p>Age: {profile.age}</p>
+            <p>Sex: {profile.personal?.sex}</p>
+            <p>Civil Status: {profile.personal?.civilStatus}</p>
+            <p>Birthdate: {profile.personal?.dateOfBirth}</p>
+            <p>Address: {profile.personal?.address}</p>
+            <p>Tel. No.: {profile.personal?.telNo}</p>
+            <p>Religion: {profile.personal?.religion}</p>
+            <p>Guardian: {profile.personal?.guardian}</p>
+            <p>Guardian's Address: {profile.personal?.guardianAddress}</p>
+            <p>Guardian's Number: {profile.personal?.guardianTelNo}</p>
+            <p> Department: {profile.education?.department}</p>
           </div>
           <div className="student-profile-data-ii">
             <h4>
@@ -643,23 +371,23 @@ function StudentProfile() {
               following systems? Specify.
             </h4>
 
-            <p>Respiratory: {selectedStudent.respiratory}</p>
-            <p>Digestive: {selectedStudent.digestive}</p>
-            <p>Nervous: {selectedStudent.nervous}</p>
-            <p>Excretory: {selectedStudent.excretory}</p>
-            <p>Endocrine: {selectedStudent.endocrine}</p>
-            <p>Circulatory: {selectedStudent.circulatory}</p>
-            <p>Skeletal: {selectedStudent.skeletal}</p>
-            <p>Muscular: {selectedStudent.muscular}</p>
-            <p>Reproductive: {selectedStudent.reproductive}</p>
-            <p>Lymphatic: {selectedStudent.lymphatic}</p>
+            <p>Respiratory: {profile.medical.respiratory}</p>
+            <p>Digestive: {profile.medical.digestive}</p>
+            <p>Nervous: {profile.medical.nervous}</p>
+            <p>Excretory: {profile.medical.excretory}</p>
+            <p>Endocrine: {profile.medical.endocrine}</p>
+            <p>Circulatory: {profile.medical.circulatory}</p>
+            <p>Skeletal: {profile.medical.skeletal}</p>
+            <p>Muscular: {profile.medical.muscular}</p>
+            <p>Reproductive: {profile.medical.reproductive}</p>
+            <p>Lymphatic: {profile.medical.lymphatic}</p>
           </div>
           <div className="student-profile-data-iii">
             <h4>III.</h4>
-            <p>Do you smoke?: {selectedStudent.smoke}</p>
-            <p>Do you drink?: {selectedStudent.drink}</p>
-            <p>Allergy?: {selectedStudent.allergy}</p>
-            <p>If so, specify: {selectedStudent.specifyAllergy}</p>
+            <p>Do you smoke?: {profile.medical.smoke ? "Yes" : "No"}</p>
+            <p>Do you drink?: {profile.medical.drink ? "Yes" : "No"}</p>
+            <p>Allergy?: {profile.medical.allergy}</p>
+            <p>If so, specify: {profile.medical.specifyAllergy}</p>
           </div>
         </div>
         <h3>Physical Examination</h3>
@@ -667,65 +395,67 @@ function StudentProfile() {
         <div className="student-column-three">
           <div className="student-profile-data-iv">
             <h4>IV.</h4>
-            <p>Eyes: {selectedStudent.respiratory}</p>
-            <p>Ear: {selectedStudent.digestive}</p>
-            <p>Nose: {selectedStudent.nervous}</p>
-            <p>Throat: {selectedStudent.excretory}</p>
-            <p>Tonsils: {selectedStudent.endocrine}</p>
-            <p>Teeth: {selectedStudent.circulatory}</p>
-            <p>Tongue: {selectedStudent.skeletal}</p>
-            <p>Neck: {selectedStudent.muscular}</p>
-            <p>Thyroids: {selectedStudent.reproductive}</p>
-            <p>Cervical Glands: {selectedStudent.lymphatic}</p>
+            <p>Eyes: {profile.medical.eyes}</p>
+            <p>Ear: {profile.medical.ear}</p>
+            <p>Nose: {profile.medical.nose}</p>
+            <p>Throat: {profile.medical.throat}</p>
+            <p>Tonsils: {profile.medical.tonsils}</p>
+            <p>Teeth: {profile.medical.teeth}</p>
+            <p>Tongue: {profile.medical.tongue}</p>
+            <p>Neck: {profile.medical.neck}</p>
+            <p>Thyroids: {profile.medical.thyroids}</p>
+            <p>Cervical Glands: {profile.medical.cervicalGlands}</p>
           </div>
 
           <div className="student-profile-data-v">
             <h4>V.</h4>
-            <p>Chest: {selectedStudent.smoke}</p>
-            <p>Contour: {selectedStudent.smoke}</p>
-            <p>Heart: {selectedStudent.drink}</p>
-            <p>Rate: {selectedStudent.drink}</p>
-            <p>Rhythm: {selectedStudent.drink}</p>
-            <p>BP: {selectedStudent.bp}</p>
-            <p>Height: {selectedStudent.height}</p>
-            <p>Weight: {selectedStudent.weight}</p>
-            <p>BMI: {selectedStudent.bmi}</p>
-            <p>Lungs: {selectedStudent.lungs}</p>
+            <p>Chest: {profile.medical.chest}</p>
+            <p>Contour: {profile.medical.contour}</p>
+            <p>Heart: {profile.medical.heart}</p>
+            <p>Rate: {profile.medical.rate}</p>
+            <p>Rhythm: {profile.medical.rhythm}</p>
+            <p>BP: {profile.medical.bp}</p>
+            <p>Height: {profile.medical.height}</p>
+            <p>Weight: {profile.medical.weight}</p>
+            <p>BMI: {profile.medical.bmi}</p>
+            <p>Lungs: {profile.medical.lungs}</p>
           </div>
 
           <div className="student-profile-data-vi">
             <h4>VI.</h4>
-            <p>Abdomen: {selectedStudent.smoke}</p>
-            <p>Contour: {selectedStudent.smoke}</p>
-            <p>Liver: {selectedStudent.drink}</p>
-            <p>Spleen: {selectedStudent.drink}</p>
-            <p>Kidneys: {selectedStudent.drink}</p>
+            <p>Abdomen: {profile.medical.abdomen}</p>
+            <p>Contour: {profile.medical.ABcontour}</p>
+            <p>Liver: {profile.medical.liver}</p>
+            <p>Spleen: {profile.medical.spleen}</p>
+            <p>Kidneys: {profile.medical.kidneys}</p>
           </div>
 
           <div className="student-profile-data-vii">
             <h4>VII.</h4>
-            <p>Extremities: {selectedStudent.extremities}</p>
-            <p>Upper: {selectedStudent.upperExtremities}</p>
-            <p>Lower: {selectedStudent.lowerExtremities}</p>
+            <p>Extremities: {profile.medical.extremities}</p>
+            <p>Upper: {profile.medical.upperExtremities}</p>
+            <p>Lower: {profile.medical.lowerExtremities}</p>
           </div>
         </div>
 
-        <h3>Laboratory Examination</h3>
         <div className="student-column-four">
-          <div className="student-profile-data-viii">
-            <h4>VIII.</h4>
-            <div className="x-ray">
-              <h4>CHEST X-RAY</h4>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-            </div>
-            <p>Others: (If indicated)</p>
+          <div className="student-data-v1">
+            <h3>Laboratory Examination</h3>
+            <h4> VIII. </h4>
+            <p> Blood Chemistry: {profile.medical.bloodChemistry}</p>
+            <p> CBC:{profile.medical.cbc} </p>
+            <p> Urinalysis: {profile.medical.urinalysis}</p>
+            <p> Fecalysis: {profile.medical.fecalysis}</p>
+          </div>
+          <div className="student-data-v2">
+            <h3>Diagnostic Procedures</h3>
+            <h4> IX. </h4>
+            <p> Chest X-Ray Findings: {profile.medical.chestXray}</p>
+          </div>
+          <div className="student-data-v3">
+            <h3>Others(ECG, Ultrasound, etc.)</h3>
+            <h4> X. </h4>
+            <p> {profile.medical.others}</p>
           </div>
         </div>
       </div>

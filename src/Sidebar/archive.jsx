@@ -18,7 +18,7 @@ function Archive() {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedSection, setSelectedSection] = useState("");
   const [students, setStudents] = useState([]);
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [profile, setprofile] = useState(null);
   const [searchName, setSearchName] = useState("");
 
   const [showModal, setShowModal] = useState(false);
@@ -51,7 +51,7 @@ function Archive() {
     setSelectedSection("");
     setSelectedDepartment("");
     setStudents([]);
-    setSelectedStudent(null);
+    setprofile(null);
     setSearchName("");
   };
 
@@ -64,21 +64,21 @@ function Archive() {
     setSelectedGrade(grade);
     setSelectedSection("");
     setStudents([]);
-    setSelectedStudent(null);
+    setprofile(null);
   };
 
   const handleStrandChange = (strand) => {
     setSelectedStrand(strand);
     setSelectedSection("");
     setStudents([]);
-    setSelectedStudent(null);
+    setprofile(null);
   };
 
   const handleCourseChange = (course) => {
     setSelectedCourse(course);
     setSelectedSection("");
     setStudents([]);
-    setSelectedStudent(null);
+    setprofile(null);
   };
 
   const handleDepartmentChange = (course) => {
@@ -86,12 +86,12 @@ function Archive() {
     setSelectedCourse("");
     setSelectedSection("");
     setStudents([]);
-    setSelectedStudent(null);
+    setprofile(null);
   };
 
   const handleSectionChange = async (section) => {
     setSelectedSection(section);
-    setSelectedStudent(null);
+    setprofile(null);
 
     // Make API call to fetch filtered students
     try {
@@ -113,8 +113,8 @@ function Archive() {
   const fetchProfile = async (studentId) => {
     try {
       const response = await axios.get(`/profile/${studentId}`);
-      setSelectedStudent(response.data);
-      console.log("Profile", selectedStudent);
+      setprofile(response.data);
+      console.log("Profile", profile);
     } catch (error) {
       console.error("Error fetching student profile:", error);
     }
@@ -287,17 +287,17 @@ function Archive() {
 
         {selectedSection && students.length === 0 ? (
           <p>No students</p>
-        ) : students.length > 0 && !selectedStudent ? (
+        ) : students.length > 0 && !profile ? (
           <div>
             <h3>Filtered Students:</h3>
             <ul>
               {students.map((student, index) => (
                 <li
                   key={index}
-                  onClick={() => fetchProfile(student.personal.userId)}
+                  onClick={() => fetchProfile(student.personal?.userId)}
                 >
-                  {student.personal.firstName} {student.personal.lastname} (ID:{" "}
-                  {student.personal.userId})
+                  {student.personal?.firstName} {student.personal?.lastname}{" "}
+                  (ID: {student.personal?.userId})
                 </li>
               ))}
             </ul>
@@ -305,27 +305,26 @@ function Archive() {
         ) : null}
 
         {/* Display Selected Student Information */}
-        {selectedStudent && (
+        {profile && (
           <div className="student-info">
             <div className="student-header">
               <div className="section">
                 <ArrowBackRoundedIcon style={{ marginTop: "1vh" }} />
                 <h3
                   className="selected-section-header"
-                  onClick={() => setSelectedStudent(null)}
+                  onClick={() => setprofile(null)}
                 >
-                  {selectedStudent.education.yearlvl +
-                    selectedStudent.education.section}
+                  {profile.education?.yearlvl + profile.education?.section}
                 </h3>
               </div>
             </div>
 
             <div className="column-one">
               <div className="student-data-i">
-                <h3>{selectedStudent.name}</h3>
+                <h3>{profile.name}</h3>
                 <div className="archive-student-pic">
                   <img
-                    src={selectedStudent.pfp ? selectedStudent.pfp : jen}
+                    src={profile.pfp ? profile.pfp : jen}
                     alt="this is a pfp"
                     className="jen"
                   />
@@ -334,30 +333,25 @@ function Archive() {
                 <p>
                   {" "}
                   Full Name:{" "}
-                  {selectedStudent.personal.firstName +
+                  {profile.personal?.firstName +
                     " " +
-                    selectedStudent.personal.lastName}
+                    profile.personal?.lastName}
                 </p>
                 <p>
                   Gr./Section:{" "}
-                  {selectedStudent.education.yearlvl +
+                  {profile.education?.yearlvl +
                     " " +
-                    selectedStudent.education.section}
+                    profile.education?.section}
                 </p>
-                <p>Civil Status: {selectedStudent.personal.civilStatus}</p>
-                <p>Birthdate: {selectedStudent.personal.dateOfBirth}</p>
-                <p>Address: {selectedStudent.personal.address}</p>
-                <p>Tel. No.: {selectedStudent.personal.telNo}</p>
-                <p>Religion: {selectedStudent.personal.religion}</p>
-                <p>Guardian: {selectedStudent.personal.guardian}</p>
-                <p>
-                  Guradian's Address: {selectedStudent.personal.guardianAddress}
-                </p>
-                <p>
-                  {" "}
-                  Guardian's Number: {selectedStudent.personal.guardianTelNo}
-                </p>
-                <p> Department: {selectedStudent.personal.department}</p>
+                <p>Civil Status: {profile.personal?.civilStatus}</p>
+                <p>Birthdate: {profile.personal?.dateOfBirth}</p>
+                <p>Address: {profile.personal?.address}</p>
+                <p>Tel. No.: {profile.personal?.telNo}</p>
+                <p>Religion: {profile.personal?.religion}</p>
+                <p>Guardian: {profile.personal?.guardian}</p>
+                <p>Guradian's Address: {profile.personal?.guardianAddress}</p>
+                <p> Guardian's Number: {profile.personal?.guardianTelNo}</p>
+                <p> Department: {profile.personal?.department}</p>
               </div>
               <div className="student-data-ii">
                 <h4> II. </h4>
@@ -365,29 +359,25 @@ function Archive() {
                   Have you ever suffered illnesses involving any of the
                   following systems? Specify.
                 </h4>
-                <p>Respiratory : {selectedStudent.medical.respiratory}</p>
-                <p>Digestive : {selectedStudent.medical.digestive}</p>
-                <p>Nervous : {selectedStudent.medical.nervous}</p>
-                <p>Excretory: {selectedStudent.medical.excretory}</p>
-                <p>Endocrine : {selectedStudent.medical.endocrine}</p>
-                <p>Circulatory : {selectedStudent.medical.circulatory}</p>
-                <p>Skeletal : {selectedStudent.medical.skeletal}</p>
-                <p>Muscular : {selectedStudent.medical.muscular}</p>
-                <p>Reproductive : {selectedStudent.medical.reproductive}</p>
-                <p>Lymphatic : {selectedStudent.medical.lymphatic}</p>
+                <p>Respiratory : {profile.medical.respiratory}</p>
+                <p>Digestive : {profile.medical.digestive}</p>
+                <p>Nervous : {profile.medical.nervous}</p>
+                <p>Excretory: {profile.medical.excretory}</p>
+                <p>Endocrine : {profile.medical.endocrine}</p>
+                <p>Circulatory : {profile.medical.circulatory}</p>
+                <p>Skeletal : {profile.medical.skeletal}</p>
+                <p>Muscular : {profile.medical.muscular}</p>
+                <p>Reproductive : {profile.medical.reproductive}</p>
+                <p>Lymphatic : {profile.medical.lymphatic}</p>
                 <br />
                 <h4> III. </h4>
-                <p>
-                  Do you smoke? : {selectedStudent.medical.smoke ? "Yes" : "No"}
-                </p>
-                <p>
-                  Do you drink? : {selectedStudent.medical.drink ? "Yes" : "No"}
-                </p>
+                <p>Do you smoke? : {profile.medical.smoke ? "Yes" : "No"}</p>
+                <p>Do you drink? : {profile.medical.drink ? "Yes" : "No"}</p>
                 <p>
                   Allergy? :
-                  {selectedStudent.medical.allergy === "N/A"
-                    ? selectedStudent.medical.specificAllergy
-                    : selectedStudent.medical.allergy}
+                  {profile.medical.allergy === "N/A"
+                    ? profile.medical.specificAllergy
+                    : profile.medical.allergy}
                 </p>
               </div>
             </div>
@@ -395,46 +385,44 @@ function Archive() {
             <div className="column-two">
               <div className="student-data-iii">
                 <h4> IV. </h4>
-                <p>Eyes : {selectedStudent.medical.eyes}</p>
-                <p>Ear : {selectedStudent.medical.ear}</p>
-                <p>Nose : {selectedStudent.medical.nose}</p>
-                <p>Throat: {selectedStudent.medical.throat}</p>
-                <p>Tonsils : {selectedStudent.medical.tonsils}</p>
-                <p>Teeth : {selectedStudent.medical.teeth}</p>
-                <p>Tongue : {selectedStudent.medical.tongue}</p>
-                <p>Neck : {selectedStudent.medical.neck}</p>
-                <p>Thyroids : {selectedStudent.medical.thyroids}</p>
-                <p>
-                  Cervical Glands : {selectedStudent.medical.cervicalGlands}
-                </p>
+                <p>Eyes : {profile.medical.eyes}</p>
+                <p>Ear : {profile.medical.ear}</p>
+                <p>Nose : {profile.medical.nose}</p>
+                <p>Throat: {profile.medical.throat}</p>
+                <p>Tonsils : {profile.medical.tonsils}</p>
+                <p>Teeth : {profile.medical.teeth}</p>
+                <p>Tongue : {profile.medical.tongue}</p>
+                <p>Neck : {profile.medical.neck}</p>
+                <p>Thyroids : {profile.medical.thyroids}</p>
+                <p>Cervical Glands : {profile.medical.cervicalGlands}</p>
                 <br />
                 <h4> V. </h4>
 
-                <p>Chest : {selectedStudent.medical.chest}</p>
-                <p>Contour : {selectedStudent.medical.contour}</p>
-                <p>Heart : {selectedStudent.medical.heart}</p>
-                <p>Rate : {selectedStudent.medical.rate}</p>
-                <p>Rhythm : {selectedStudent.medical.rhythm}</p>
-                <p>BP : {selectedStudent.medical.bp}</p>
-                <p>Height : {selectedStudent.medical.height}</p>
-                <p>Weight : {selectedStudent.medical.weight}</p>
-                <p>BMI : {selectedStudent.medical.bmi}</p>
-                <p>Lungs : {selectedStudent.medical.lungs}</p>
+                <p>Chest : {profile.medical.chest}</p>
+                <p>Contour : {profile.medical.contour}</p>
+                <p>Heart : {profile.medical.heart}</p>
+                <p>Rate : {profile.medical.rate}</p>
+                <p>Rhythm : {profile.medical.rhythm}</p>
+                <p>BP : {profile.medical.bp}</p>
+                <p>Height : {profile.medical.height}</p>
+                <p>Weight : {profile.medical.weight}</p>
+                <p>BMI : {profile.medical.bmi}</p>
+                <p>Lungs : {profile.medical.lungs}</p>
               </div>
 
               <div className="student-data-iv">
                 <h4> VI. </h4>
 
-                <p>Abdomen : {selectedStudent.medical.abdomen}</p>
-                <p>Contour : {selectedStudent.medical.ABcontour}</p>
-                <p>Liver : {selectedStudent.medical.liver}</p>
-                <p>Spleen : {selectedStudent.medical.spleen}</p>
-                <p>Kidneys : {selectedStudent.medical.kidneys}</p>
+                <p>Abdomen : {profile.medical.abdomen}</p>
+                <p>Contour : {profile.medical.ABcontour}</p>
+                <p>Liver : {profile.medical.liver}</p>
+                <p>Spleen : {profile.medical.spleen}</p>
+                <p>Kidneys : {profile.medical.kidneys}</p>
                 <br />
                 <h4> VII. </h4>
-                <p>Extremities : {selectedStudent.medical.extremities}</p>
-                <p>Upper : {selectedStudent.medical.upperExtremities}</p>
-                <p>Lower : {selectedStudent.medical.lowerExtremities}</p>
+                <p>Extremities : {profile.medical.extremities}</p>
+                <p>Upper : {profile.medical.upperExtremities}</p>
+                <p>Lower : {profile.medical.lowerExtremities}</p>
               </div>
             </div>
             <h3>Laboratory Examination</h3>
@@ -442,20 +430,20 @@ function Archive() {
               <div className="student-data-v1">
                 <h3>Laboratory Examination</h3>
                 <h4> VIII. </h4>
-                <p>Blood Chemistry: {selectedStudent.medical.bloodChemistry}</p>
-                <p> CBC: {selectedStudent.medical.cbc} </p>
-                <p> Urinalysis: {selectedStudent.medical.urinalysis}</p>
-                <p> Fecalysis: {selectedStudent.medical.fecalysis}</p>
+                <p>Blood Chemistry: {profile.medical.bloodChemistry}</p>
+                <p> CBC: {profile.medical.cbc} </p>
+                <p> Urinalysis: {profile.medical.urinalysis}</p>
+                <p> Fecalysis: {profile.medical.fecalysis}</p>
               </div>
               <div className="student-data-v2">
                 <h3>Diagnostic Procedures</h3>
                 <h4> IX. </h4>
-                <p>Chest X-ray Findings: {selectedStudent.medical.chestXray}</p>
+                <p>Chest X-ray Findings: {profile.medical.chestXray}</p>
               </div>
               <div className="student-data-v3">
                 <h3>Others(ECG, Ultrasound, etc.)</h3>
                 <h4> X. </h4>
-                <p> {selectedStudent.medical.others}</p>
+                <p> {profile.medical.others}</p>
               </div>
             </div>
 
@@ -471,9 +459,8 @@ function Archive() {
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedStudent.assessment &&
-                    selectedStudent.assessment.length > 0 ? (
-                      selectedStudent.assessment.map((item) => (
+                    {profile.assessment && profile.assessment.length > 0 ? (
+                      profile.assessment.map((item) => (
                         <tr key={item._id}>
                           <td>
                             {new Date(item.timestamp).toLocaleDateString()}
@@ -503,9 +490,8 @@ function Archive() {
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedStudent.assessment &&
-                    selectedStudent.assessment.length > 0 ? (
-                      selectedStudent.assessment.map((item) =>
+                    {profile.assessment && profile.assessment.length > 0 ? (
+                      profile.assessment.map((item) =>
                         item.followUps ? (
                           <tr key={`follow-up-${item._id}`}>
                             <td>
@@ -545,9 +531,8 @@ function Archive() {
                     </tr>
                   </thead>
                   <tbody>
-                    {selectedStudent.immunization &&
-                    selectedStudent.immunization.length > 0 ? (
-                      selectedStudent.immunization.map((item) => (
+                    {profile.immunization && profile.immunization.length > 0 ? (
+                      profile.immunization.map((item) => (
                         <tr key={item._id}>
                           <td>
                             {new Date(item.timestamp).toLocaleDateString()}
@@ -570,9 +555,7 @@ function Archive() {
               className="archive-staff"
               style={{ fontSize: "14px", margin: "1vw" }}
             >
-              <button
-                onClick={() => handleOpenModal(selectedStudent.medical.userId)}
-              >
+              <button onClick={() => handleOpenModal(profile.medical.userId)}>
                 View Archive
               </button>
               {showModal && archiveData && (

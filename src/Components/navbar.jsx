@@ -1,19 +1,19 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useState } from 'react';
-import axios from 'axios';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from "react";
+import axios from "axios";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import CircularProgress from '@mui/material/CircularProgress'; 
+import CircularProgress from "@mui/material/CircularProgress";
 
 import logo from "../assets/logo.png";
 import "./navbar.css";
-import { useUser } from '../context/UserContext';
+import { useUser } from "../context/UserContext";
 
 const fetchNotifications = async () => {
-  const response = await axios.get('/notification');
+  const response = await axios.get("/notification");
   return response.data;
-}
+};
 
 const Navbar = () => {
   const { user } = useUser();
@@ -23,9 +23,13 @@ const Navbar = () => {
 
   const queryClient = useQueryClient();
 
-  const { data: notifications = [], isLoading, isError } = useQuery({
-    queryKey: ['notifications'],
-    queryFn: fetchNotifications
+  const {
+    data: notifications = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: fetchNotifications,
   });
 
   const handleNotificationClick = async (notif) => {
@@ -33,20 +37,20 @@ const Navbar = () => {
       await axios.post(`/notification/${notif._id}`);
 
       switch (notif.documentType) {
-        case 'post':
+        case "post":
           navigate(`/post/${notif.documentId}`);
           break;
-        case 'request':
+        case "request":
           navigate(`/request/${notif.documentId}`);
           break;
-        case 'event':
+        case "event":
           navigate(`/event/${notif.documentId}`);
           break;
         default:
-          console.error('Unknown document type');
+          console.error("Unknown document type");
       }
     } catch (error) {
-      console.error('Error marking notification as read:', error);
+      console.error("Error marking notification as read:", error);
     }
   };
 
@@ -80,25 +84,36 @@ const Navbar = () => {
 
         <div className="navbar-right">
           <ul>
-            <li onClick={() => setShowDropdown(!showDropdown)} style={{ position: 'relative' }}>
+            <li
+              onClick={() => setShowDropdown(!showDropdown)}
+              style={{ position: "relative" }}
+            >
               <NotificationsIcon
                 className="user-icon"
-                style={{ color: "white", fontSize: "32px", cursor: 'pointer' }}
+                style={{ color: "white", fontSize: "32px", cursor: "pointer" }}
                 onClick={() => setShowDropdown(!showDropdown)}
               />
               {showDropdown && (
                 <div className="notification-dropdown">
                   {isLoading ? (
-                    <CircularProgress style={{ color: 'white' }} />
+                    <CircularProgress style={{ color: "white" }} />
                   ) : isError ? (
                     <p>Error loading notifications</p> // Error message
                   ) : notifications.length > 0 ? (
                     <ul>
                       {notifications.map((notif) => (
-                        <li key={notif._id} style={{ opacity: notif.isRead ? 0.5 : 1 }}>
-                          <Link to="#" onClick={() => handleNotificationClick(notif)}>
+                        <li
+                          key={notif._id}
+                          style={{ opacity: notif.isRead ? 0.5 : 1 }}
+                        >
+                          <Link
+                            to="#"
+                            onClick={() => handleNotificationClick(notif)}
+                          >
                             <p>{notif.title}</p>
-                            <small>{new Date(notif.timestamp).toLocaleString()}</small>
+                            <small>
+                              {new Date(notif.timestamp).toLocaleString()}
+                            </small>
                           </Link>
                         </li>
                       ))}
@@ -115,7 +130,16 @@ const Navbar = () => {
                 style={{ color: "white", fontSize: "32px" }}
               />
             </li>
-            <Link to={user.role === 'admin' ? '/admin' : `/user/${user._id}`} className='navbar-link'>{user.username}</Link>
+            <Link
+              to={
+                user.role === "admin" || user.role === "staff"
+                  ? "/admin"
+                  : `/user/${user._id}`
+              }
+              className="navbar-link"
+            >
+              {user.username}
+            </Link>
           </ul>
         </div>
       </div>

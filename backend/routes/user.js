@@ -129,9 +129,21 @@ router.get("/profile/:id", auth, async (req, res) => {
   try {
     const userId = req.params.id;
     const currentUser = req.user;
-    if (currentUser.role !== "admin" && currentUser.id !== userId) {
+    const currentUserId = req.user._id;
+
+    if (
+      currentUser.role !== "admin" &&
+      currentUser.role !== "staff" &&
+      currentUser.id !== userId
+    ) {
       return res.status(404).json({ error: "Not authorize" });
     }
+
+    const currentUserEducation = await EducationInfo.findOne({
+      userId: currentUserId,
+    }).select("educationLevel");
+    console.log("sad: ", currentUserEducation);
+
     const personal = await PersonalInfo.findOne({ userId });
     const medical = await MedicalInfo.findOne({ userId });
     const education = await EducationInfo.findOne({ userId });
@@ -141,6 +153,7 @@ router.get("/profile/:id", auth, async (req, res) => {
     const immunization = await Immunization.find({
       medicalInfoId: medical._id,
     });
+
     if (personal) {
       return res.status(200).json({
         personal,
@@ -149,6 +162,7 @@ router.get("/profile/:id", auth, async (req, res) => {
         assessment,
         immunization,
         pfp: user.pfp,
+        staffAuth: currentUserEducation,
       });
     } else {
       console.log("User not found");
@@ -157,6 +171,49 @@ router.get("/profile/:id", auth, async (req, res) => {
   } catch (err) {
     console.log("error:", err);
     res.status(404).json({ error: "error fetching user" });
+  }
+});
+
+router.patch("/profile/:id", auth, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const currentUser = req.user;
+    const { personal, education } = req.body;
+
+    if (currentUser.id !== userId) {
+      return res.status(404).json({ error: "Not authorize" });
+    }
+
+    // Update Personal Info
+    if (personal) {
+      await PersonalInfo.findOneAndUpdate({ userId: userId }, personal, {
+        new: true,
+        upsert: true,
+      });
+    }
+
+    // Update Education Info
+    if (education) {
+      await EducationInfo.findOneAndUpdate({ userId: userId }, education, {
+        new: true,
+        upsert: true,
+      });
+    }
+    // Optionally, return updated data (or omit if not needed)
+    const updatedPersonal = personal
+      ? await PersonalInfo.findOne({ userId: userId })
+      : null;
+    const updatedEducation = education
+      ? await EducationInfo.findOne({ userId: userId })
+      : null;
+
+    return res.status(200).json({
+      personal: updatedPersonal,
+      education: updatedEducation,
+    });
+  } catch (err) {
+    console.log("error:", err);
+    res.status(404).json({ error: "error updating user" });
   }
 });
 

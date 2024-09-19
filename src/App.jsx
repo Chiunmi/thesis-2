@@ -59,7 +59,7 @@ function App() {
         {/* Routes that use the Profile Layout */}
         <Route element={<ProfileLayout />}>
           <Route path="/archive" element={<Archive />} />
-          <Route path="/user" element={<StudentProfile />} />
+          <Route path="/user/:id" element={<StudentProfile />} />
           <Route path="/admin" element={<AdminProfile />} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/health-record" element={<HealthRecord />} />
