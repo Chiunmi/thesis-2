@@ -46,6 +46,8 @@ function StudentProfile() {
     muscular: "None",
     reproductive: "None",
     lymphatic: "None",
+    psychological: "N/A",
+    specifyPsychological: "N/A",
     smoke: "No",
     drink: "No",
     allergy: "None",
@@ -134,7 +136,7 @@ function StudentProfile() {
                     maxHeight: "fit-content",
                     margin: "auto",
                     marginTop: "5vh",
-                    paddingTop: "120vh",
+                    paddingTop: "145vh",
                     backgroundColor: "rgba(0, 0, 0, 0)",
                     border: "none",
                     overflowY: "auto",
@@ -153,11 +155,35 @@ function StudentProfile() {
                       onChange={handleChange}
                     />
                     <br />
-                    <label>Gr./Section: </label>
+                    <label>Education Level: </label>
+                    <input
+                      type="text"
+                      name="section"
+                      value={selectedStudent.educationLevel}
+                      onChange={handleChange}
+                    />
+                    <br />
+                    <label>Grade/Year: </label>
+                    <input
+                      type="text"
+                      name="section"
+                      value={selectedStudent.yearlvl}
+                      onChange={handleChange}
+                    />
+                    <br />
+                    <label>Section: </label>
                     <input
                       type="text"
                       name="section"
                       value={selectedStudent.section}
+                      onChange={handleChange}
+                    />
+                    <br />
+                    <label>Strand/Program: </label>
+                    <input
+                      type="text"
+                      name="section"
+                      value={selectedStudent.strand}
                       onChange={handleChange}
                     />
                     <br />
@@ -411,7 +437,11 @@ function StudentProfile() {
           <div className="student-profile-data-i">
             <h4>I.</h4>
             <p>Full Name: {selectedStudent.name}</p>
-            <p>Gr./Section: {selectedStudent.section}</p>
+            <p>Education Level: {selectedStudent.educationLevel}</p>
+            <p>Grade/Year: {selectedStudent.yearlvl}</p>
+            <p>Section: {selectedStudent.section}</p>
+            <p>Strand/Program: {selectedStudent.strand}</p>
+            <p> Department: {selectedStudent.department}</p>
             <p>Age: {selectedStudent.age}</p>
             <p>Sex: {selectedStudent.sex}</p>
             <p>Civil Status: {selectedStudent.civilstatus}</p>
@@ -422,7 +452,6 @@ function StudentProfile() {
             <p>Guardian: {selectedStudent.guardian}</p>
             <p>Guardian's Address: {selectedStudent.guradianAddress}</p>
             <p>Guardian's Number: {selectedStudent.guardianNum}</p>
-            <p> Department: {selectedStudent.department}</p>
           </div>
           <div className="student-profile-data-ii">
             <h4>
@@ -440,6 +469,8 @@ function StudentProfile() {
             <p>Muscular: {selectedStudent.muscular}</p>
             <p>Reproductive: {selectedStudent.reproductive}</p>
             <p>Lymphatic: {selectedStudent.lymphatic}</p>
+            <p>Psychological : {selectedStudent.psychological}</p>
+            <p>If so, specify? : {selectedStudent.specifyPsychological}</p>
           </div>
           <div className="student-profile-data-iii">
             <h4>III.</h4>

@@ -46,6 +46,10 @@
   margin: 4vh 1vw 1vh 0.2vw;
   width: 35vw;
 }
+
+.health-record-modal {
+  margin-top: 20vh;
+}
 .health-record-modal-content {
   text-align: center;
 }

@@ -36,7 +36,7 @@ function AdminProfile() {
         <Modal
           isOpen={healthModalVisible}
           onRequestClose={handleCloseHealthModal}
-          className="health-record-modal" // Added unique class name
+          className="health-record-modal"
           style={{
             overlay: {
               backgroundColor: "rgba(0, 0, 0, 0.3)",

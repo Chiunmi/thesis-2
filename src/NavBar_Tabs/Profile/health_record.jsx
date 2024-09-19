@@ -15,7 +15,10 @@ const studentData = {
       "G7-Compassion": [
         {
           name: "Jenine Carpio",
+          educationLevel: "JHS",
+          yearlvl: "7",
           section: "G7-Counsel",
+          strand: "ABM",
           age: 13,
           sex: "Female",
           civilstatus: "Single",
@@ -754,7 +757,7 @@ function HealthRecord() {
                         maxHeight: "fit-content",
                         margin: "auto",
                         marginTop: "5vh",
-                        paddingTop: "265vh",
+                        paddingTop: "305vh",
                         backgroundColor: "rgba(0, 0, 0, 0)",
                         border: "none",
                         overflowY: "auto",
@@ -1362,7 +1365,10 @@ function HealthRecord() {
                 </Modal>
                 <h4> I. </h4>
                 <p> Full Name: {selectedStudent.name}</p>
-                <p>Gr./Section: {selectedStudent.section}</p>
+                <p>Education Level: {selectedStudent.educationLevel}</p>
+                <p>Grade/Year: {selectedStudent.yearlvl}</p>
+                <p>Section: {selectedStudent.section}</p>
+                <p>Strand/Program: {selectedStudent.strand}</p>
                 <p>Age: {selectedStudent.age}</p>
                 <p>Civil Status: {selectedStudent.civilstatus}</p>
                 <p>Birthdate: {selectedStudent.birthdate}</p>
