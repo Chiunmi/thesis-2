@@ -1,10 +1,13 @@
-import Left from "../../Components/left";
+import orgchart from "./../../assets/orgchart.jpg";
+import "./about-us.css";
 
 function AboutUs() {
   return (
-    <div>
-      <h1 style={{ fontSize: "40px" }}> this is about us</h1>
-      <Left />
+    <div className="about-page">
+      <h3>HEALTH SERVICE DEPARTMENT-DASMARIÑAS</h3>
+      <div className="orgchart-img">
+        <img src={orgchart} alt="Organization Chart" className="orgchart" />
+      </div>
     </div>
   );
 }

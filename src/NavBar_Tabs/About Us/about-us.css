@@ -1,0 +1,36 @@
+.about-page {
+  position: fixed;
+  /* background-color: pink; */
+  width: calc(100vw - 33vw);
+  height: auto;
+  height: 92vh;
+  margin: 6vh 0vw;
+  margin-left: calc(0% + 12.5vw);
+  margin-right: calc(0% + 18vw);
+  overflow-y: auto;
+}
+.about-page::-webkit-scrollbar {
+  display: none;
+}
+
+.about-page h3 {
+  text-align: center;
+  margin: 1vh;
+}
+
+.orgchart-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin-top: 5vh;
+  margin-bottom: 10vh;
+}
+
+.orgchart-img img {
+  width: 100%;
+  height: auto;
+  max-height: 9%;
+  object-fit: contain;
+}

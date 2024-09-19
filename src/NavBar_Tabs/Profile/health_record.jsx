@@ -1432,9 +1432,9 @@ function HealthRecord() {
                 <h4> I. </h4>
                 <p> Full Name: {selectedStudent.name}</p>
                 <p>Education Level: {selectedStudent.educationLevel}</p>
+                <p>Strand/Program: {selectedStudent.strand}</p>
                 <p>Grade/Year: {selectedStudent.yearlvl}</p>
                 <p>Section: {selectedStudent.section}</p>
-                <p>Strand/Program: {selectedStudent.strand}</p>
                 <p>Age: {selectedStudent.age}</p>
                 <p>Civil Status: {selectedStudent.civilstatus}</p>
                 <p>Birthdate: {selectedStudent.birthdate}</p>

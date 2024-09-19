@@ -42,7 +42,7 @@ const EditStockPage = () => {
             <tr>
               <th>Product Name</th>
               <th>Current Quantity</th>
-              <th>New Quantity</th>
+              <th>Quantity</th>
               <th>Expiration Date</th>
             </tr>
           </thead>

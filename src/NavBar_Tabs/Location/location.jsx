@@ -20,17 +20,25 @@ const Location = () => {
       );
     };
 
-    // Load Google Maps script and initialize the map
-    if (!window.google) {
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCGW1QpsdvXbsBLUkzC3Moo5p8b4BWQR4Q&callback=initMap`;
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-      script.onload = initMap;
-    } else {
-      initMap();
-    }
+    const loadGoogleMapsScript = () => {
+      const existingScript = document.getElementById("googleMaps");
+      if (!existingScript) {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCGW1QpsdvXbsBLUkzC3Moo5p8b4BWQR4Q`; // Removed the callback parameter
+        script.id = "googleMaps";
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+
+        script.onload = () => {
+          initMap(); // Initialize the Street View panorama after script is loaded
+        };
+      } else {
+        initMap(); // If script is already loaded, just initialize the map
+      }
+    };
+
+    loadGoogleMapsScript();
   }, []);
 
   return (
