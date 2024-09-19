@@ -155,22 +155,73 @@ function StudentProfile() {
                       onChange={handleChange}
                     />
                     <br />
-                    <label>Education Level: </label>
-                    <input
-                      type="text"
-                      name="section"
-                      value={selectedStudent.educationLevel}
-                      onChange={handleChange}
-                    />
-                    <br />
-                    <label>Grade/Year: </label>
-                    <input
-                      type="text"
-                      name="section"
-                      value={selectedStudent.yearlvl}
-                      onChange={handleChange}
-                    />
-                    <br />
+                    <div className="form-group">
+                      <label>Education Level: </label>
+                      <select
+                        name="educationLevel"
+                        value={selectedStudent.educationLevel}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Education Level</option>
+                        <option value="JHS">JHS</option>
+                        <option value="SHS">SHS</option>
+                        <option value="College">College</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Department: </label>
+                      <select
+                        name="department"
+                        value={selectedStudent.department}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Department</option>
+                        <option value="CBAA">CBAA</option>
+                        <option value="CHTM">CHTM</option>
+                        <option value="COI">COI</option>
+                        <option value="CET">CET</option>
+                        <option value="COE">COE</option>
+                        <option value="CASSW">CASSW</option>
+                        <option value="CNAH">CNAH</option>
+                        <option value="COCRIM">COCRIM</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Strand/Program: </label>
+                      <select
+                        name="strand"
+                        value={selectedStudent.strand}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Strand/Program</option>
+                        <option value="STEM">STEM</option>
+                        <option value="ABM">ABM</option>
+                        <option value="HUMSS">HUMSS</option>
+                        <option value="TVL-ICT">TVL-ICT</option>
+                        <option value="TVL-HE">TVL-HE</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Grade/Year: </label>
+                      <select
+                        name="yearlvl"
+                        value={selectedStudent.yearlvl}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Grade/Year</option>
+                        <option value="grade 7">Grade 7</option>
+                        <option value="grade 8">Grade 8</option>
+                        <option value="grade 9">Grade 9</option>
+                        <option value="grade 10">Grade 10</option>
+                        <option value="grade 11">Grade 11</option>
+                        <option value="grade 12">Grade 12</option>
+                        <option value="1st year">1st Year</option>
+                        <option value="2nd year">2nd Year</option>
+                        <option value="3rd year">3rd Year</option>
+                        <option value="4th year">4th Year</option>
+                        <option value="5th year">5th Year</option>
+                      </select>
+                    </div>
                     <label>Section: </label>
                     <input
                       type="text"
@@ -178,15 +229,6 @@ function StudentProfile() {
                       value={selectedStudent.section}
                       onChange={handleChange}
                     />
-                    <br />
-                    <label>Strand/Program: </label>
-                    <input
-                      type="text"
-                      name="section"
-                      value={selectedStudent.strand}
-                      onChange={handleChange}
-                    />
-                    <br />
                     <label>Age: </label>
                     <input
                       type="number"

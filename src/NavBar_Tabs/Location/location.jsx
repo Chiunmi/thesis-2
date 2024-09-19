@@ -1,20 +1,43 @@
+import React, { useEffect } from "react";
 import "./location.css";
 
-function Location() {
+const Location = () => {
+  useEffect(() => {
+    const initMap = () => {
+      const location = { lat: 14.2919996, lng: 120.9604942 }; // Coordinates from the provided link
+
+      // Create a Street View panorama centered at the location
+      const panorama = new window.google.maps.StreetViewPanorama(
+        document.getElementById("pano"),
+        {
+          position: location,
+          pov: {
+            heading: 158.57, // Set heading (horizontal view direction)
+            pitch: 0, // Set pitch (camera angle up/down)
+          },
+          zoom: 1, // Initial zoom level
+        }
+      );
+    };
+
+    // Load Google Maps script and initialize the map
+    if (!window.google) {
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCGW1QpsdvXbsBLUkzC3Moo5p8b4BWQR4Q&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      script.onload = initMap;
+    } else {
+      initMap();
+    }
+  }, []);
+
   return (
     <div className="location-page">
-      <div className="map-container">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3866.3226720384446!2d120.9598773!3d14.2926752!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d58d4dacc433%3A0xf230c6ed6578a37e!2sPhilippine%20Christian%20University!5e0!3m2!1sen!2sph!4v1702017052465!5m2!1sen!2sph"
-          title="Google Maps"
-          frameBorder="0"
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
+      <div id="pano" style={{ width: "100%", height: "87vh" }}></div>
     </div>
   );
-}
+};
 
 export default Location;

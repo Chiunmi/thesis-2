@@ -164,3 +164,21 @@
   opacity: 1;
   border: 1px white solid;
 }
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  width: 150px;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.form-group select,
+.form-group input {
+  flex: 1;
+  padding: 5px;
+}
