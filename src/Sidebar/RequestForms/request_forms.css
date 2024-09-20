@@ -3,7 +3,7 @@
   /* background-color: pink; */
   width: calc(100vw - 32.5vw);
   height: auto;
-  height: 92vh;
+  height: 90vh;
   margin: 6vh 0vw;
   margin-left: calc(0% + 12vw);
   margin-right: calc(0% + 18vw);
@@ -51,6 +51,7 @@
   cursor: pointer;
   border-radius: 12px;
   width: 10vw;
+  margin-top: 2vh;
 }
 .request-form-btn:hover {
   background-color: white;

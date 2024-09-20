@@ -2,7 +2,7 @@ import "./forms.css";
 import { Link } from "react-router-dom";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
-function SpecialLeaveForm() {
+function TelehealthAppointmentRequestForm() {
   return (
     <div className="request-forms">
       <div className="back-forms">
@@ -17,36 +17,37 @@ function SpecialLeaveForm() {
         Fabricating information or providing false details can lead to
         consequences and may impact your credibility and trustworthiness.
       </p>
-      <h3> Special Leave Form </h3>
+      <h3>Telehealth Appointment Request Form </h3>
       <div className="form-content">
         <label for="student-id">Student ID:</label>
         <input type="text" id="student-id" required />
 
-        <label for="special-leave-reason">Reason for Special Leave:</label>
-        <select id="special-leave-reason" required>
-          <option value="maternity-leave">Maternity Leave</option>
-          <option value="bereavement-leave">Bereavement Leave</option>
-          <option value="other">Other (Please specify below)</option>
-        </select>
-
-        <label for="additional-info">
-          Additional Information (if applicable):
+        <label for="telehealth-date">
+          Preferred Telehealth Appointment Date:
         </label>
+        <input type="date" id="telehealth-date" required />
+
+        <label for="telehealth-time">
+          Preferred Telehealth Appointment Time:
+        </label>
+        <input type="time" id="telehealth-time" required />
+
+        <label for="platform">
+          Preferred Telehealth Platform (Zoom, Teams, etc.):
+        </label>
+        <input type="text" id="platform" required />
+
+        <label for="reason">Reason for Telehealth Appointment:</label>
         <textarea
           className="text-area"
-          id="additional-info"
+          id="reason"
           rows="4"
+          required
         ></textarea>
-
-        <label for="leave-duration">Duration of Leave (Start - End):</label>
-        <div className="leave-duration">
-          <input type="date" id="start-date" required /> to
-          <input type="date" id="end-date" required />
-        </div>
 
         <div className="submit-buttons">
           <button className="submit-form-btn" type="submit">
-            Submit Special Leave Request
+            Submit Telehealth Appointment Request
           </button>
         </div>
       </div>
@@ -54,4 +55,4 @@ function SpecialLeaveForm() {
   );
 }
 
-export default SpecialLeaveForm;
+export default TelehealthAppointmentRequestForm;

@@ -2,7 +2,7 @@ import "./forms.css";
 import { Link } from "react-router-dom";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
-function SpecialLeaveForm() {
+function ReferralForm() {
   return (
     <div className="request-forms">
       <div className="back-forms">
@@ -17,36 +17,31 @@ function SpecialLeaveForm() {
         Fabricating information or providing false details can lead to
         consequences and may impact your credibility and trustworthiness.
       </p>
-      <h3> Special Leave Form </h3>
+      <h3> Referral Form </h3>
       <div className="form-content">
         <label for="student-id">Student ID:</label>
         <input type="text" id="student-id" required />
 
-        <label for="special-leave-reason">Reason for Special Leave:</label>
-        <select id="special-leave-reason" required>
-          <option value="maternity-leave">Maternity Leave</option>
-          <option value="bereavement-leave">Bereavement Leave</option>
-          <option value="other">Other (Please specify below)</option>
-        </select>
+        <label for="referring-doctor">Referring Doctor's Name:</label>
+        <input type="text" id="referring-doctor" required />
 
-        <label for="additional-info">
-          Additional Information (if applicable):
-        </label>
+        <label for="specialist-name">Specialist Name:</label>
+        <input type="text" id="specialist-name" required />
+
+        <label for="reason">Reason for Referral:</label>
         <textarea
           className="text-area"
-          id="additional-info"
+          id="reason"
           rows="4"
+          required
         ></textarea>
 
-        <label for="leave-duration">Duration of Leave (Start - End):</label>
-        <div className="leave-duration">
-          <input type="date" id="start-date" required /> to
-          <input type="date" id="end-date" required />
-        </div>
+        <label for="appointment-date">Preferred Appointment Date:</label>
+        <input type="date" id="appointment-date" required />
 
         <div className="submit-buttons">
           <button className="submit-form-btn" type="submit">
-            Submit Special Leave Request
+            Submit Referral Form
           </button>
         </div>
       </div>
@@ -54,4 +49,4 @@ function SpecialLeaveForm() {
   );
 }
 
-export default SpecialLeaveForm;
+export default ReferralForm;

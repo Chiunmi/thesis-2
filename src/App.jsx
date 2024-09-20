@@ -24,6 +24,12 @@ import StudentAbsenceForm from "./Sidebar/RequestForms/student-absence-form";
 import MedicalLeaveForm from "./Sidebar/RequestForms/medical-leave-form";
 import SpecialLeaveForm from "./Sidebar/RequestForms/special-leave-form";
 import EditStockPage from "./NavBar_Tabs/Profile/edit-stock";
+import AppointmentRequestForm from "./Sidebar/RequestForms/appointment-request-form";
+import AppointmentCancellationForm from "./Sidebar/RequestForms/appointment-cancellation-form";
+import MedicalRecordRequestForm from "./Sidebar/RequestForms/medical-record-request-form";
+import ParentalConsentForm from "./Sidebar/RequestForms/parental-consent-form";
+import ReferralForm from "./Sidebar/RequestForms/referral-form";
+import TelehealthAppointmentRequestForm from "./Sidebar/RequestForms/telehealth-form";
 
 function App() {
   return (
@@ -37,11 +43,32 @@ function App() {
           <Route path="/telemed" element={<Telemed />} />
           <Route path="/request-forms" element={<RequestForms />} />
           <Route
+            path="/appointment-request-form"
+            element={<AppointmentRequestForm />}
+          />
+          <Route
+            path="/appointment-cancellation-form"
+            element={<AppointmentCancellationForm />}
+          />
+          <Route path="/medical-leave-form" element={<MedicalLeaveForm />} />
+          <Route
+            path="/medical-record-request-form"
+            element={<MedicalRecordRequestForm />}
+          />
+          <Route
+            path="/parental-consent-form"
+            element={<ParentalConsentForm />}
+          />
+          <Route path="/referral-form" element={<ReferralForm />} />
+          <Route
             path="/student-absence-form"
             element={<StudentAbsenceForm />}
           />
-          <Route path="/medical-leave-form" element={<MedicalLeaveForm />} />
           <Route path="/special-leave-form" element={<SpecialLeaveForm />} />
+          <Route
+            path="/telehealth-form"
+            element={<TelehealthAppointmentRequestForm />}
+          />
 
           <Route path="/events" element={<Events />} />
           <Route path="/health-tips" element={<HealthTips />} />

@@ -2,7 +2,7 @@ import "./forms.css";
 import { Link } from "react-router-dom";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
-function SpecialLeaveForm() {
+function MedicalRecordRequestForm() {
   return (
     <div className="request-forms">
       <div className="back-forms">
@@ -17,36 +17,35 @@ function SpecialLeaveForm() {
         Fabricating information or providing false details can lead to
         consequences and may impact your credibility and trustworthiness.
       </p>
-      <h3> Special Leave Form </h3>
+      <h3> Medical Record Request/Release Form </h3>
       <div className="form-content">
         <label for="student-id">Student ID:</label>
         <input type="text" id="student-id" required />
 
-        <label for="special-leave-reason">Reason for Special Leave:</label>
-        <select id="special-leave-reason" required>
-          <option value="maternity-leave">Maternity Leave</option>
-          <option value="bereavement-leave">Bereavement Leave</option>
-          <option value="other">Other (Please specify below)</option>
-        </select>
+        <label for="requester-name">Requester's Name:</label>
+        <input type="text" id="requester-name" required />
 
-        <label for="additional-info">
-          Additional Information (if applicable):
+        <label for="release-to">
+          Release Medical Records To (Doctor/Clinic):
         </label>
+        <input type="text" id="release-to" required />
+
+        <label for="purpose">Purpose of Request:</label>
         <textarea
           className="text-area"
-          id="additional-info"
+          id="purpose"
           rows="4"
+          required
         ></textarea>
 
-        <label for="leave-duration">Duration of Leave (Start - End):</label>
-        <div className="leave-duration">
-          <input type="date" id="start-date" required /> to
-          <input type="date" id="end-date" required />
-        </div>
+        <label for="supporting-docs">
+          Upload Supporting Documents (if required):
+        </label>
+        <input type="file" id="supporting-docs" accept=".pdf,.jpg,.png" />
 
         <div className="submit-buttons">
           <button className="submit-form-btn" type="submit">
-            Submit Special Leave Request
+            Submit Medical Record Request/Release Form
           </button>
         </div>
       </div>
@@ -54,4 +53,4 @@ function SpecialLeaveForm() {
   );
 }
 
-export default SpecialLeaveForm;
+export default MedicalRecordRequestForm;
