@@ -30,7 +30,8 @@
 }
 .interedted-confirm-btn:hover,
 .save-event-modal-btn:hover,
-.event-modal-delete-btn:hover {
+.add-event-modal-btn:hover,
+.delete-event-modal-btn:hover {
   background-color: white;
   /* background-color: #a9abab; */
   color: #003163;
@@ -63,8 +64,9 @@
   justify-content: end;
 }
 .save-event-modal-btn,
+.add-event-modal-btn,
 .close-event-modal-btn,
-.event-modal-delete-btn {
+.delete-event-modal-btn {
   border: 1px solid white;
   color: white;
   padding: 10px 20px;
@@ -78,10 +80,13 @@
   margin: 0.5vw;
 }
 
+.add-event-modal-btn {
+  background-color: #2a9df4;
+}
 .save-event-modal-btn {
-  background-color: #003163;
+  background-color: #429d1c;
   width: 8vw;
 }
-.event-modal-delete-btn {
+.delete-event-modal-btn {
   background-color: red;
 }

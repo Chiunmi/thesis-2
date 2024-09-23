@@ -1,17 +1,21 @@
 import React, { useState } from "react";
+import Modal from "react-modal";
 import "./events.css";
-import EventModal from "./event-modal";
-import EventFunctionsModal from "./event-functions-modal";
+import "./event-modal.css";
 
 function Events() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => setIsModalOpen(true);
-
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
+  const [newEventDetails, setNewEventDetails] = useState({
+    title: "",
+    who: "",
+    when: "",
+    time: "",
+    where: "",
+  });
   const [events, setEvents] = useState([
     {
       id: 1,
@@ -30,6 +34,7 @@ function Events() {
     },
   ]);
 
+  const openModal = () => setIsModalOpen(true);
   const openAddModal = () => setIsAddModalOpen(true);
   const openEditModal = (event) => {
     setSelectedEvent(event);
@@ -127,21 +132,245 @@ function Events() {
           </div>
         ))
       ) : (
-        <p>No events available</p> // Added fallback text
+        <p>No events available</p>
       )}
 
-      {/* Modal Component */}
-      <EventModal isOpen={isModalOpen} onClose={closeModal} />
-      <EventFunctionsModal
-        isAddModalOpen={isAddModalOpen}
-        isEditModalOpen={isEditModalOpen}
-        isDeleteModalOpen={isDeleteModalOpen}
-        closeModal={closeModal}
-        eventDetails={selectedEvent}
-        handleAddEvent={handleAddEvent}
-        handleEditEvent={handleEditEvent}
-        handleDeleteEvent={handleDeleteEvent}
-      />
+      {/* Interested Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        className="event-modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          content: {
+            width: "35vw",
+            height: "22vh",
+            margin: "auto",
+            borderRadius: "12px",
+            backgroundColor: "#f8f8ff",
+            padding: "25px",
+          },
+        }}
+      >
+        <h2>Interested in the Event?</h2>
+        <p>Please confirm your interest by clicking Confirm.</p>
+        <button className="close-modal-btn" onClick={closeModal}>
+          Close
+        </button>
+        <button className="interedted-confirm-btn"> Confirm</button>
+      </Modal>
+
+      {/* Add Modal */}
+      <Modal
+        isOpen={isAddModalOpen}
+        onRequestClose={closeModal}
+        className="event-modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          content: {
+            width: "40vw",
+            height: "55vh",
+            margin: "auto",
+            borderRadius: "12px",
+            backgroundColor: "#f8f8ff",
+            padding: "25px",
+          },
+        }}
+      >
+        <div className="add-event-modal">
+          <h2>Add New Event</h2>
+          <input
+            type="text"
+            placeholder="Title"
+            value={newEventDetails.title}
+            onChange={(e) =>
+              setNewEventDetails({ ...newEventDetails, title: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Who"
+            value={newEventDetails.who}
+            onChange={(e) =>
+              setNewEventDetails({ ...newEventDetails, who: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="When"
+            value={newEventDetails.when}
+            onChange={(e) =>
+              setNewEventDetails({ ...newEventDetails, when: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Time"
+            value={newEventDetails.time}
+            onChange={(e) =>
+              setNewEventDetails({ ...newEventDetails, time: e.target.value })
+            }
+          />
+
+          <input
+            type="text"
+            placeholder="Where"
+            value={newEventDetails.where}
+            onChange={(e) =>
+              setNewEventDetails({ ...newEventDetails, where: e.target.value })
+            }
+          />
+        </div>
+
+        <div className="event-modal-buttons">
+          <button className="close-event-modal-btn" onClick={closeModal}>
+            Close
+          </button>
+          <button
+            className="add-event-modal-btn"
+            onClick={() => {
+              handleAddEvent(newEventDetails);
+              closeModal();
+            }}
+          >
+            Add Event
+          </button>
+        </div>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal
+        isOpen={isEditModalOpen}
+        onRequestClose={closeModal}
+        className="event-modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          content: {
+            width: "40vw",
+            height: "55vh",
+            margin: "auto",
+            borderRadius: "12px",
+            backgroundColor: "#f8f8ff",
+            padding: "25px",
+          },
+        }}
+      >
+        <div className="add-event-modal">
+          <h2>Edit Event</h2>
+          <input
+            type="text"
+            placeholder="Title"
+            value={selectedEvent.title}
+            onChange={(e) =>
+              setSelectedEvent({ ...selectedEvent, title: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Who"
+            value={selectedEvent.who}
+            onChange={(e) =>
+              setSelectedEvent({ ...selectedEvent, who: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="When"
+            value={selectedEvent.when}
+            onChange={(e) =>
+              setSelectedEvent({ ...selectedEvent, when: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Time"
+            value={selectedEvent.time}
+            onChange={(e) =>
+              setSelectedEvent({ ...selectedEvent, time: e.target.value })
+            }
+          />
+
+          <input
+            type="text"
+            placeholder="Where"
+            value={selectedEvent.where}
+            onChange={(e) =>
+              setSelectedEvent({ ...selectedEvent, where: e.target.value })
+            }
+          />
+        </div>
+
+        <div className="event-modal-buttons">
+          <button className="close-event-modal-btn" onClick={closeModal}>
+            Close
+          </button>
+          <button
+            className="save-event-modal-btn"
+            onClick={() => {
+              handleEditEvent(selectedEvent);
+              closeModal();
+            }}
+          >
+            Save Changes
+          </button>
+        </div>
+      </Modal>
+
+      {/* Delete Modal */}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onRequestClose={closeModal}
+        className="event-modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          content: {
+            width: "35vw",
+            height: "22vh",
+            margin: "auto",
+            borderRadius: "12px",
+            backgroundColor: "#f8f8ff",
+            padding: "25px",
+          },
+        }}
+      >
+        <h2>Delete Event</h2>
+        <p>
+          Are you sure you want to delete the event: <br />
+          <strong>{selectedEvent.title}</strong>?
+        </p>
+        <button className="close-event-modal-btn" onClick={closeModal}>
+          Cancel
+        </button>
+        <button
+          className="delete-event-modal-btn"
+          onClick={() => {
+            handleDeleteEvent(selectedEvent.id);
+            closeModal();
+          }}
+        >
+          Delete
+        </button>
+      </Modal>
     </div>
   );
 }

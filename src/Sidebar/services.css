@@ -1,0 +1,14 @@
+.services-page {
+  position: fixed;
+  /* background-color: pink; */
+  width: calc(100vw - 32.5vw);
+  height: auto;
+  height: 90vh;
+  margin: 6vh 0vw;
+  margin-left: calc(0% + 12vw);
+  margin-right: calc(0% + 18vw);
+  overflow-y: auto;
+}
+.services-page::-webkit-scrollbar {
+  display: none;
+}

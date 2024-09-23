@@ -58,3 +58,138 @@
   color: #003163;
   border: 1px solid #003163;
 }
+
+.sent-requests {
+  display: flex;
+  margin: 1vh 2vw;
+}
+
+.sent-request-btn {
+  background-color: #429d1c;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 10vw;
+}
+.sent-request-btn:hover {
+  background-color: white;
+  color: #003163;
+  border: 1px solid #003163;
+}
+
+.sent-requests-btn {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.sent-requests-btn:hover {
+  background-color: #45a049;
+}
+
+.sent-requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.sent-requests-table th,
+.sent-requests-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.sent-requests-table th {
+  background-color: #f2f2f2;
+}
+
+.cancel-btn,
+.reschedule-btn {
+  color: white;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border: 1px white solid;
+}
+.cancel-btn {
+  background-color: red;
+}
+
+.reschedule-btn {
+  background-color: #2a9df4;
+}
+
+.reschedule-btn:hover,
+.cancel-btn:hover {
+  background-color: white;
+  color: #003163;
+  border: 1px solid #003163;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.close-modal-btn {
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 12px;
+  width: 6vw;
+  margin: 0.5vw;
+}
+
+.close-modal-btn:hover {
+  background-color: #c0c2c2;
+  border: 1px solid #003163;
+  color: #003163;
+}
+
+.request-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sent-requests-table th,
+.sent-requests-table .status-column {
+  text-align: center;
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  border: 1px solid gray;
+  cursor: not-allowed;
+}
+
+.cancel-btn:disabled,
+.reschedule-btn:disabled {
+  border: 1px solid gray;
+  opacity: 0.6;
+}
+
+.cancel-modal p {
+  text-align: center;
+}
+
+.form-cancel-modal-actions {
+  display: flex;
+  justify-content: center;
+}

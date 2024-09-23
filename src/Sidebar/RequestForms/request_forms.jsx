@@ -1,6 +1,40 @@
 import "./request_forms.css";
 import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import Modal from "react-modal";
+
 function RequestForms() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const openCancelModal = (request) => {
+    setSelectedRequest(request);
+    setIsCancelModalOpen(true);
+  };
+  const closeCancelModal = () => setIsCancelModalOpen(false);
+
+  // Dummy data for sent requests
+  const sentRequests = [
+    {
+      id: 1,
+      request: "Medical Check-Up",
+      status: "Pending",
+    },
+    {
+      id: 2,
+      request: "Vaccination Schedule",
+      status: "Approved",
+    },
+    {
+      id: 3,
+      request: "Consultation",
+      status: "Completed",
+    },
+  ];
   return (
     <div className="request-form-page">
       Fill out the appropriate leave form based on your situation. Please wait
@@ -10,6 +44,139 @@ function RequestForms() {
         Fabricating information or providing false details can lead to
         consequences and may impact your credibility and trustworthiness.
       </p>
+      <div className="sent-requests">
+        <button className="sent-request-btn" onClick={openModal}>
+          View Sent Requests
+        </button>
+      </div>
+      {/* Modal for sent requests */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        className="sent-requests-modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          content: {
+            width: "60vw",
+            height: "fit-content",
+            margin: "auto",
+            borderRadius: "12px",
+            backgroundColor: "#f8f8ff",
+            padding: "25px",
+          },
+        }}
+      >
+        <h2>Sent Requests</h2>
+
+        {/* Table for sent requests */}
+        <table className="sent-requests-table">
+          <thead>
+            <tr>
+              <th>Request</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sentRequests.map((request) => (
+              <tr key={request.id}>
+                <td>{request.request}</td>
+                <td
+                  className="status-column"
+                  style={{
+                    color:
+                      request.status === "Pending"
+                        ? "red"
+                        : request.status === "Approved"
+                        ? "blue"
+                        : "green",
+                  }}
+                >
+                  {request.status}
+                </td>
+
+                <td>
+                  {/* Actions: Cancel and Reschedule */}
+                  <div className="request-actions">
+                    <button
+                      className="cancel-btn"
+                      onClick={() => openCancelModal(request)}
+                      disabled={request.status === "Completed"}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="reschedule-btn"
+                      disabled={request.status === "Completed"}
+                    >
+                      Reschedule
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <Modal
+          isOpen={isCancelModalOpen}
+          onRequestClose={closeCancelModal}
+          className="cancel-modal"
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.3)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+            content: {
+              width: "35vw",
+              height: "25vh",
+              margin: "auto",
+              borderRadius: "12px",
+              backgroundColor: "#f8f8ff",
+              padding: "25px",
+            },
+          }}
+        >
+          <h2>Cancel Request</h2>
+          <p>
+            Are you sure you want to cancel the request for: <br />
+            <strong>{selectedRequest?.request}</strong>?
+          </p>
+          <div className="form-cancel-modal-actions">
+            <button
+              className="close-event-modal-btn"
+              onClick={closeCancelModal}
+            >
+              No
+            </button>
+            <button
+              className="delete-event-modal-btn"
+              onClick={() => {
+                // Handle cancel logic here (for now just close the modal)
+                console.log(
+                  `Canceled request for: ${selectedRequest?.request}`
+                );
+                closeCancelModal();
+              }}
+            >
+              Yes
+            </button>
+          </div>
+        </Modal>
+        {/* Close button for the modal */}
+        <div className="modal-actions">
+          <button className="close-modal-btn" onClick={closeModal}>
+            Close
+          </button>
+        </div>
+      </Modal>
       <div className="form-container">
         <div className="request-form">
           <p className="form-title"> Appointment Request Form</p>
