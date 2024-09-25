@@ -18,7 +18,7 @@
 }
 .back-to-admin {
   display: flex;
-  width: 10vw;
+  width: fit-content;
   background-color: #003163;
   padding: 5px 15px;
   border-radius: 24px;
@@ -87,18 +87,17 @@
   display: flex;
   justify-content: space-between;
   margin: 1vh 1vw;
-  width: 28vw;
-}
-
-.dept {
+  width: 30vw;
   margin-top: 6vh;
 }
 
-.buttons {
+.buttons-search {
   display: flex;
+  justify-content: left;
+  align-items: center;
+  width: fit-content;
 }
 .admin-search {
-  /* background-color: azure; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,7 +313,7 @@
   margin-top: 10px;
   border-radius: 10px;
   width: 100%;
-  min-width: 480px;
+  min-width: 400px;
 }
 .student-data-vii,
 .student-data-viii,
@@ -528,7 +527,7 @@ body.no-scroll {
 
 .table-style {
   width: 100%;
-  border-collapse: collapse; /* Combine border into a single line */
+  border-collapse: collapse;
 }
 
 /* Style table header */
@@ -580,4 +579,94 @@ body.no-scroll {
 }
 .health-stat-title {
   margin-right: 4vw;
+}
+
+@media (max-width: 1680px) {
+  .adminProfile {
+    margin: 6vh 2vw 2vw 20vh;
+  }
+  .button-create,
+  .button-manage,
+  .button-bmi,
+  .edit-profile,
+  .health-record-btn {
+    width: fit-content;
+    padding: 10px 25px;
+    margin: 0px 0px 20px 55px;
+  }
+
+  .admin-button {
+    display: flex;
+    justify-content: space-between;
+    margin: 4vh 1vh 0.2vw;
+    width: 40vw;
+  }
+
+  .back-to-admin {
+    display: flex;
+    width: fit-content;
+    background-color: #003163;
+    padding: 5px 15px;
+    border-radius: 24px;
+    cursor: pointer;
+    border: 1px #003163 solid;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  .dept {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 1vw;
+    width: 35vw;
+    margin-top: 2vh;
+  }
+
+  .buttons-search {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: fit-content;
+  }
+  .admin-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2vw;
+    margin-top: 1vh;
+  }
+}
+@media (max-width: 1000px) {
+  .adminProfile {
+    margin: 6vh 2vw 2vw 11vh;
+  }
+  .admin-button {
+    display: flex;
+    justify-content: space-between;
+    margin: 4vh 1vh 0.2vw;
+    width: 80vw;
+  }
+  .buttons-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-left: 1vw;
+  }
+  .dept {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 1vw;
+    width: 60vw;
+    margin-top: 2vh;
+  }
+  .profile-btn {
+    display: flex;
+    justify-content: center;
+    width: 35vw;
+    margin-left: 0vw;
+    gap: 0;
+  }
+  .column-four {
+    display: flex;
+    flex-direction: column;
+  }
 }

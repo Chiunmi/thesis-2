@@ -155,11 +155,7 @@ function AdminProfile() {
           <button className="button-manage">Manage Stock</button>
         </Link>
       </div>
-      <div className="title-charts">
-        <h3> Top 5 Major Health Concerns</h3>
-        <h3 className="health-stat-title"> Health Statistics</h3>
-        <h3> Insights</h3>
-      </div>
+
       <Chart />
     </div>
   );

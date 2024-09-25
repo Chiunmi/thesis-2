@@ -118,6 +118,7 @@ export default class Chart extends PureComponent {
       <div className="chart-stat">
         <div className="charts">
           <div className="bar-chart">
+            <h3> Top 5 Major Health Concerns </h3>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={barChartData}
@@ -148,6 +149,7 @@ export default class Chart extends PureComponent {
           </div>
 
           <div className="pie-chart">
+            <h3> Health Statistics</h3>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -166,6 +168,7 @@ export default class Chart extends PureComponent {
             </ResponsiveContainer>
           </div>
           <div className="insight">
+            <h3> Insights</h3>
             <p> Insights</p>
           </div>
         </div>

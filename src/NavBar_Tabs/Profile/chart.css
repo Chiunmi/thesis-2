@@ -15,6 +15,7 @@
 .insight {
   flex: 1; /* Each section takes an equal amount of space */
   display: flex;
+  flex-direction: column;
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
   margin: 10px;
@@ -25,8 +26,25 @@
 .insight h1 {
   text-align: center;
 }
+.insight {
+  justify-content: right;
+}
 
 .bar-chart {
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 1000px) {
+  .charts {
+    display: flex;
+    flex-direction: column; /* Arrange children horizontally */
+    flex: 1; /* Ensure it takes up available space */
+  }
+  .chart-stat {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin-bottom: 4vh;
+  }
 }

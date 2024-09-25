@@ -490,7 +490,7 @@ function HealthRecord() {
           <h3 className="back-to-admin-btn">Back to Admin</h3>
         </Link>
       </div>
-      <div className="buttons">
+      <div className="buttons-search">
         <div className="dept">
           <button
             className={`button-jhs ${

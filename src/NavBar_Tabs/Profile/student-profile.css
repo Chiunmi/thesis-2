@@ -1,6 +1,6 @@
 .studentProfile {
   position: fixed;
-  margin: 6vh 2vw 2vw 26vh;
+  margin: 6vh 2vw 2vw 24vh;
   /* background-color: pink; */
   width: 86vw;
   height: 92vh;
@@ -40,8 +40,8 @@
 
 .student-column-two,
 .student-column-three,
-.student-column-four,
-.student-column-five {
+.student-column-five,
+.student-column-four {
   display: flex;
   justify-content: space-between;
   column-gap: 20px;
@@ -50,13 +50,15 @@
 .student-profile-data-i,
 .student-profile-data-ii,
 .student-profile-data-iii,
-.student-profile-data-viii {
+.student-data-v1,
+.student-data-v2,
+.student-data-v3 {
   background-color: rgba(138, 138, 138, 0.2);
   padding: 20px;
   margin-top: 10px;
   border-radius: 10px;
   width: 100%;
-  min-width: 480px;
+  min-width: 400px;
 }
 
 .student-column-three {
@@ -181,4 +183,19 @@
 .form-group input {
   flex: 1;
   padding: 5px;
+}
+@media (max-width: 1680px) {
+  .studentProfile {
+    margin: 6vh 2vw 2vw 20vh;
+  }
+}
+
+@media (max-width: 1000px) {
+  .studentProfile {
+    margin: 6vh 2vw 2vw 11vh;
+  }
+  .profile-student-pic {
+    height: auto;
+    width: auto;
+  }
 }

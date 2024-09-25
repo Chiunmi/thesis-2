@@ -1,19 +1,24 @@
 .location-page {
   position: fixed;
-  /* background-color: pink; */
   width: calc(100vw - 33vw);
   height: auto;
-  height: 92vh;
+  height: 89vh;
   margin: 6vh 0vw;
-  margin-left: calc(0% + 12.5vw);
+  margin-left: calc(0% + 11vw);
   margin-right: calc(0% + 18vw);
+  margin-top: 6vh;
   max-height: 100vh;
   overflow-y: auto;
+}
+
+.location-page h3 {
+  text-align: center;
+  margin: 2.2vh;
 }
 .map-container {
   position: relative;
   width: 100%;
-  height: 87vh;
+  height: 77vh;
 
   overflow: hidden;
 }
@@ -32,6 +37,13 @@
   background: linear-gradient(to right, #003163, #13072e);
   border-radius: 20px;
   color: white;
-  margin-top: 10px;
+  margin-top: 6vh;
   padding: 20px;
+}
+
+@media (max-width: 1000px) {
+  .location-page {
+    position: fixed;
+    width: 85%;
+  }
 }

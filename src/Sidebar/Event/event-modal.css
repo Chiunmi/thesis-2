@@ -14,7 +14,7 @@
   font-size: 14px;
   cursor: pointer;
   border-radius: 12px;
-  width: 6vw;
+  width: fit-content;
   margin: 1vw;
 }
 .close-modal-btn,
@@ -76,7 +76,7 @@
   font-size: 14px;
   cursor: pointer;
   border-radius: 12px;
-  width: 6vw;
+  width: fit-content;
   margin: 0.5vw;
 }
 
@@ -85,7 +85,7 @@
 }
 .save-event-modal-btn {
   background-color: #429d1c;
-  width: 8vw;
+  width: fit-content;
 }
 .delete-event-modal-btn {
   background-color: red;

@@ -9,8 +9,7 @@
   position: fixed;
   display: flex;
   top: 0;
-  /* left: 10%; */
-  width: 100%;
+  width: 100vw;
   background: linear-gradient(to right, #003163, #13072e);
   color: white;
   justify-content: space-between;
@@ -76,7 +75,7 @@
   position: fixed;
   display: flex;
   top: 0;
-  left: 77%;
+  right: 0.5vw;
   /* background-color: pink; */
 }
 
@@ -96,4 +95,21 @@
 .user-icon {
   margin: 12px;
   color: white;
+}
+
+@media (max-width: 1000px) {
+  .nav ul {
+    display: flex;
+    list-style: none;
+    margin-left: 15%;
+    padding: 0;
+    width: 12vw;
+  }
+
+  .navbar-right {
+    position: fixed;
+    display: flex;
+    justify-content: end;
+    top: 0;
+  }
 }

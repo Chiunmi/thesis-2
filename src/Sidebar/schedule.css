@@ -5,7 +5,7 @@
   height: auto;
   height: 92vh;
   margin: 6vh 0vw;
-  margin-left: calc(0% + 12vw);
+  margin-left: calc(0% + 11vw);
   margin-right: calc(0% + 18vw);
   overflow-y: auto;
 }
@@ -125,5 +125,11 @@
   .custom-input {
     width: 100%;
     margin-right: 10px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .schedule-page {
+    width: 85%;
   }
 }

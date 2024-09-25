@@ -1,0 +1,267 @@
+@font-face {
+  font-family: "Old English Text MT";
+  src: url("./assets/oldenglishtextmt.ttf") format("woff2");
+}
+.login-page {
+  position: fixed;
+  background: linear-gradient(to right, #003163, #13072e);
+  margin-top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  background-color: rgba(138, 138, 138, 0.7);
+  padding: 4vh 1vw;
+  border-radius: 24px;
+  width: 550px;
+  height: fit-content;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.login-logo {
+  width: 25vh;
+  height: 14vh;
+}
+
+.login-university-name {
+  font-family: "Old English Text MT", serif;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  margin: 2vh 2vw;
+}
+
+.login-content p {
+  text-align: center;
+  color: white;
+  margin: 2vh;
+}
+.login-content h3 {
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 1vh;
+  margin-top: 2vh;
+  font-weight: 400;
+}
+.login-google,
+.admin-toggle-button,
+.login-button,
+.student-toggle-button {
+  color: white;
+  border: 1px solid #003163;
+  border-radius: 16px;
+  width: 240px;
+  padding: 10px 24px;
+  cursor: pointer;
+}
+
+.login-google,
+.student-toggle-button {
+  background: linear-gradient(to left, #003163, #13072e);
+}
+
+.login-button {
+  color: white;
+  background-color: #003163;
+  margin-top: 2vh;
+}
+
+.admin-toggle-button,
+.login-button {
+  background-color: #2a9df4;
+  border: 1px solid #2a9df4;
+}
+
+.login-google:hover,
+.student-toggle-button:hover {
+  border: 1px solid white;
+}
+.admin-toggle-button:hover,
+.login-button:hover {
+  border: 1px solid white;
+}
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
+}
+.login-content label {
+  color: white;
+  font-size: 16px;
+}
+
+.login-content input {
+  border-radius: 8px;
+  padding: 3px;
+  margin: 1vh 0vw;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.password-input {
+  width: 100%;
+  padding-right: 40px;
+}
+.visibility-icon {
+  position: absolute;
+  right: 10px;
+  margin-top: 7px;
+  cursor: pointer;
+}
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: -2;
+  white-space: nowrap;
+}
+
+.image-column {
+  display: inline-block;
+}
+
+.bg-image {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to right, #003163, #13072e);
+  opacity: 0.7;
+  z-index: -1;
+}
+
+@keyframes moveImages {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100vw);
+  }
+}
+
+.moving-images {
+  display: flex;
+  animation: moveImages 20s linear infinite;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 50vw;
+  position: relative; /* For close button positioning */
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.modal-content input {
+  margin-right: 1vw;
+}
+
+.nda-button {
+  display: flex;
+  justify-content: end;
+}
+
+.nda-btn {
+  background-color: #45a049;
+  color: white;
+  border: 1px solid white;
+  border-radius: 6px;
+  width: fit-content;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+.nda-btn:hover {
+  background-color: #aaa;
+}
+
+@media (max-width: 600px) {
+  .modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; /* Ensure modal takes up full viewport height */
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 80vw;
+    max-height: 80vh; /* Limit the height to 80% of the viewport */
+    overflow-y: auto;
+    margin: 2vh;
+  }
+  .login-container {
+    width: 450px;
+  }
+}

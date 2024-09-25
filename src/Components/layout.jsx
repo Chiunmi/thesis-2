@@ -1,3 +1,4 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Left from "./left";
 import Navbar from "./Navbar";
@@ -11,7 +12,7 @@ function Layout() {
       <div className="content-area">
         <Left className="sidebar-left" />
         <div className="main-content">
-          <Outlet /> {/* This is where nested routes will be rendered */}
+          <Outlet />
         </div>
         <Right className="sidebar-right" />
       </div>

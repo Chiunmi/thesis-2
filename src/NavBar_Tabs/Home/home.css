@@ -5,7 +5,7 @@
   height: auto;
   height: 92vh;
   margin: 6vh 0vw;
-  margin-left: calc(0% + 12.5vw);
+  margin-left: calc(0% + 11vw);
   margin-right: calc(0% + 18vw);
   max-height: 100vh;
   overflow-y: auto;
@@ -141,7 +141,7 @@
 .modal-buttons {
   display: flex;
   position: relative;
-  left: 12vw;
+  left: 10vw;
   gap: 20px;
 }
 
@@ -190,4 +190,50 @@
   gap: 20px;
   top: 2vh;
   left: 8vw;
+}
+
+@media (max-width: 1680px) {
+  .home-page {
+    position: fixed;
+    width: 70%;
+    height: auto;
+    height: 92vh;
+    margin: 6vh 0vw;
+    margin-left: calc(0% + 11vw);
+    margin-right: 4vw;
+    max-height: 100vh;
+    overflow-y: auto;
+    margin-bottom: 4vh;
+  }
+  .welcome-content,
+  .announcement-container {
+    width: 95%;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: end;
+    position: relative;
+    margin-right: 3vw;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .home-page {
+    position: fixed;
+    width: 90%;
+    height: auto;
+    height: 92vh;
+    margin: 6vh 0vw;
+    margin-left: calc(0% + 11vw);
+    overflow-y: auto;
+    margin-bottom: 4vh;
+  }
+  .modal-buttons {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-right: 5vw;
+  }
 }

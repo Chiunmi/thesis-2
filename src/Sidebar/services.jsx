@@ -1,5 +1,5 @@
 import * as React from "react";
-import PropTypes from "prop-types"; // Import PropTypes for validation
+import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -9,6 +9,7 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import "./services.css";
 import waterAnalysis from "./../assets/water-analysis.jpeg";
 import intrams from "./../assets/intrams.jpeg";
@@ -53,7 +54,7 @@ const servicesData = [
   {
     title: "Consultations",
     description:
-      " Medical consultations are provided for students who need health advice or treatment for minor illnesses and injuries. This service also includes referrals for specialized care when necessary.",
+      "Medical consultations are provided for students who need health advice or treatment for minor illnesses and injuries. This service also includes referrals for specialized care when necessary.",
     image: consultation,
   },
   {
@@ -81,54 +82,58 @@ const ExpandMore = styled(({ expand, ...other }) => {
 }));
 
 ExpandMore.propTypes = {
-  expand: PropTypes.bool.isRequired, // Prop validation in place of TypeScript
+  expand: PropTypes.bool.isRequired,
 };
 
 function Services() {
-  const [expanded, setExpanded] = React.useState(null); // Store expanded state for each card
+  const [expandedIndex, setExpandedIndex] = React.useState(null);
 
   const handleExpandClick = (index) => {
-    setExpanded(expanded === index ? null : index);
+    // If the card is already expanded, collapse it; otherwise, expand the clicked card
+    setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   return (
     <div className="services-page">
-      {servicesData.map((service, index) => (
-        <Card key={index} sx={{ maxWidth: 1300, marginBottom: "20px" }}>
-          <CardContent>
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", textAlign: "center" }}
-            >
-              {service.title}
-            </Typography>
-          </CardContent>
-
-          <CardMedia
-            component="img"
-            height="400"
-            image={service.image} // Use dynamic image from the data
-            alt={service.title}
-          />
-
-          <CardActions disableSpacing>
-            <ExpandMore
-              expand={expanded === index}
-              onClick={() => handleExpandClick(index)}
-              aria-expanded={expanded === index}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </CardActions>
-
-          <Collapse in={expanded === index} timeout="auto" unmountOnExit>
+      <h3> Services </h3>
+      <div className="grid-container">
+        {servicesData.map((service, index) => (
+          <Card key={index} sx={{ maxWidth: 600, marginBottom: "20px" }}>
             <CardContent>
-              <Typography>{service.description}</Typography>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "bold", textAlign: "center" }}
+              >
+                {service.title}
+              </Typography>
             </CardContent>
-          </Collapse>
-        </Card>
-      ))}
+
+            <CardMedia
+              component="img"
+              height="300"
+              image={service.image}
+              alt={service.title}
+            />
+
+            <CardActions disableSpacing>
+              <ExpandMore
+                expand={expandedIndex === index}
+                onClick={() => handleExpandClick(index)}
+                aria-expanded={expandedIndex === index}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+            </CardActions>
+
+            <Collapse in={expandedIndex === index} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography>{service.description}</Typography>
+              </CardContent>
+            </Collapse>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

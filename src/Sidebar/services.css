@@ -5,10 +5,41 @@
   height: auto;
   height: 90vh;
   margin: 6vh 0vw;
-  margin-left: calc(0% + 12vw);
+  margin-left: calc(0% + 11vw);
   margin-right: calc(0% + 18vw);
   overflow-y: auto;
 }
 .services-page::-webkit-scrollbar {
   display: none;
+}
+
+.services-page {
+  padding: 20px;
+}
+.services-page h3 {
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-gap: 20px; /* Spacing between cards */
+  justify-content: center; /* Center the cards */
+}
+
+.services-page .MuiCollapse-root {
+  transition: height 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* One column on smaller screens */
+  }
+}
+
+@media (max-width: 1000px) {
+  .services-page {
+    width: 85%;
+  }
 }

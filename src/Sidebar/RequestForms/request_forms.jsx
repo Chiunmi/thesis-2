@@ -195,24 +195,6 @@ function RequestForms() {
       </div>
       <div className="form-container">
         <div className="request-form">
-          <p className="form-title">
-            {" "}
-            Appointment Cancellation/Reschedule Form
-          </p>
-          <h3>
-            A form for students to cancel or reschedule their appointments,
-            indicating the reason for the change and new preferred dates.
-          </h3>
-
-          <div className="form-button">
-            <Link to="/appointment-cancellation-form">
-              <button className="request-form-btn">Submit a Form</button>
-            </Link>
-          </div>
-        </div>
-      </div>
-      <div className="form-container">
-        <div className="request-form">
           <p className="form-title"> Medical Leave Form</p>
           <h3>
             If you require medical leave due to illness or medical reasons,

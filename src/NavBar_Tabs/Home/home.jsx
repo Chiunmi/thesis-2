@@ -57,9 +57,11 @@ function Home() {
             day :)
           </h1>
           <p>
-            A distinctive Christian University integrating faith, character and
-            service, transforming global Learners for enlightenment, leadership,
-            and human development in the 21st century.
+            A Health Services Department that is widely recognized as a prime
+            mover of quality school health care , ensuring a perfectly fit and
+            academically successful Philippine Christian University community
+            firmly united by abiding faith, steadfast character and dedicated
+            services.
           </p>
         </div>
 
@@ -87,7 +89,7 @@ function Home() {
                 zIndex: 2,
               },
               content: {
-                width: "40vw",
+                width: "fit-content",
                 height: "45vh",
                 margin: "auto",
                 borderRadius: "12px",
@@ -177,7 +179,6 @@ function Home() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-            <p className="see-details">{" >"} See details</p>
           </div>
         </div>
         <Modal
@@ -193,7 +194,7 @@ function Home() {
               zIndex: 2,
             },
             content: {
-              width: "30vw",
+              width: "fit-content",
               height: "20vh",
               margin: "auto",
               borderRadius: "12px",

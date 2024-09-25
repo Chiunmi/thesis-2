@@ -1,41 +1,120 @@
+/* Ensure the entire page takes the full screen */
 .layout-container {
   display: flex;
-  flex-direction: column; /* Stacks Navbar at the top */
+  flex-direction: column;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
+  overflow: hidden;
 }
 
+/* Navbar will stay at the top, and the content will adjust below it */
 .navbar {
-  flex-shrink: 0; /* Keep Navbar at the top */
-  width: 100%;
+  flex-shrink: 0;
 }
 
+/* Content area below the navbar will fill the remaining space */
 .content-area {
   display: flex;
-  flex-direction: row;
-  /* flex: 1; */
-  height: 100vh;
+  flex-grow: 1; /* This makes the content area take up all available space */
+  height: 100%;
+  overflow: hidden;
 }
 
+/* Sidebar on the left */
 .sidebar-left {
-  width: 15vw; /* Adjust based on how wide you want the sidebar */
-  background-color: #f4f4f4;
+  flex-basis: 20%; /* Adjust the percentage as needed */
+  min-width: 200px; /* Minimum width for smaller screens */
   height: 100%;
-  flex-shrink: 0;
-}
-
-.main-content {
-  flex: 1; /* Take the remaining width */
-  padding: 4vh 0;
+  background-color: #f0f0f0; /* Example background color */
   overflow-y: auto;
-  width: calc(100vw - 40vw);
-  margin-right: 20vw;
 }
 
+/* Sidebar on the right */
 .sidebar-right {
-  width: 20vw;
-
-  /* background-color: rgba(138, 138, 138, 0.2); */
+  flex-basis: 20%; /* Adjust the percentage as needed */
+  min-width: 200px; /* Minimum width for smaller screens */
   height: 100%;
+  background-color: #f0f0f0; /* Example background color */
+  overflow-y: auto;
+}
+
+/* Main content */
+.main-content {
+  flex-grow: 1; /* Take up remaining space between the sidebars */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Make sure elements inside adapt to screen size */
+@media (max-width: 768px) {
+  .sidebar-left,
+  .sidebar-right {
+    display: none; /* Hide sidebars on smaller screens */
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 769px) {
+  .main-content {
+    padding: 20px; /* Larger padding for larger screens */
+  }
+}
+
+/* Ensure the entire page takes up the full screen */
+.profile-layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Navbar remains at the top */
+.navbar {
   flex-shrink: 0;
+}
+
+/* Profile content below the navbar */
+.profile-content-area {
+  display: flex;
+  flex-grow: 1; /* This makes the content area fill all available space */
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar on the left */
+.sidebar-left {
+  flex-basis: 20%; /* Adjust the width as needed */
+  min-width: 200px; /* Minimum width for small screens */
+  height: 100%;
+  background-color: #f5f5f5; /* Example background color */
+  overflow-y: auto;
+}
+
+/* Main profile content */
+.profile-main-content {
+  flex-grow: 1; /* This allows the main content to take the remaining space */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Make sure the page adjusts to smaller screens */
+@media (max-width: 768px) {
+  .sidebar-left {
+    display: none; /* Hide the sidebar on smaller screens */
+  }
+
+  .profile-main-content {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 769px) {
+  .profile-main-content {
+    padding: 20px;
+  }
 }

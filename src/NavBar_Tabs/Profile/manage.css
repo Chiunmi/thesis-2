@@ -180,3 +180,17 @@ td {
   justify-content: end;
   margin: 2vh 3vw;
 }
+
+@media (max-width: 1680px) {
+  .edit-stock,
+  .admin-inventory {
+    margin: 6vh 2vw 2vw 20vh;
+  }
+}
+
+@media (max-width: 1000px) {
+  .edit-stock,
+  .admin-inventory {
+    margin: 6vh 2vw 2vw 11vh;
+  }
+}

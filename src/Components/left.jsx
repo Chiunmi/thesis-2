@@ -1,5 +1,7 @@
+import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./left.css";
+import logo from "../assets/logo.png";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
@@ -12,86 +14,51 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const Left = () => {
   const location = useLocation();
 
+  const menuItems = [
+    { path: "/services", icon: MedicalServicesIcon, label: "Services" },
+    { path: "/schedules", icon: CalendarMonthRoundedIcon, label: "Schedules" },
+    { path: "/telemed", icon: VideocamRoundedIcon, label: "Telemed" },
+    { path: "/request-forms", icon: FolderRoundedIcon, label: "Request Forms" },
+    { path: "/events", icon: EventAvailableRoundedIcon, label: "Events" },
+    {
+      path: "/health-tips",
+      icon: MonitorHeartRoundedIcon,
+      label: "Health Tips",
+    },
+    { path: "/archive", icon: ArchiveRoundedIcon, label: "Archive" },
+  ];
+
   return (
     <div className="left">
+      <div className="navbar-logo">
+        <img src={logo} alt="" className="logo" />
+      </div>
       <div className="sidebar">
         <ul className="sidebar-list">
-          <li className={location.pathname === "/services" ? "active" : ""}>
-            <Link to="/services">
-              <MedicalServicesIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />
-              Services
-            </Link>
-          </li>
-          <li className={location.pathname === "/schedules" ? "active" : ""}>
-            <Link to="/schedules">
-              <CalendarMonthRoundedIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />
-              Schedules
-            </Link>
-          </li>
-          <li className={location.pathname === "/telemed" ? "active" : ""}>
-            <Link to="/telemed">
-              <VideocamRoundedIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />
-              Telemed
-            </Link>
-          </li>
-          <li
-            className={location.pathname === "/request-forms" ? "active" : ""}
-          >
-            <Link to="/request-forms">
-              <FolderRoundedIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />
-              Request Forms
-            </Link>
-          </li>
-          <li className={location.pathname === "/events" ? "active" : ""}>
-            <Link to="/events">
-              <EventAvailableRoundedIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />
-              Events
-            </Link>
-          </li>
-          <li className={location.pathname === "/health-tips" ? "active" : ""}>
-            <Link to="/health-tips">
-              <MonitorHeartRoundedIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />
-              Health Tips
-            </Link>
-          </li>
-          <li className={location.pathname === "/archive" ? "active" : ""}>
-            <Link to="/archive">
-              <ArchiveRoundedIcon
-                className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />
-              Archive
-            </Link>
-          </li>
+          {menuItems.map((item) => (
+            <li
+              key={item.path}
+              className={location.pathname === item.path ? "active" : ""}
+            >
+              <Link to={item.path}>
+                <item.icon
+                  className="left-icon"
+                  style={{ color: "#8A8A8A", fontSize: "24px" }}
+                />
+                {/* Only show label if not active or screen width is above 1000px */}
+                <span className="label">{item.label}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
-
         <div className="logout">
           <li>
-            {" "}
             <Link to="/login">
               <LogoutIcon
                 className="left-icon"
-                style={{ color: "8A8A8A", fontSize: "24px" }}
-              />{" "}
-              Logout
+                style={{ color: "#8A8A8A", fontSize: "24px" }}
+              />
+              <span className="label">Logout</span>
             </Link>
           </li>
         </div>

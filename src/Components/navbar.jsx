@@ -10,9 +10,6 @@ const Navbar = () => {
   return (
     <div className="navigation-bar">
       <div className="navbar">
-        <div>
-          <img src={logo} alt="" className="logo" />
-        </div>
         <div className="nav">
           <ul>
             <li className={location.pathname === "/" ? "active" : ""}>

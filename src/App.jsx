@@ -25,7 +25,6 @@ import MedicalLeaveForm from "./Sidebar/RequestForms/medical-leave-form";
 import SpecialLeaveForm from "./Sidebar/RequestForms/special-leave-form";
 import EditStockPage from "./NavBar_Tabs/Profile/edit-stock";
 import AppointmentRequestForm from "./Sidebar/RequestForms/appointment-request-form";
-import AppointmentCancellationForm from "./Sidebar/RequestForms/appointment-cancellation-form";
 import MedicalRecordRequestForm from "./Sidebar/RequestForms/medical-record-request-form";
 import ParentalConsentForm from "./Sidebar/RequestForms/parental-consent-form";
 import ReferralForm from "./Sidebar/RequestForms/referral-form";
@@ -46,10 +45,7 @@ function App() {
             path="/appointment-request-form"
             element={<AppointmentRequestForm />}
           />
-          <Route
-            path="/appointment-cancellation-form"
-            element={<AppointmentCancellationForm />}
-          />
+
           <Route path="/medical-leave-form" element={<MedicalLeaveForm />} />
           <Route
             path="/medical-record-request-form"
@@ -88,6 +84,7 @@ function App() {
 
         {/* Routes that do not use any layout */}
         <Route path="/login" element={<Login />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
