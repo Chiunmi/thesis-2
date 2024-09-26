@@ -90,7 +90,7 @@ function Home() {
               },
               content: {
                 width: "fit-content",
-                height: "45vh",
+                height: "fit-content",
                 margin: "auto",
                 borderRadius: "12px",
                 backgroundColor: "#f8f8ff",

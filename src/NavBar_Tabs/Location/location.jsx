@@ -44,7 +44,7 @@ const Location = () => {
   return (
     <div className="location-page">
       <h3> Philippine Christian University Clinic</h3>
-      <div id="pano" style={{ width: "100%", height: "80vh" }}></div>
+      <div id="pano" style={{ width: "98%", height: "80vh" }}></div>
     </div>
   );
 };

@@ -50,7 +50,7 @@
   font-size: 14px;
   cursor: pointer;
   border-radius: 12px;
-  width: 10vw;
+  width: fit-content;
   margin-top: 2vh;
 }
 .request-form-btn:hover {
@@ -192,4 +192,19 @@ button:disabled {
 .form-cancel-modal-actions {
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 1440px) {
+  .request-form-page {
+    width: 65%;
+    margin-left: calc(0% + 11vw);
+    margin-top: 9vh;
+  }
+
+  .request-form-page::-webkit-scrollbar {
+    display: none;
+  }
+  .request-note {
+    margin: 1vh;
+  }
 }

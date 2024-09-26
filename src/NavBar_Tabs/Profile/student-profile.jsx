@@ -571,7 +571,7 @@ function StudentProfile() {
         </div>
 
         <div className="student-column-four">
-          <div className="student-data-v1">
+          <div className="student-profile-data-v1">
             <h3>Laboratory Examination</h3>
             <h4> VIII. </h4>
             <p> Blood Chemistry: {selectedStudent.bloodChemistry}</p>
@@ -579,12 +579,12 @@ function StudentProfile() {
             <p> Urinalysis: {selectedStudent.urinalysis}</p>
             <p> Fecalysis: {selectedStudent.fecalysis}</p>
           </div>
-          <div className="student-data-v2">
+          <div className="student-profile-data-v2">
             <h3>Diagnostic Procedures</h3>
             <h4> IX. </h4>
             <p> Chest X-Ray Findings: {selectedStudent.chestXray}</p>
           </div>
-          <div className="student-data-v3">
+          <div className="student-profile-data-v3">
             <h3>Others(ECG, Ultrasound, etc.)</h3>
             <h4> X. </h4>
             <p> {selectedStudent.others}</p>

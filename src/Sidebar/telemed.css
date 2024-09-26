@@ -23,3 +23,14 @@
   text-align: center;
   margin-top: 1vh;
 }
+@media (max-width: 1440px) {
+  .telemed-page {
+    width: 65%;
+    margin-left: calc(0% + 11vw);
+    margin-top: 9vh;
+  }
+
+  .telemed-appointments {
+    margin-top: 2vh;
+  }
+}

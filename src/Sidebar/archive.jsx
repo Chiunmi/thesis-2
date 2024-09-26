@@ -1,10 +1,7 @@
-// import "./archive.css";
-import jen from "./../assets/jen.png";
+import "./archive.css";
+
 import React, { useState } from "react";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
-import PostAddRoundedIcon from "@mui/icons-material/PostAddRounded";
 
 import Modal from "react-modal";
 const studentData = {
@@ -233,7 +230,32 @@ const studentData = {
   },
 };
 
-function Archive() {
+const Archive = () => {
+  const [isOpen, setIsOpen] = useState(false); // Controls the main archive modal
+  const [isModalOpen, setIsModalOpen] = useState(false); // Controls the nested modal
+  const [activeHeading, setActiveHeading] = useState(""); // Tracks the heading clicked for the nested modal
+
+  // Open the main archive modal
+  const openArchiveModal = () => {
+    setIsOpen(true);
+  };
+
+  // Close the main archive modal
+  const onClose = () => {
+    setIsOpen(false);
+    setIsModalOpen(false); // Ensure nested modal closes if main modal is closed
+  };
+
+  // Open the nested modal for a specific heading
+  const openModal = (heading) => {
+    setActiveHeading(heading);
+    setIsModalOpen(true); // Open the nested modal
+  };
+
+  // Close the nested modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
@@ -291,67 +313,6 @@ function Archive() {
   const handleSectionChange = (section) => {
     setSelectedSection(section);
     setSelectedStudent(null);
-  };
-
-  const [isScanBMIModalOpen, setScanBMIModalOpen] = useState(false);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(""); // 'add' or 'edit'
-  const [formData, setFormData] = useState({
-    date: "",
-    symptoms: "",
-    action: "",
-  });
-
-  const openAddModal = () => {
-    setModalType("add");
-    setIsModalOpen(true);
-  };
-
-  const openEditModal = (data) => {
-    setFormData(data);
-    setModalType("edit");
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setFormData({
-      date: "",
-      symptoms: "",
-      action: "",
-    });
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSave = () => {
-    if (modalType === "add") {
-      // Handle add logic
-    } else if (modalType === "edit") {
-      // Update the selected student's data or handle update logic
-    }
-    closeModal();
-  };
-
-  const isDetailsBlank = (item) => {
-    return !item.date && !item.symptoms && !item.action;
-  };
-
-  const [isEditProfileModalOpen, setEditProfileModalOpen] = useState(false);
-
-  const openEditProfileModal = () => {
-    setEditProfileModalOpen(true);
-  };
-
-  const closeEditProfileModal = () => {
-    setEditProfileModalOpen(false);
   };
 
   const assessmentData = [
@@ -423,62 +384,25 @@ function Archive() {
     },
   ]);
 
-  const [isVaccineModalOpen, setIsVaccineModalOpen] = useState(false);
   const [vaccineFormData, setVaccineFormData] = useState({
     id: null,
     date: "",
     vaccine: "",
     remarks: "",
   });
-  const [vaccineModalType, setVaccineModalType] = useState("add");
 
-  // Modal state functions
-  const openVaccineModal = (type, vaccine) => {
-    setVaccineModalType(type);
-    setVaccineFormData(
-      vaccine
-        ? { ...vaccine }
-        : { id: null, date: "", vaccine: "", remarks: "" }
-    );
-    setIsVaccineModalOpen(true);
-  };
-
-  const closeVaccineModal = () => {
-    setIsVaccineModalOpen(false);
-  };
-
-  // Handle form data change
-  const handleVaccineChange = (e) => {
-    const { name, value } = e.target;
-    setVaccineFormData({
-      ...vaccineFormData,
-      [name]: value,
-    });
-  };
-
-  // Save function for adding or editing a vaccine
-  const handleVaccineSave = () => {
-    if (vaccineModalType === "add") {
-      // Add new vaccine
-      setVaccineData([
-        ...vaccineData,
-        { ...vaccineFormData, id: vaccineData.length + 1 },
-      ]);
-    } else {
-      // Edit existing vaccine
-      setVaccineData(
-        vaccineData.map((vaccine) =>
-          vaccine.id === vaccineFormData.id ? vaccineFormData : vaccine
-        )
-      );
-    }
-    closeVaccineModal();
-  };
   return (
     <div className="adminProfile">
       <h2> Student Health Record Archive</h2>
       <div className="buttons">
-        <div className="dept">
+        <div className="archive-search">
+          <input
+            type="text"
+            className="admin-search-input"
+            placeholder="Search..."
+          />
+        </div>
+        <div className="archive-dept">
           <button
             className={`button-jhs ${
               selectedCategory === "JHS" ? "active-button" : ""
@@ -503,14 +427,6 @@ function Archive() {
           >
             College
           </button>
-        </div>
-        <div className="admin-search">
-          <input
-            type="text"
-            className="admin-search-input"
-            placeholder="Search..."
-          />
-          <SearchRoundedIcon />
         </div>
       </div>
 
@@ -709,16 +625,16 @@ function Archive() {
               </div>{" "}
             </div>
 
-            <div className="column-one">
-              <div className="student-data-i">
+            <div className="archive-content">
+              <div className="archive-data-i">
                 <h3>{selectedStudent.name}</h3>
-                <div className="archive-student-pic">
-                  <img src={jen} alt="" className="jen" />
-                </div>
-
+                <h4> Personal Information</h4>
                 <h4> I. </h4>
                 <p> Full Name: {selectedStudent.name}</p>
-                <p>Gr./Section: {selectedStudent.section}</p>
+                <p>Education Level: {selectedStudent.educationLevel}</p>
+                <p>Strand/Program: {selectedStudent.strand}</p>
+                <p>Grade/Year: {selectedStudent.yearlvl}</p>
+                <p>Section: {selectedStudent.section}</p>
                 <p>Age: {selectedStudent.age}</p>
                 <p>Civil Status: {selectedStudent.civilstatus}</p>
                 <p>Birthdate: {selectedStudent.birthdate}</p>
@@ -728,10 +644,7 @@ function Archive() {
                 <p>Guardian: {selectedStudent.guardian}</p>
                 <p>Guradian's Address: {selectedStudent.guradianAddress}</p>
                 <p> Guardian's Number: {selectedStudent.guardianNum}</p>
-              </div>
-              <div className="student-data-ii">
-                {" "}
-                <h4> II. </h4>
+                <p> Department: {selectedStudent.department}</p> <h4> II. </h4>
                 <h4>
                   {" "}
                   Have you ever suffered illnesses involving any of the
@@ -747,6 +660,8 @@ function Archive() {
                 <p>Muscular : {selectedStudent.muscular}</p>
                 <p>Reproductive : {selectedStudent.reproductive}</p>
                 <p>Lymphatic : {selectedStudent.lymphatic}</p>
+                <p>Psychological : {selectedStudent.psychological}</p>
+                <p>If so, specify? : {selectedStudent.specifyPsychological}</p>
                 <br />
                 <h4> III. </h4>
                 <p>Do you smoke? : {selectedStudent.smoke}</p>
@@ -755,9 +670,10 @@ function Archive() {
                 <p>If so, specify? : {selectedStudent.specifyAllergy}</p>
               </div>
             </div>
-            <h3>Physical Examination</h3>
+
             <div className="column-two">
-              <div className="student-data-iii">
+              <div className="archive-data-ii">
+                <h4>Physical Examination</h4>
                 <h4> IV. </h4>
                 <p>Eyes : {selectedStudent.respiratory}</p>
                 <p>Ear : {selectedStudent.digestive}</p>
@@ -782,9 +698,7 @@ function Archive() {
                 <p>Weight : {selectedStudent.weight}</p>
                 <p>BMI : {selectedStudent.bmi}</p>
                 <p>Lungs : {selectedStudent.lungs}</p>
-              </div>
-
-              <div className="student-data-iv">
+                <br />
                 <h4> VI. </h4>
 
                 <p>Abdomen : {selectedStudent.smoke}</p>
@@ -799,24 +713,24 @@ function Archive() {
                 <p>Lower : {selectedStudent.lowerExtremities}</p>
               </div>
             </div>
-            <h3>Laboratory Examination</h3>
+
             <div className="column-three">
-              <div className="student-data-v">
-                <h4> VI. </h4>
-                <div className="x-ray">
-                  <h4> CHEST X-RAY </h4>
-                </div>
+              <div className="archive-data-iii">
+                <h4>Laboratory Examination</h4>
+                <h4> VIII. </h4>
+                <p> Blood Chemistry: {selectedStudent.bloodChemistry}</p>
+                <p> CBC:{selectedStudent.cbc} </p>
+                <p> Urinalysis: {selectedStudent.urinalysis}</p>
+                <p> Fecalysis: {selectedStudent.fecalysis}</p>
                 <br />
+                <h4>Diagnostic Procedures</h4>
+                <h4> IX. </h4>
+                <p> Chest X-ray Findings: {selectedStudent.chestXray}</p>
                 <br />
+                <h4>Others(ECG, Ultrasound, etc.)</h4>
+                <h4> X. </h4>
+                <p> {selectedStudent.others}</p>
                 <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <p> Others: (If indicated)</p>
               </div>
             </div>
 
@@ -888,19 +802,125 @@ function Archive() {
                 </table>
               </div>
             </div>
+            <div className="view-archive">
+              <button className="archive-button" onClick={openArchiveModal}>
+                View Archive
+              </button>
 
-            <div
-              className="archive-staff"
-              style={{ fontSize: "14px", margin: "1vw" }}
-            >
-              Last edited by: (staff name) <br />
-              Time stamp: Mar 16 08:12:04
+              {/* Main Archive Modal */}
+              <Modal
+                isOpen={isOpen}
+                onRequestClose={onClose}
+                className="archive-modal"
+                style={{
+                  overlay: {
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 2,
+                  },
+                  content: {
+                    width: "fit-content",
+                    minWidth: "50vw",
+                    height: "fit-content",
+                    margin: "auto",
+                    borderRadius: "12px",
+                    backgroundColor: "#f8f8ff",
+                    padding: "25px",
+                    border: "none",
+                    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                    zIndex: 2,
+                  },
+                }}
+              >
+                <div className="archive-modal-content">
+                  <h2>Changes History</h2>
+
+                  {/* Medical Record Changes */}
+                  <h3 onClick={() => openModal("Medical Record Changes")}>
+                    Medical Record Changes
+                  </h3>
+                  <p>Insert medical records summary here</p>
+                  <br />
+
+                  {/* Immunization Record Changes */}
+                  <h3 onClick={() => openModal("Immunization Record Changes")}>
+                    Immunization Record Changes
+                  </h3>
+                  <p>Insert immunization records summary here</p>
+                  <br />
+
+                  {/* Assessment Record Changes */}
+                  <h3 onClick={() => openModal("Assessment Record Changes")}>
+                    Assessment Record Changes
+                  </h3>
+                  <p>Insert assessment records summary here</p>
+                  <br />
+
+                  {/* Nested Modal */}
+                  <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    className="heading-modal"
+                    style={{
+                      overlay: {
+                        backgroundColor: "rgba(0, 0, 0, 0.3)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 3,
+                      },
+                      content: {
+                        width: "fit-content",
+                        height: "fit-content",
+                        margin: "auto",
+                        borderRadius: "12px",
+                        backgroundColor: "#f8f8ff",
+                        padding: "25px",
+                        border: "none",
+                        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                        zIndex: 3,
+                      },
+                    }}
+                  >
+                    <div className="heading-modal-content">
+                      {/* Close button (X) */}
+                      <span
+                        className="close-button"
+                        onClick={closeModal}
+                        style={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "15px",
+                          fontSize: "24px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        &times;
+                      </span>
+
+                      <h4>{activeHeading} Changes History</h4>
+                      <p>
+                        Insert change history here for{" "}
+                        {activeHeading.toLowerCase()}
+                      </p>
+                    </div>
+                  </Modal>
+
+                  <div className="archive-modal-buttons">
+                    <button className="close-btn" onClick={onClose}>
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </Modal>
             </div>
           </div>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default Archive;

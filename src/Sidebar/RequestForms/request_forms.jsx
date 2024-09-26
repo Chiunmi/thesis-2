@@ -37,13 +37,15 @@ function RequestForms() {
   ];
   return (
     <div className="request-form-page">
-      Fill out the appropriate leave form based on your situation. Please wait
-      for confirmation or approval after submitting the form.
-      <p className="form-warning">
-        {" "}
-        Fabricating information or providing false details can lead to
-        consequences and may impact your credibility and trustworthiness.
-      </p>
+      <div className="request-note">
+        Fill out the appropriate leave form based on your situation. Please wait
+        for confirmation or approval after submitting the form.
+        <p className="form-warning">
+          {" "}
+          Fabricating information or providing false details can lead to
+          consequences and may impact your credibility and trustworthiness.
+        </p>
+      </div>
       <div className="sent-requests">
         <button className="sent-request-btn" onClick={openModal}>
           View Sent Requests

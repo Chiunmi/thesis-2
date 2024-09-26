@@ -29,6 +29,7 @@ import MedicalRecordRequestForm from "./Sidebar/RequestForms/medical-record-requ
 import ParentalConsentForm from "./Sidebar/RequestForms/parental-consent-form";
 import ReferralForm from "./Sidebar/RequestForms/referral-form";
 import TelehealthAppointmentRequestForm from "./Sidebar/RequestForms/telehealth-form";
+import ManageAccount from "./NavBar_Tabs/Profile/accounts";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
           <Route path="/user" element={<StudentProfile />} />
           <Route path="/admin" element={<AdminProfile />} />
           <Route path="/manage" element={<Manage />} />
+          <Route path="/accounts" element={<ManageAccount />} />
           <Route path="/edit-stock" element={<EditStockPage />} />
           <Route path="/health-record" element={<HealthRecord />} />
         </Route>

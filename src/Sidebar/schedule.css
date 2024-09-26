@@ -127,7 +127,13 @@
     margin-right: 10px;
   }
 }
-
+@media (max-width: 1440px) {
+  .schedule-page {
+    width: 65%;
+    margin-left: calc(0% + 10vw);
+    margin-top: 9vh;
+  }
+}
 @media (max-width: 1000px) {
   .schedule-page {
     width: 85%;

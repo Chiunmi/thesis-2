@@ -37,7 +37,12 @@
     grid-template-columns: 1fr; /* One column on smaller screens */
   }
 }
-
+@media (max-width: 1440px) {
+  .services-page {
+    width: 65%;
+    margin-left: calc(0% + 10vw);
+  }
+}
 @media (max-width: 1000px) {
   .services-page {
     width: 85%;

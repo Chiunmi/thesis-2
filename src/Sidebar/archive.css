@@ -1,0 +1,96 @@
+.archive-search {
+  margin-left: 1vw;
+}
+
+.archive-dept {
+  display: flex;
+  justify-content: space-between;
+  margin: 1vh 1vw;
+  width: fit-content;
+  margin-top: 2vh;
+}
+.archive-data-i h3 {
+  text-align: left;
+  color: #003163;
+}
+
+.archive-data-i,
+.archive-data-ii,
+.archive-data-iii {
+  background-color: rgba(138, 138, 138, 0.2);
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: 100%;
+  min-width: 400px;
+}
+.archive-button {
+  margin: 1vh 1vw 2vh 1vw;
+  background-color: #003163;
+  width: fit-content;
+  padding: 2px 20px;
+  border-radius: 10px;
+  border: 2px solid #003163;
+  color: white;
+  cursor: pointer;
+}
+
+.archive-button:hover {
+  background-color: white;
+  border: 2px solid #003163;
+  color: #003163;
+}
+.archive-modal-content {
+  padding: 20px;
+  z-index: 8;
+}
+.archive-modal-content h3 {
+  font-weight: 600;
+  font-size: 16px;
+}
+.archive-modal-buttons {
+  display: flex;
+  justify-content: end;
+  margin-top: 2vh;
+}
+.archive-modal-buttons .close-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #808080;
+  color: white;
+  border: 1px solid #ddd;
+}
+
+.archive-modal-content h3:hover {
+  color: #808080;
+  cursor: pointer;
+}
+
+.heading-modal,
+.heading-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 100;
+}
+
+.heading-modal h4 {
+  margin-bottom: 10px;
+}
+
+.heading-modal p {
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background-color: #ccc;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #b3b3b3;
+}

@@ -120,6 +120,7 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
+  min-height: 30vh;
   gap: 20px;
   padding: 20px;
 }
@@ -219,6 +220,11 @@
   }
 }
 
+@media (max-width: 1440px) {
+  .home-page {
+    width: 67%;
+  }
+}
 @media (max-width: 1000px) {
   .home-page {
     position: fixed;

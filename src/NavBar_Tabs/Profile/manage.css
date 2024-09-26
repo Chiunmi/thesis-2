@@ -1,9 +1,8 @@
 .admin-inventory,
 .edit-stock {
   position: fixed;
-  margin: 8vh 2vw 2vw 26vh;
-  /* background-color: pink; */
-  width: 86vw;
+  margin: 8vh 2vw 4vw 26vh;
+  min-width: 85vw;
   height: 90vh;
   overflow-y: auto;
   max-height: fit-content;
@@ -29,6 +28,7 @@
   background-color: #c0c2c2;
   border-radius: 20px;
   padding: 10px;
+  margin-bottom: 4vh;
 }
 
 .back {
@@ -55,6 +55,27 @@
 h2 {
   text-align: center;
   margin-bottom: 2vh;
+}
+
+.inventory-tabs {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  gap: 20px;
+}
+.tab-button.active {
+  background-color: #007bff;
+  color: white;
+}
+.inventory-tabs button {
+  padding: 5px 10px;
+  border-top-right-radius: 15px;
+  border: 1px solid #003163;
+  cursor: pointer;
+}
+
+.inventory-tabs button:hover {
+  background-color: #8a8a8a;
 }
 .status-label {
   font-size: 30px;
@@ -98,7 +119,8 @@ td {
   background-color: #d0d2d2; /* Lightened color on hover */
 }
 
-.edit-stock-btn {
+.edit-stock-btn,
+.add-stock-btn {
   padding: 5px 15px;
   border-radius: 10px;
   cursor: pointer;
@@ -109,7 +131,11 @@ td {
   color: white;
 }
 
-.edit-stock-btn:hover {
+.add-stock-btn {
+  background-color: #00ab66;
+}
+.edit-stock-btn:hover,
+.add-stock-btn:hover {
   background-color: white;
   border: 1px solid #003163;
   color: #003163;
@@ -181,6 +207,82 @@ td {
   margin: 2vh 3vw;
 }
 
+.add-stock-modal-content h4,
+.delete-stock-modal-content h3 {
+  text-align: center;
+}
+.add-stock-modal-content .delete-stock-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.add-stock-modal-content input {
+  width: 80%;
+  margin-left: 1vw;
+}
+.add-stock-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
+.add-stock-buttons .stock-submit-btn,
+.add-stock-buttons .stock-close-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #00ab66;
+  border: 1px white solid;
+  color: white;
+}
+
+.add-stock-buttons .stock-close-btn {
+  background-color: #808080;
+}
+.add-stock-buttons .stock-submit-btn:hover,
+.add-stock-buttons .stock-close-btn:hover {
+  background-color: #c0c2c2;
+  border: 1px solid #003163;
+  color: #003163;
+}
+.edit-stock-delete-btn:hover {
+  background-color: white;
+  border: 1px solid #003163;
+  color: #003163;
+}
+.edit-stock-delete-btn {
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px #ddd solid;
+  color: white;
+  background-color: red;
+  width: fit-content;
+}
+.close-btn {
+  padding: 10px 15px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px; /* Space between buttons */
+}
+
+.delete-btn {
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-btn:hover,
+.delete-btn:hover,
+.stock-close-btn:hover {
+  opacity: 0.5;
+}
 @media (max-width: 1680px) {
   .edit-stock,
   .admin-inventory {

@@ -34,7 +34,11 @@
   max-height: 9%;
   object-fit: contain;
 }
-
+@media (max-width: 1440px) {
+  .about-page {
+    width: 65%;
+  }
+}
 @media (max-width: 1000px) {
   .about-page {
     width: 85%;

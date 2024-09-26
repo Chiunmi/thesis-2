@@ -96,15 +96,16 @@ function AdminProfile() {
               boxShadow: "none",
             },
             content: {
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               width: "fit-content",
-              height: "90vh",
+              maxHeight: "70vh",
+              height: "fit-content",
               margin: "auto",
-              marginTop: "3vh",
-              backgroundColor: "rgba(0, 0, 0, 0)",
+              borderRadius: "12px",
+              backgroundColor: "#f8f8ff",
+              padding: "20px",
               border: "none",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              overflowY: "scroll",
             },
           }}
         >
@@ -153,6 +154,9 @@ function AdminProfile() {
         </Modal>
         <Link to="/manage">
           <button className="button-manage">Manage Stock</button>
+        </Link>
+        <Link to="/accounts">
+          <button className="button-accounts">Manage Accounts</button>
         </Link>
       </div>
 

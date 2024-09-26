@@ -172,7 +172,7 @@
   overflow-y: scroll;
   font-size: 12px;
   padding: 15px;
-  width: 18vw;
+  width: 100%;
   height: 16vh;
 }
 
@@ -188,6 +188,12 @@
     position: relative;
     left: 5vw;
     gap: 20px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .right-container {
+    width: 22%;
   }
 }
 @media (max-width: 1000px) {

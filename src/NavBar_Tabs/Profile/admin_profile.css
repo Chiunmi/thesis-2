@@ -1,6 +1,6 @@
 .adminProfile {
   position: fixed;
-  margin: 6vh 2vw 2vw 26vh;
+  margin: 6vh 2vw 2vw 24vh;
   /* background-color: pink; */
   width: 86vw;
   height: 92vh;
@@ -44,7 +44,7 @@
   display: flex;
   justify-content: space-between;
   margin: 4vh 1vw 1vh 0.2vw;
-  width: 35vw;
+  width: fit-content;
 }
 
 .health-record-modal {
@@ -148,6 +148,7 @@
 
 .button-create,
 .button-manage,
+.button-accounts,
 .button-bmi,
 .edit-profile,
 .health-record-btn {
@@ -164,6 +165,7 @@
 
 .button-create:hover,
 .button-manage:hover,
+.button-accounts:hover,
 .button-bmi:hover,
 .edit-profile:hover,
 .health-record-btn:hover {
@@ -174,16 +176,13 @@
 
 .edit-profile {
   background-color: #00ab66;
-  margin-left: 2.5vw;
 }
 
-.button-bmi {
-  margin-right: 2.5vw;
-}
 .profile-btn {
   display: flex;
-  justify-content: space-between;
-  margin: 2vh 9vw;
+  justify-content: center;
+  margin: 2vh;
+  /* gap: 5vw; */
 }
 
 .name-list {
@@ -198,7 +197,7 @@
   margin-left: 1.5vw;
 }
 
-.student-name:hover {
+.name:hover {
   color: #8a8a8a;
 }
 
@@ -258,10 +257,11 @@
   background-color: #00ab66;
   border: 1px white solid;
   color: white;
+  width: fit-content;
 }
 
 .scan-bmi-btn .close-btn {
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 10px;
   cursor: pointer;
   background-color: #808080;
@@ -363,18 +363,15 @@ select option {
 }
 
 .create-account-modal {
-  background-color: #f8f8ff;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+  max-width: 30vw;
+  background-color: hsl(0, 0%, 100%);
   padding: 20px;
-  border-radius: 24px;
-  height: 80vh;
-  width: 30vw;
-  max-width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  position: relative; /* For proper alignment */
-  margin: auto;
-  top: 50%; /* Center the modal vertically */
-  transform: translateY(-50%); /* Adjust vertical alignment */
+  border-radius: 12px;
+  min-height: 20vh;
 }
 
 .form input[type="text"] {
@@ -434,7 +431,6 @@ select option {
   padding: 20px;
   border-radius: 24px;
   height: fit-content;
-  /* max-height: 100%; */
   width: 400vw;
   max-width: 95%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -587,6 +583,7 @@ body.no-scroll {
   }
   .button-create,
   .button-manage,
+  .button-accounts,
   .button-bmi,
   .edit-profile,
   .health-record-btn {
@@ -599,7 +596,7 @@ body.no-scroll {
     display: flex;
     justify-content: space-between;
     margin: 4vh 1vh 0.2vw;
-    width: 40vw;
+    width: fit-content;
   }
 
   .back-to-admin {
@@ -617,7 +614,7 @@ body.no-scroll {
     display: flex;
     justify-content: space-between;
     margin: 1vh 1vw;
-    width: 35vw;
+    width: fit-content;
     margin-top: 2vh;
   }
 

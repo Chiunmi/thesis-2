@@ -50,15 +50,15 @@
 .student-profile-data-i,
 .student-profile-data-ii,
 .student-profile-data-iii,
-.student-data-v1,
-.student-data-v2,
-.student-data-v3 {
+.student-profile-data-v1,
+.student-profile-data-v2,
+.student-profile-data-v3 {
   background-color: rgba(138, 138, 138, 0.2);
   padding: 20px;
   margin-top: 10px;
   border-radius: 10px;
   width: 100%;
-  min-width: 400px;
+  min-width: 300px;
 }
 
 .student-column-three {

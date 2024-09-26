@@ -94,8 +94,8 @@ function Right() {
             zIndex: 2,
           },
           content: {
-            width: "40vw",
-            height: "40vh",
+            width: "fit-content",
+            height: "fit-content",
             margin: "auto",
             borderRadius: "12px",
             backgroundColor: "#f8f8ff",
@@ -147,7 +147,7 @@ function Right() {
           },
           content: {
             width: "fit-content",
-            height: "20vh",
+            height: "fit-content",
             margin: "auto",
             borderRadius: "12px",
             backgroundColor: "#f8f8ff",

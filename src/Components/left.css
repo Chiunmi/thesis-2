@@ -127,6 +127,37 @@
   }
 }
 
+@media (max-width: 1440px) {
+  .sidebar-list,
+  .logout {
+    margin: 15vh 0px 0px 0, 5vw;
+    row-gap: 30px;
+  }
+
+  .sidebar-list li a,
+  .logout li a,
+  .logout .logout-li {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .sidebar-list li:hover,
+  .sidebar-list li.active,
+  .logout li a:hover,
+  .logout-li:hover,
+  .logout .logout-li:hover {
+    width: 9vw;
+    height: 38px;
+  }
+  .logout {
+    margin-top: 18vh;
+  }
+  .logo {
+    width: 10vw;
+    height: 8vh;
+    left: 1vw;
+  }
+}
 @media (max-width: 1000px) {
   /* Remove hover effect for small screens */
   .sidebar-list li:hover,

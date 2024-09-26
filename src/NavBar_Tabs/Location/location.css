@@ -40,7 +40,11 @@
   margin-top: 6vh;
   padding: 20px;
 }
-
+@media (max-width: 1440px) {
+  .location-page {
+    width: 65%;
+  }
+}
 @media (max-width: 1000px) {
   .location-page {
     position: fixed;

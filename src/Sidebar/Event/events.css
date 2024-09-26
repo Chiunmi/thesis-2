@@ -114,3 +114,21 @@
   color: white;
   border: 1px white solid;
 }
+.event-page h4 {
+  margin: 1vh;
+  font-weight: 500;
+}
+
+@media (max-width: 1440px) {
+  .event-page {
+    width: 65%;
+    margin-left: calc(0% + 10.5vw);
+    margin-top: 9vh;
+    margin-bottom: 4vh;
+    height: 87vh;
+  }
+
+  .event-page::-webkit-scrollbar {
+    display: none;
+  }
+}

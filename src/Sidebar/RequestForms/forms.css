@@ -18,6 +18,9 @@
   display: flex;
   margin-bottom: 10px;
 }
+.form-warning {
+  margin: 1vw;
+}
 
 .form-back-button {
   background-color: #003163;
@@ -59,9 +62,7 @@
 }
 
 .text-area {
-  width: 62.5vw;
-  max-width: 62.5vw;
-  min-width: 62.5vw;
+  width: calc(100%);
   font-size: 16px;
   padding: 7px;
 }
@@ -129,4 +130,12 @@
   flex-direction: row;
   width: fit-content;
   margin: 2vh 1vw;
+}
+
+@media (max-width: 1440px) {
+  .request-forms {
+    width: 65%;
+    margin-left: calc(0% + 11vw);
+    margin-top: 9vh;
+  }
 }

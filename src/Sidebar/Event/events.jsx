@@ -69,10 +69,10 @@ function Events() {
 
   return (
     <div className="event-page">
-      <p>
+      <h4>
         Read through the event details provided, including the event name, date,
         time, venue (if physical), and any special instructions.
-      </p>
+      </h4>
 
       <div className="event-buttons">
         <button className="add-event-btn" onClick={openAddModal}>
@@ -178,8 +178,9 @@ function Events() {
             alignItems: "center",
           },
           content: {
-            width: "40vw",
-            height: "55vh",
+            width: "fit-content",
+            minWidth: "50vw",
+            height: "fit-content",
             margin: "auto",
             borderRadius: "12px",
             backgroundColor: "#f8f8ff",
@@ -261,8 +262,9 @@ function Events() {
             alignItems: "center",
           },
           content: {
-            width: "40vw",
-            height: "55vh",
+            width: "fit-content",
+            minWidth: "50vw",
+            height: "fit-content",
             margin: "auto",
             borderRadius: "12px",
             backgroundColor: "#f8f8ff",
@@ -344,8 +346,9 @@ function Events() {
             alignItems: "center",
           },
           content: {
-            width: "35vw",
-            height: "22vh",
+            width: "fit-content",
+            minWidth: "40vw",
+            height: "fit-content",
             margin: "auto",
             borderRadius: "12px",
             backgroundColor: "#f8f8ff",
