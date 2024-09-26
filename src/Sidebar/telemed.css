@@ -10,52 +10,16 @@
   overflow-y: auto;
 }
 
-.telemed-container {
+.telemed-appointments {
   display: flex;
   flex-direction: column;
   background-color: rgba(138, 138, 138, 0.2);
-  padding: 40px;
+  padding: 20px;
   border-radius: 20px;
-  margin: 3vh;
+  margin: 4vh 1vw;
 }
 
-.telemed-title {
-  color: #003163;
-  font-size: 20px;
-  font-weight: 600;
-}
-.call-button {
-  display: flex;
-  justify-content: space-between;
-}
-.call-button h3 {
-  font-size: 16px;
-  font-weight: 400;
-  margin-right: 1vw;
-}
-
-.join-call-btn {
-  background-color: #003163;
-  border: none;
-  color: white;
-  padding: 10px 32px;
+.request-forms h4 {
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 0px 10px 4px 0px;
-  cursor: pointer;
-  border-radius: 12px;
-  min-width: 200px;
-  max-height: 40px;
-}
-.join-call-btn:hover {
-  background-color: white;
-  color: #003163;
-  border: 1px solid #003163;
-}
-.trouble {
-  font-size: 14px;
-  margin: 4vh 3vw;
-  color: #18181b;
+  margin-top: 1vh;
 }
