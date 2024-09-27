@@ -873,7 +873,9 @@ const Archive = () => {
                       },
                       content: {
                         width: "fit-content",
+                        maxWidth: "40vw",
                         height: "fit-content",
+                        maxHeight: "80vh",
                         margin: "auto",
                         borderRadius: "12px",
                         backgroundColor: "#f8f8ff",
@@ -895,20 +897,56 @@ const Archive = () => {
                           right: "15px",
                           fontSize: "24px",
                           cursor: "pointer",
+                          color: "gray",
                         }}
                       >
                         &times;
                       </span>
 
                       <h4>{activeHeading} Changes History</h4>
-                      <div>
+                      <div className="changes-content-whole">
                         <p>
                           Insert change history here for{" "}
                           {activeHeading.toLowerCase()}
                         </p>
-                        <div> medical changes here</div>
-                        <div> medical changes here</div>
-                        <div> medical changes here</div>
+                        <div className="changes-content">
+                          <h4>Who made changes:</h4>
+                          <p>Mark</p>
+                          <br />
+                          <h4>What changes:</h4>
+                          <p>Updated title</p>
+                          <br />
+                          <h4>OLD:</h4>
+                          <p>Old title</p>
+                          <br />
+                          <h4>NEW:</h4>
+                          <p>New title</p>
+                          <br />
+                          <h4>WHEN:</h4>
+                          <p>Sept 27, 2024</p>
+                          <br />
+                        </div>
+
+                        <br />
+                        <div className="changes-content">
+                          <h4>Who made changes:</h4>
+                          <p>Mark</p>
+                          <br />
+                          <h4>What changes:</h4>
+                          <p>Updated title</p>
+                          <br />
+                          <h4>OLD:</h4>
+                          <p>Old title</p>
+                          <br />
+                          <h4>NEW:</h4>
+                          <p>New title</p>
+                          <br />
+                          <h4>WHEN:</h4>
+                          <p>Sept 27, 2024</p>
+                          <br />
+                        </div>
+                        <br />
+                        <br />
                       </div>
                     </div>
                   </Modal>

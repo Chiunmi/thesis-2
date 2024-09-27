@@ -123,7 +123,24 @@
   border: 1px solid #003163;
   color: #003163;
 }
+.changes-content {
+  display: block; /* Switch to block layout instead of flexbox */
+}
 
+.changes-content h4,
+.changes-content p {
+  display: inline; /* Place h4 and p inline, but let them wrap naturally */
+  font-weight: 600; /* Optional: keep the heading bold */
+}
+
+.changes-content p {
+  font-weight: 400; /* Optional: set the paragraph (value) weight */
+  margin-left: 5px; /* Add a small margin between the heading and the value */
+}
+
+.heading-modal-content {
+  overflow-y: auto;
+}
 @media (max-width: 1680px) {
   .manage-account {
     margin: 6vh 2vw 2vw 20vh;
