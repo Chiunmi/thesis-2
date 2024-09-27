@@ -901,10 +901,15 @@ const Archive = () => {
                       </span>
 
                       <h4>{activeHeading} Changes History</h4>
-                      <p>
-                        Insert change history here for{" "}
-                        {activeHeading.toLowerCase()}
-                      </p>
+                      <div>
+                        <p>
+                          Insert change history here for{" "}
+                          {activeHeading.toLowerCase()}
+                        </p>
+                        <div> medical changes here</div>
+                        <div> medical changes here</div>
+                        <div> medical changes here</div>
+                      </div>
                     </div>
                   </Modal>
 
