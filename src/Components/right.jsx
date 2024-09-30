@@ -1,9 +1,6 @@
 import "./right.css";
 import bakuna from "../assets/bakuna.png";
 import waterAnalysis from "../assets/water-analysis.jpeg";
-import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import DoubleArrowOutlinedIcon from "@mui/icons-material/DoubleArrowOutlined";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 
@@ -12,6 +9,11 @@ function Right() {
   const [sliderImages, setSliderImages] = useState([bakuna, waterAnalysis]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track current image index
   const [fadeClass, setFadeClass] = useState("image-fade-enter"); // State to manage fade effect
+
+  const [isEditMode, setIsEditMode] = useState(false);
+  const handleEditImages = () => {
+    setIsEditMode(!isEditMode);
+  };
 
   // State for managing modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -179,37 +181,6 @@ function Right() {
 
       {/* Right-side Content */}
       <div className="right-content">
-        <div className="priority-content">
-          <CampaignOutlinedIcon
-            style={{
-              width: "50px",
-              height: "50px",
-              color: "white",
-              backgroundColor: "red",
-              borderRadius: "50%",
-              padding: "5px",
-            }}
-          />
-          <div className="priority-text">
-            <h3>Vaccination</h3>
-            <p>
-              College Freshmen and TransfereesCollege Freshmen and
-              TransfereesCollege Freshmen and Transferees
-            </p>
-          </div>
-          {/*note: use this icon: DoubleArrowOutlinedIcon for students, same style*/}
-          <DoubleArrowOutlinedIcon
-            style={{
-              width: "35px",
-              height: "35px",
-              color: "#003163",
-              marginTop: "1vh",
-              cursor: "pointer",
-            }}
-          />
-        </div>
-        <div className="line"></div>
-
         {/* Image Poster with Upload Functionality */}
         <div className="poster-container">
           <label htmlFor="upload-photo" className="upload-label">
@@ -218,16 +189,64 @@ function Right() {
               alt="Bakuna Photo"
               className={`bakuna-photo ${fadeClass}`} /* Apply fade classes */
             />
-            <input
-              type="file"
-              id="upload-photo"
-              className="upload-poster-input"
-              onChange={handleImageUpload}
-            />
-            <button className="upload-button">Change Photo</button>
           </label>
         </div>
-
+        <div className="img-button">
+          <input
+            type="file"
+            id="upload-photo"
+            className="upload-poster-input"
+            onChange={handleImageUpload}
+            style={{ display: "none" }} // Hide the input element
+          />
+          <button
+            onClick={() => document.getElementById("upload-photo").click()}
+          >
+            Upload image
+          </button>
+          <button onClick={handleEditImages}>Edit images</button>
+          {/* Edit Image Table */}
+          {isEditMode && (
+            <div className="modal-overlay" onClick={handleEditImages}>
+              <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h2>Edit Images</h2>
+                <div className="scrollable-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Image</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sliderImages.map((image, index) => (
+                        <tr key={index}>
+                          <td>
+                            <img
+                              src={image}
+                              alt={`Image ${index}`}
+                              className="edit-image-preview"
+                              style={{ width: "100px", height: "auto" }}
+                            />
+                          </td>
+                          <td>
+                            <button className="delete-button">Delete</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <button className="close-button" onClick={handleEditImages}>
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
         <div className="poster-description">
           <p>
             Did you know that Filipinos have historically shown high acceptance
@@ -235,7 +254,11 @@ function Right() {
             campaigns, such as those for influenza, measles, and polio,
             Filipinos have generally demonstrated a positive attitude towards
             vaccination, contributing to successful immunization efforts across
-            different age groups and regions in the Philippines.
+            different age groups and regions in the Philippines.nfluenza,
+            measles, and polio, Filipinos have generally demonstrated a positive
+            attitude towards vaccination, contributing to successful
+            immunization efforts across different age groups and regions in the
+            Philippines.
           </p>
         </div>
       </div>
