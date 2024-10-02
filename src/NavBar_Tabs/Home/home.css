@@ -134,10 +134,12 @@
   width: 35vw;
   max-width: 35vw;
   min-width: 35vw;
+  padding: 5px;
 }
 .input-content {
   height: 20vh;
   max-height: 20vh;
+  padding: 5px;
 }
 .modal-buttons {
   display: flex;
@@ -187,10 +189,9 @@
 }
 .delete-modal-buttons {
   display: flex;
-  position: relative;
+  justify-content: end;
   gap: 20px;
   top: 2vh;
-  left: 8vw;
 }
 
 @media (max-width: 1680px) {

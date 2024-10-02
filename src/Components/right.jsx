@@ -1,88 +1,188 @@
+import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
 import "./right.css";
 import bakuna from "../assets/bakuna.png";
 import waterAnalysis from "../assets/water-analysis.jpeg";
-import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
+
+const dummyAnnouncement = {
+  title: "Filipino Vaccination Acceptance",
+  description:
+    "Did you know that Filipinos have historically shown high acceptance rates for vaccination programs? During various public health campaigns, such as those for influenza, measles, and polio, Filipinos have generally demonstrated a positive attitude towards vaccination, contributing to successful immunization efforts across different age groups and regions in the Philippines.",
+  images: [bakuna, waterAnalysis],
+};
 
 function Right() {
-  const [imageSrc, setImageSrc] = useState(bakuna);
-  const [sliderImages, setSliderImages] = useState([bakuna, waterAnalysis]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track current image index
-  const [fadeClass, setFadeClass] = useState("image-fade-enter"); // State to manage fade effect
+  const [announcements, setAnnouncements] = useState([dummyAnnouncement]);
+  const [sliderImages, setSliderImages] = useState(dummyAnnouncement.images);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [fadeClass, setFadeClass] = useState("image-fade-enter");
 
+  // Modal states
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [announcementTitle, setAnnouncementTitle] = useState("");
+  const [announcementContent, setAnnouncementContent] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedAnnouncementIndex, setSelectedAnnouncementIndex] =
+    useState(null);
+
+  // Image upload handler
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    console.log("Image uploaded:", file);
+    // Handle the file upload logic here
+  };
+
+  // Add Announcement handler
+  const handleAddAnnouncement = () => {
+    const newAnnouncement = {
+      title: announcementTitle,
+      description: announcementContent,
+      images: [bakuna], // Example, you should use the uploaded image file
+    };
+    setAnnouncements([...announcements, newAnnouncement]);
+    setIsAddModalOpen(false);
+    setAnnouncementTitle("");
+    setAnnouncementContent("");
+  };
+
+  // Edit Mode Toggle
   const handleEditImages = () => {
     setIsEditMode(!isEditMode);
   };
 
-  // State for managing modals
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [announcementTitle, setAnnouncementTitle] = useState("");
-  const [announcementContent, setAnnouncementContent] = useState("");
-
-  const handleAddAnnouncement = (title, content) => {
-    console.log("Added Announcement:", { title, content });
-  };
-
-  const handleDeleteItem = () => {
-    console.log("Deleted Announcement");
-  };
-
-  const openAddModal = () => {
-    setAnnouncementTitle("");
-    setAnnouncementContent("");
-    setIsAddModalOpen(true);
-  };
-
-  const openDeleteModal = () => {
+  // Delete Modal Open
+  const handleOpenDeleteModal = (index) => {
+    setSelectedAnnouncementIndex(index);
     setIsDeleteModalOpen(true);
   };
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageSrc(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  // Delete Announcement Handler
+  const handleDeleteItem = () => {
+    const updatedAnnouncements = announcements.filter(
+      (_, index) => index !== selectedAnnouncementIndex
+    );
+    setAnnouncements(updatedAnnouncements);
+    setSliderImages(
+      updatedAnnouncements.length ? updatedAnnouncements[0].images : []
+    );
+    setIsDeleteModalOpen(false);
+    setIsEditMode(false); // Close edit mode after deletion
   };
 
+  // Image Slider Logic
   useEffect(() => {
     const interval = setInterval(() => {
-      // Start fade-out effect
       setFadeClass("image-fade-exit");
-
-      // Set timeout to change image after fade-out completes (matching the transition duration)
       setTimeout(() => {
         setCurrentImageIndex(
           (prevIndex) => (prevIndex + 1) % sliderImages.length
         );
-
-        // Start fade-in effect after image changes
         setFadeClass("image-fade-enter");
-      }, 1000); // Delay matches transition time in CSS
-    }, 3000); // Change image every 3 seconds
-
-    return () => clearInterval(interval); // Cleanup the interval on unmount
-  }, [sliderImages.length]);
+      }, 1000);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [sliderImages]);
 
   return (
     <div className="right-container">
-      {/* Monthly Announcement Buttons */}
       <div className="monthly-buttons">
         <span className="monthly-announcement-label">Monthly Announcement</span>
-        <button className="monthly-add" onClick={openAddModal}>
+        <button className="monthly-add" onClick={() => setIsAddModalOpen(true)}>
           Add
         </button>
-        <button className="monthly-delete" onClick={openDeleteModal}>
-          Delete
+        <button className="montly-edit" onClick={handleEditImages}>
+          Edit
         </button>
       </div>
 
-      {/* Add Monthly Announcement Modal */}
+      {/* Edit Mode */}
+      {isEditMode && (
+        <div className="modal-overlay" onClick={handleEditImages}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Edit Monthly Announcements</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Image</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {announcements.map((announcement, index) => (
+                  <tr key={index}>
+                    <td>{announcement.title}</td>
+                    <td>{announcement.description}</td>
+                    <td>
+                      <img
+                        src={announcement.images[0]}
+                        alt="announcement"
+                        style={{ width: "100px" }}
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className="announcement-modal-content-delete-btn"
+                        onClick={() => handleOpenDeleteModal(index)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onRequestClose={() => setIsDeleteModalOpen(false)}
+        className="announcement-modal"
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // More opaque for visibility
+            position: "fixed", // Ensure it's fixed to the viewport
+            top: 0, // Align at the top
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+          },
+          content: {
+            width: "fit-content",
+            height: "20vh",
+            margin: "auto",
+            borderRadius: "12px",
+            backgroundColor: "#f8f8ff",
+            padding: "25px",
+            zIndex: 10000, // Higher than the overlay
+          },
+        }}
+      >
+        <div className="delete-modal-content">
+          <p>Are you sure you want to delete this item?</p>
+          <div className="delete-modal-buttons">
+            <button
+              className="close-btn"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Close
+            </button>
+            <button className="delete-btn" onClick={handleDeleteItem}>
+              Delete
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Add Announcement Modal */}
       <Modal
         isOpen={isAddModalOpen}
         onRequestClose={() => setIsAddModalOpen(false)}
@@ -102,164 +202,65 @@ function Right() {
             borderRadius: "12px",
             backgroundColor: "#f8f8ff",
             padding: "25px",
+            zIndex: 2,
           },
         }}
       >
         <div className="announcement-modal-content">
-          <p>Add Monthly Announcement</p>
+          <h3>Add Monthly Announcement</h3>
+          <input
+            value={announcementTitle}
+            onChange={(e) => setAnnouncementTitle(e.target.value)}
+            placeholder="Announcement Title"
+            className="input-title"
+          />
           <textarea
             value={announcementContent}
             onChange={(e) => setAnnouncementContent(e.target.value)}
             placeholder="Announcement Content"
-            className="input-content"
             rows={4}
+            className="input-content"
           />
-          <div className="monthly-modal-buttons">
-            <button
-              className="close-btn"
-              onClick={() => setIsAddModalOpen(false)}
-            >
-              Close
-            </button>
-            <button
-              className="save-btn"
-              onClick={() => {
-                handleAddAnnouncement(announcementTitle, announcementContent);
-                setIsAddModalOpen(false);
-              }}
-            >
-              Save
-            </button>
-          </div>
-        </div>
-      </Modal>
-
-      {/* Delete Confirmation Modal */}
-      <Modal
-        isOpen={isDeleteModalOpen}
-        onRequestClose={() => setIsDeleteModalOpen(false)}
-        className="monthly-modal"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 2,
-          },
-          content: {
-            width: "fit-content",
-            height: "fit-content",
-            margin: "auto",
-            borderRadius: "12px",
-            backgroundColor: "#f8f8ff",
-            padding: "25px",
-          },
-        }}
-      >
-        <div className="right-delete-modal-content">
-          <p>Are you sure you want to delete this item?</p>
-          <div className="delete-modal-buttons">
-            <button
-              className="close-btn"
-              onClick={() => setIsDeleteModalOpen(false)}
-            >
-              Close
-            </button>
-            <button
-              className="delete-btn"
-              onClick={() => {
-                handleDeleteItem();
-                setIsDeleteModalOpen(false);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </Modal>
-
-      {/* Right-side Content */}
-      <div className="right-content">
-        {/* Image Poster with Upload Functionality */}
-        <div className="poster-container">
-          <label htmlFor="upload-photo" className="upload-label">
-            <img
-              src={sliderImages[currentImageIndex]}
-              alt="Bakuna Photo"
-              className={`bakuna-photo ${fadeClass}`} /* Apply fade classes */
-            />
-          </label>
-        </div>
-        <div className="img-button">
           <input
             type="file"
             id="upload-photo"
-            className="upload-poster-input"
             onChange={handleImageUpload}
-            style={{ display: "none" }} // Hide the input element
+            style={{ display: "none" }}
           />
+        </div>
+        <div className="upload-image">
           <button
+            className="upload-img-btn"
             onClick={() => document.getElementById("upload-photo").click()}
           >
-            Upload image
+            Upload Image
           </button>
-          <button onClick={handleEditImages}>Edit images</button>
-          {/* Edit Image Table */}
-          {isEditMode && (
-            <div className="modal-overlay" onClick={handleEditImages}>
-              <div
-                className="modal-content"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <h2>Edit Images</h2>
-                <div className="scrollable-table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Image</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {sliderImages.map((image, index) => (
-                        <tr key={index}>
-                          <td>
-                            <img
-                              src={image}
-                              alt={`Image ${index}`}
-                              className="edit-image-preview"
-                              style={{ width: "100px", height: "auto" }}
-                            />
-                          </td>
-                          <td>
-                            <button className="delete-button">Delete</button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <button className="close-button" onClick={handleEditImages}>
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
+        </div>
+        <div className="monthly-modal-buttons">
+          <button className="save-btn" onClick={handleAddAnnouncement}>
+            Save
+          </button>
+          <button
+            className="close-btn"
+            onClick={() => setIsAddModalOpen(false)}
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
+
+      {/* Image Slider */}
+      <div className="right-content">
+        <div className="poster-container">
+          <img
+            src={sliderImages[currentImageIndex]}
+            alt="Announcement"
+            className={`bakuna-photo ${fadeClass}`}
+          />
         </div>
         <div className="poster-description">
-          <p>
-            Did you know that Filipinos have historically shown high acceptance
-            rates for vaccination programs? During various public health
-            campaigns, such as those for influenza, measles, and polio,
-            Filipinos have generally demonstrated a positive attitude towards
-            vaccination, contributing to successful immunization efforts across
-            different age groups and regions in the Philippines.nfluenza,
-            measles, and polio, Filipinos have generally demonstrated a positive
-            attitude towards vaccination, contributing to successful
-            immunization efforts across different age groups and regions in the
-            Philippines.
-          </p>
+          <h3>{announcements[0].title} </h3>
+          <p>{announcements[0].description}</p>
         </div>
       </div>
     </div>
