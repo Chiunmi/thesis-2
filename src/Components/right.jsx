@@ -8,14 +8,35 @@ const dummyAnnouncement = {
   title: "Filipino Vaccination Acceptance",
   description:
     "Did you know that Filipinos have historically shown high acceptance rates for vaccination programs? During various public health campaigns, such as those for influenza, measles, and polio, Filipinos have generally demonstrated a positive attitude towards vaccination, contributing to successful immunization efforts across different age groups and regions in the Philippines.",
-  images: [bakuna, waterAnalysis],
+  images: [bakuna],
+};
+const anotherAnnouncement = {
+  title: "Water Analysis Report",
+  description:
+    "This report shows the latest findings on the water quality in the region, emphasizing the importance of clean drinking water for the community.",
+  images: [waterAnalysis],
 };
 
 function Right() {
-  const [announcements, setAnnouncements] = useState([dummyAnnouncement]);
-  const [sliderImages, setSliderImages] = useState(dummyAnnouncement.images);
+  const [announcements, setAnnouncements] = useState([
+    dummyAnnouncement,
+    anotherAnnouncement,
+  ]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fadeClass, setFadeClass] = useState("image-fade-enter");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFadeClass("image-fade-exit");
+      setTimeout(() => {
+        setCurrentImageIndex(
+          (prevIndex) => (prevIndex + 1) % announcements.length
+        );
+        setFadeClass("image-fade-enter");
+      }, 1000);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [announcements]);
 
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -69,20 +90,6 @@ function Right() {
     setIsDeleteModalOpen(false);
     setIsEditMode(false); // Close edit mode after deletion
   };
-
-  // Image Slider Logic
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFadeClass("image-fade-exit");
-      setTimeout(() => {
-        setCurrentImageIndex(
-          (prevIndex) => (prevIndex + 1) % sliderImages.length
-        );
-        setFadeClass("image-fade-enter");
-      }, 1000);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [sliderImages]);
 
   return (
     <div className="right-container">
@@ -189,7 +196,7 @@ function Right() {
         className="announcement-modal"
         style={{
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -253,14 +260,14 @@ function Right() {
       <div className="right-content">
         <div className="poster-container">
           <img
-            src={sliderImages[currentImageIndex]}
+            src={announcements[currentImageIndex].images[0]}
             alt="Announcement"
             className={`bakuna-photo ${fadeClass}`}
           />
         </div>
         <div className="poster-description">
-          <h3>{announcements[0].title} </h3>
-          <p>{announcements[0].description}</p>
+          <h3>{announcements[currentImageIndex].title} </h3>
+          <p>{announcements[currentImageIndex].description}</p>
         </div>
       </div>
     </div>
